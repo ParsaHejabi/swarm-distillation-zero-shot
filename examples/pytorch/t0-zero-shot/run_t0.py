@@ -9,6 +9,16 @@ import sys
 sys.path.insert(2, "./")
 
 import datasets
+try:
+    load_metric = datasets.load_metric
+except AttributeError:  # `load_metric` was removed in newer `datasets` versions
+    try:
+        import evaluate
+
+        load_metric = evaluate.load
+    except Exception as e:  # pragma: no cover - handle missing evaluate
+        raise ImportError(
+            "Neither `datasets.load_metric` nor `evaluate.load` are available" ) from e
 import transformers
 from transformers import (
     AutoConfig,
@@ -164,9 +174,9 @@ def main():
 
     config.num_choices = test_data.num_choices
     if test_args.metric_name == "none":
-        metrics = datasets.load_metric(data_args.dataset_name, data_args.subset_name, cache_dir=model_args.cache_dir)
+        metrics = load_metric(data_args.dataset_name, data_args.subset_name, cache_dir=model_args.cache_dir)
     else:
-        metrics = datasets.load_metric(test_args.metric_name, cache_dir=model_args.cache_dir)
+        metrics = load_metric(test_args.metric_name, cache_dir=model_args.cache_dir)
 
     logger.info(f"Model parameters {config}")
 
