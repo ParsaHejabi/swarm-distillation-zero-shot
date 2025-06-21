@@ -161,3 +161,7 @@ tags
 
 # .lock
 *.lock
+
+# Parsa added these
+pretrain_models/
+checkpoints/
