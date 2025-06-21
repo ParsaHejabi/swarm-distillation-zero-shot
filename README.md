@@ -24,6 +24,17 @@ pip install datasets
 
 ## Usage
 We are still working on cleaning the code, for early usage please refer to `exps/ttt/final_3B.sh` for an example training script that we used to tune the T0-3B model.
+For running on a single machine with multiple GPUs and without Slurm, see
+`exps_ttt/run_deepspeed_local.sh`. Run this script from anywhere and it will
+launch training with DeepSpeed on 8 GPUs. The script also adds the repository
+root to `PYTHONPATH` so that local modules like `ttt` can be imported. By
+default, the script allows Transformers to download models if they are not
+cached locally. Uncomment the `TRANSFORMERS_OFFLINE` line in the script if you
+need to run strictly offline.
+
+If you see errors about protobuf descriptors when launching the script, set the
+environment variable `PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python` or
+install a `protobuf` version <=3.20 to resolve the issue.
 
 ## Citation
 
