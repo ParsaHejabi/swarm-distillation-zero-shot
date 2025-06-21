@@ -1,12 +1,22 @@
 #!/bin/bash
 # Example script to run T0 experiments locally with 8 GPUs using DeepSpeed.
 
-export TRANSFORMERS_CACHE=pretrain_models/huggingface
-export HF_DATASETS_CACHE=pretrain_models/huggingface
-export HF_METRICS_CACHE=pretrain_models/huggingface
-cache_dir=pretrain_models/huggingface
+# Resolve the repository root so the script works when executed from any
+# directory.
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$(realpath "$SCRIPT_DIR/..")"
 
-export TRANSFORMERS_OFFLINE=1
+# Ensure local modules (e.g., the `ttt` package) are found
+export PYTHONPATH="$REPO_ROOT:$PYTHONPATH"
+
+export TRANSFORMERS_CACHE="$REPO_ROOT/pretrain_models/huggingface"
+export HF_DATASETS_CACHE="$REPO_ROOT/pretrain_models/huggingface"
+export HF_METRICS_CACHE="$REPO_ROOT/pretrain_models/huggingface"
+cache_dir="$REPO_ROOT/pretrain_models/huggingface"
+
+# Allow Transformers to download models if they are not present locally.
+# Uncomment the next line to disable network access and run strictly offline.
+# export TRANSFORMERS_OFFLINE=1
 export WANDB_MODE=offline
 
 # wandb env variables
@@ -79,14 +89,14 @@ pseudo_target_mode="pairwise"
 ensemble_subset_size=0.0
 
 exp_name=11B_${test_mode}.train.source.${train_data}.${dataset}.${subset}.${testset_name}.${model}.peft.${peft}.lora_alpha${lora_alpha}.lora_drop${lora_dropout}.bn${pL}.pw${pseudo_weight}.np${nprompts}.bsz${bsz}.ga${ga}.lr${lr}.steps.${max_steps}
-SAVE=checkpoints/${dname}/${exp_name}_${DATE}
-rm -rf ${SAVE}; mkdir -p ${SAVE}
-cp $0 ${SAVE}/run.sh
+SAVE="$REPO_ROOT/checkpoints/${dname}/${exp_name}_${DATE}"
+rm -rf "${SAVE}"; mkdir -p "${SAVE}"
+cp "$0" "${SAVE}/run.sh"
 
 # Launch with DeepSpeed on 8 GPUs
 
-deepspeed --num_gpus 8 examples/pytorch/t0-zero-shot/run_t0.py \
-  --deepspeed deepspeed_configs/ds_config_zero2.json \
+deepspeed --num_gpus 8 "$REPO_ROOT/examples/pytorch/t0-zero-shot/run_t0.py" \
+  --deepspeed "$REPO_ROOT/deepspeed_configs/ds_config_zero2.json" \
   --dataset_name ${dataset} --subset_name ${subset} --prompt_set_name ${dataset} --testset_name ${testset_name} \
   --model_name_or_path ${model} --per_device_train_batch_size ${bsz} --per_device_eval_batch_size ${eval_bsz} \
   --test_mode ${test_mode} --cache_dir ${cache_dir} --metric_name ${metric} \
