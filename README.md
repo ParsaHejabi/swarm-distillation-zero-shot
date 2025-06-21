@@ -24,6 +24,9 @@ pip install datasets
 
 ## Usage
 We are still working on cleaning the code, for early usage please refer to `exps/ttt/final_3B.sh` for an example training script that we used to tune the T0-3B model.
+For running on a single machine with multiple GPUs and without Slurm, see
+`exps_ttt/run_deepspeed_local.sh` which launches training with DeepSpeed on 8
+GPUs.
 
 ## Citation
 
