@@ -23,6 +23,9 @@ export WANDB_MODE=offline
 export WANDB_PROJECT=gaogao
 export WANDB_WATCH="false"
 
+# Avoid protobuf runtime errors when using precompiled tokenizer protobufs.
+export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
+
 export TOKENIZERS_PARALLELISM="false"
 DATE=`date +%Y%m%d`
 
