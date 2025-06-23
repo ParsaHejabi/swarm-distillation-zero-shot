@@ -164,4 +164,4 @@ tags
 
 # Parsa added these
 pretrain_models/
-checkpoints/
+checkpoints/*/*/*.p*

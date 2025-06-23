@@ -1,0 +1,1831 @@
+[2025-06-23 13:20:46,360] [INFO] [real_accelerator.py:254:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-23 13:20:48,283] [INFO] [logging.py:107:log_dist] [Rank -1] [TorchCheckpointEngine] Initialized with serialization = False
+[2025-06-23 13:20:48,316] [WARNING] [runner.py:220:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+[2025-06-23 13:20:48,316] [INFO] [runner.py:610:main] cmd = /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/bin/python3 -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMCwgMSwgMiwgMywgNCwgNSwgNl19 --master_addr=127.0.0.1 --master_port=29500 --enable_each_rank_log=None /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/examples/pytorch/t0-zero-shot/run_t0.py --deepspeed /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/deepspeed_configs/ds_config_zero2.json --dataset_name super_glue --subset_name rte --prompt_set_name super_glue --testset_name validation --model_name_or_path T0pp --per_device_train_batch_size 1 --per_device_eval_batch_size 100 --test_mode ttt_t0 --cache_dir /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface --metric_name accuracy --debug_size -1 --peft_option lora --bottleneck_dim 1 --do_train --logging_steps 10 --num_train_epochs 50 --max_steps 1000 --adam_beta1 0.9 --adam_beta2 0.98 --adam_epsilon 1e-6 --seed 42 --debug_size 10000 --max_dev_size 1000 --learning_rate 2e-5 --evaluation_strategy steps --eval_steps 50 --disable_eval_mode 0 --pseudo_target_mode pairwise --ensemble_subset_size 0.0 --loss_option pseudo_train --jsd 0 --detach_kl_left 1 --detach_kl_right 0 --ensemble_option avg_prob --pseudo_train_loss_weight 1.0 --pseudo_dist smooth --lora_dropout 0.3 --lora_alpha 4 --lora_pos encdec --prob_temperature 1.0 --combine_option uniform --train_random_n_prompts 5 --train_data_source validation --save_strategy no --warmup_steps 100 --gradient_accumulation_steps 4 --lr_scheduler_type polynomial --output_dir /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/checkpoints/rte/11B_ttt_t0.train.source.validation.super_glue.rte.validation.T0pp.peft.lora.lora_alpha4.lora_drop0.3.bn1.pw1.0.np5.bsz1.ga4.lr2e-5.steps.1000_20250623 --overwrite_output_dir --report_to none --bf16 --disable_tqdm True
+[2025-06-23 13:20:50,835] [INFO] [real_accelerator.py:254:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-23 13:20:54,492] [INFO] [logging.py:107:log_dist] [Rank -1] [TorchCheckpointEngine] Initialized with serialization = False
+[2025-06-23 13:20:54,558] [INFO] [launch.py:139:main] 0 NCCL_P2P_DISABLE=1
+[2025-06-23 13:20:54,558] [INFO] [launch.py:139:main] 0 NCCL_DEBUG=INFO
+[2025-06-23 13:20:54,559] [INFO] [launch.py:146:main] WORLD INFO DICT: {'localhost': [0, 1, 2, 3, 4, 5, 6]}
+[2025-06-23 13:20:54,559] [INFO] [launch.py:152:main] nnodes=1, num_local_procs=7, node_rank=0
+[2025-06-23 13:20:54,559] [INFO] [launch.py:163:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0, 1, 2, 3, 4, 5, 6]})
+[2025-06-23 13:20:54,559] [INFO] [launch.py:164:main] dist_world_size=7
+[2025-06-23 13:20:54,559] [INFO] [launch.py:168:main] Setting CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6
+[2025-06-23 13:20:54,587] [INFO] [launch.py:256:main] process 1879420 spawned with command: ['/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/bin/python3', '-u', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/examples/pytorch/t0-zero-shot/run_t0.py', '--local_rank=0', '--deepspeed', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/deepspeed_configs/ds_config_zero2.json', '--dataset_name', 'super_glue', '--subset_name', 'rte', '--prompt_set_name', 'super_glue', '--testset_name', 'validation', '--model_name_or_path', 'T0pp', '--per_device_train_batch_size', '1', '--per_device_eval_batch_size', '100', '--test_mode', 'ttt_t0', '--cache_dir', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface', '--metric_name', 'accuracy', '--debug_size', '-1', '--peft_option', 'lora', '--bottleneck_dim', '1', '--do_train', '--logging_steps', '10', '--num_train_epochs', '50', '--max_steps', '1000', '--adam_beta1', '0.9', '--adam_beta2', '0.98', '--adam_epsilon', '1e-6', '--seed', '42', '--debug_size', '10000', '--max_dev_size', '1000', '--learning_rate', '2e-5', '--evaluation_strategy', 'steps', '--eval_steps', '50', '--disable_eval_mode', '0', '--pseudo_target_mode', 'pairwise', '--ensemble_subset_size', '0.0', '--loss_option', 'pseudo_train', '--jsd', '0', '--detach_kl_left', '1', '--detach_kl_right', '0', '--ensemble_option', 'avg_prob', '--pseudo_train_loss_weight', '1.0', '--pseudo_dist', 'smooth', '--lora_dropout', '0.3', '--lora_alpha', '4', '--lora_pos', 'encdec', '--prob_temperature', '1.0', '--combine_option', 'uniform', '--train_random_n_prompts', '5', '--train_data_source', 'validation', '--save_strategy', 'no', '--warmup_steps', '100', '--gradient_accumulation_steps', '4', '--lr_scheduler_type', 'polynomial', '--output_dir', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/checkpoints/rte/11B_ttt_t0.train.source.validation.super_glue.rte.validation.T0pp.peft.lora.lora_alpha4.lora_drop0.3.bn1.pw1.0.np5.bsz1.ga4.lr2e-5.steps.1000_20250623', '--overwrite_output_dir', '--report_to', 'none', '--bf16', '--disable_tqdm', 'True']
+[2025-06-23 13:20:54,610] [INFO] [launch.py:256:main] process 1879421 spawned with command: ['/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/bin/python3', '-u', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/examples/pytorch/t0-zero-shot/run_t0.py', '--local_rank=1', '--deepspeed', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/deepspeed_configs/ds_config_zero2.json', '--dataset_name', 'super_glue', '--subset_name', 'rte', '--prompt_set_name', 'super_glue', '--testset_name', 'validation', '--model_name_or_path', 'T0pp', '--per_device_train_batch_size', '1', '--per_device_eval_batch_size', '100', '--test_mode', 'ttt_t0', '--cache_dir', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface', '--metric_name', 'accuracy', '--debug_size', '-1', '--peft_option', 'lora', '--bottleneck_dim', '1', '--do_train', '--logging_steps', '10', '--num_train_epochs', '50', '--max_steps', '1000', '--adam_beta1', '0.9', '--adam_beta2', '0.98', '--adam_epsilon', '1e-6', '--seed', '42', '--debug_size', '10000', '--max_dev_size', '1000', '--learning_rate', '2e-5', '--evaluation_strategy', 'steps', '--eval_steps', '50', '--disable_eval_mode', '0', '--pseudo_target_mode', 'pairwise', '--ensemble_subset_size', '0.0', '--loss_option', 'pseudo_train', '--jsd', '0', '--detach_kl_left', '1', '--detach_kl_right', '0', '--ensemble_option', 'avg_prob', '--pseudo_train_loss_weight', '1.0', '--pseudo_dist', 'smooth', '--lora_dropout', '0.3', '--lora_alpha', '4', '--lora_pos', 'encdec', '--prob_temperature', '1.0', '--combine_option', 'uniform', '--train_random_n_prompts', '5', '--train_data_source', 'validation', '--save_strategy', 'no', '--warmup_steps', '100', '--gradient_accumulation_steps', '4', '--lr_scheduler_type', 'polynomial', '--output_dir', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/checkpoints/rte/11B_ttt_t0.train.source.validation.super_glue.rte.validation.T0pp.peft.lora.lora_alpha4.lora_drop0.3.bn1.pw1.0.np5.bsz1.ga4.lr2e-5.steps.1000_20250623', '--overwrite_output_dir', '--report_to', 'none', '--bf16', '--disable_tqdm', 'True']
+[2025-06-23 13:20:54,631] [INFO] [launch.py:256:main] process 1879422 spawned with command: ['/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/bin/python3', '-u', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/examples/pytorch/t0-zero-shot/run_t0.py', '--local_rank=2', '--deepspeed', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/deepspeed_configs/ds_config_zero2.json', '--dataset_name', 'super_glue', '--subset_name', 'rte', '--prompt_set_name', 'super_glue', '--testset_name', 'validation', '--model_name_or_path', 'T0pp', '--per_device_train_batch_size', '1', '--per_device_eval_batch_size', '100', '--test_mode', 'ttt_t0', '--cache_dir', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface', '--metric_name', 'accuracy', '--debug_size', '-1', '--peft_option', 'lora', '--bottleneck_dim', '1', '--do_train', '--logging_steps', '10', '--num_train_epochs', '50', '--max_steps', '1000', '--adam_beta1', '0.9', '--adam_beta2', '0.98', '--adam_epsilon', '1e-6', '--seed', '42', '--debug_size', '10000', '--max_dev_size', '1000', '--learning_rate', '2e-5', '--evaluation_strategy', 'steps', '--eval_steps', '50', '--disable_eval_mode', '0', '--pseudo_target_mode', 'pairwise', '--ensemble_subset_size', '0.0', '--loss_option', 'pseudo_train', '--jsd', '0', '--detach_kl_left', '1', '--detach_kl_right', '0', '--ensemble_option', 'avg_prob', '--pseudo_train_loss_weight', '1.0', '--pseudo_dist', 'smooth', '--lora_dropout', '0.3', '--lora_alpha', '4', '--lora_pos', 'encdec', '--prob_temperature', '1.0', '--combine_option', 'uniform', '--train_random_n_prompts', '5', '--train_data_source', 'validation', '--save_strategy', 'no', '--warmup_steps', '100', '--gradient_accumulation_steps', '4', '--lr_scheduler_type', 'polynomial', '--output_dir', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/checkpoints/rte/11B_ttt_t0.train.source.validation.super_glue.rte.validation.T0pp.peft.lora.lora_alpha4.lora_drop0.3.bn1.pw1.0.np5.bsz1.ga4.lr2e-5.steps.1000_20250623', '--overwrite_output_dir', '--report_to', 'none', '--bf16', '--disable_tqdm', 'True']
+[2025-06-23 13:20:54,650] [INFO] [launch.py:256:main] process 1879423 spawned with command: ['/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/bin/python3', '-u', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/examples/pytorch/t0-zero-shot/run_t0.py', '--local_rank=3', '--deepspeed', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/deepspeed_configs/ds_config_zero2.json', '--dataset_name', 'super_glue', '--subset_name', 'rte', '--prompt_set_name', 'super_glue', '--testset_name', 'validation', '--model_name_or_path', 'T0pp', '--per_device_train_batch_size', '1', '--per_device_eval_batch_size', '100', '--test_mode', 'ttt_t0', '--cache_dir', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface', '--metric_name', 'accuracy', '--debug_size', '-1', '--peft_option', 'lora', '--bottleneck_dim', '1', '--do_train', '--logging_steps', '10', '--num_train_epochs', '50', '--max_steps', '1000', '--adam_beta1', '0.9', '--adam_beta2', '0.98', '--adam_epsilon', '1e-6', '--seed', '42', '--debug_size', '10000', '--max_dev_size', '1000', '--learning_rate', '2e-5', '--evaluation_strategy', 'steps', '--eval_steps', '50', '--disable_eval_mode', '0', '--pseudo_target_mode', 'pairwise', '--ensemble_subset_size', '0.0', '--loss_option', 'pseudo_train', '--jsd', '0', '--detach_kl_left', '1', '--detach_kl_right', '0', '--ensemble_option', 'avg_prob', '--pseudo_train_loss_weight', '1.0', '--pseudo_dist', 'smooth', '--lora_dropout', '0.3', '--lora_alpha', '4', '--lora_pos', 'encdec', '--prob_temperature', '1.0', '--combine_option', 'uniform', '--train_random_n_prompts', '5', '--train_data_source', 'validation', '--save_strategy', 'no', '--warmup_steps', '100', '--gradient_accumulation_steps', '4', '--lr_scheduler_type', 'polynomial', '--output_dir', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/checkpoints/rte/11B_ttt_t0.train.source.validation.super_glue.rte.validation.T0pp.peft.lora.lora_alpha4.lora_drop0.3.bn1.pw1.0.np5.bsz1.ga4.lr2e-5.steps.1000_20250623', '--overwrite_output_dir', '--report_to', 'none', '--bf16', '--disable_tqdm', 'True']
+[2025-06-23 13:20:54,668] [INFO] [launch.py:256:main] process 1879424 spawned with command: ['/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/bin/python3', '-u', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/examples/pytorch/t0-zero-shot/run_t0.py', '--local_rank=4', '--deepspeed', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/deepspeed_configs/ds_config_zero2.json', '--dataset_name', 'super_glue', '--subset_name', 'rte', '--prompt_set_name', 'super_glue', '--testset_name', 'validation', '--model_name_or_path', 'T0pp', '--per_device_train_batch_size', '1', '--per_device_eval_batch_size', '100', '--test_mode', 'ttt_t0', '--cache_dir', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface', '--metric_name', 'accuracy', '--debug_size', '-1', '--peft_option', 'lora', '--bottleneck_dim', '1', '--do_train', '--logging_steps', '10', '--num_train_epochs', '50', '--max_steps', '1000', '--adam_beta1', '0.9', '--adam_beta2', '0.98', '--adam_epsilon', '1e-6', '--seed', '42', '--debug_size', '10000', '--max_dev_size', '1000', '--learning_rate', '2e-5', '--evaluation_strategy', 'steps', '--eval_steps', '50', '--disable_eval_mode', '0', '--pseudo_target_mode', 'pairwise', '--ensemble_subset_size', '0.0', '--loss_option', 'pseudo_train', '--jsd', '0', '--detach_kl_left', '1', '--detach_kl_right', '0', '--ensemble_option', 'avg_prob', '--pseudo_train_loss_weight', '1.0', '--pseudo_dist', 'smooth', '--lora_dropout', '0.3', '--lora_alpha', '4', '--lora_pos', 'encdec', '--prob_temperature', '1.0', '--combine_option', 'uniform', '--train_random_n_prompts', '5', '--train_data_source', 'validation', '--save_strategy', 'no', '--warmup_steps', '100', '--gradient_accumulation_steps', '4', '--lr_scheduler_type', 'polynomial', '--output_dir', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/checkpoints/rte/11B_ttt_t0.train.source.validation.super_glue.rte.validation.T0pp.peft.lora.lora_alpha4.lora_drop0.3.bn1.pw1.0.np5.bsz1.ga4.lr2e-5.steps.1000_20250623', '--overwrite_output_dir', '--report_to', 'none', '--bf16', '--disable_tqdm', 'True']
+[2025-06-23 13:20:54,686] [INFO] [launch.py:256:main] process 1879425 spawned with command: ['/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/bin/python3', '-u', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/examples/pytorch/t0-zero-shot/run_t0.py', '--local_rank=5', '--deepspeed', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/deepspeed_configs/ds_config_zero2.json', '--dataset_name', 'super_glue', '--subset_name', 'rte', '--prompt_set_name', 'super_glue', '--testset_name', 'validation', '--model_name_or_path', 'T0pp', '--per_device_train_batch_size', '1', '--per_device_eval_batch_size', '100', '--test_mode', 'ttt_t0', '--cache_dir', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface', '--metric_name', 'accuracy', '--debug_size', '-1', '--peft_option', 'lora', '--bottleneck_dim', '1', '--do_train', '--logging_steps', '10', '--num_train_epochs', '50', '--max_steps', '1000', '--adam_beta1', '0.9', '--adam_beta2', '0.98', '--adam_epsilon', '1e-6', '--seed', '42', '--debug_size', '10000', '--max_dev_size', '1000', '--learning_rate', '2e-5', '--evaluation_strategy', 'steps', '--eval_steps', '50', '--disable_eval_mode', '0', '--pseudo_target_mode', 'pairwise', '--ensemble_subset_size', '0.0', '--loss_option', 'pseudo_train', '--jsd', '0', '--detach_kl_left', '1', '--detach_kl_right', '0', '--ensemble_option', 'avg_prob', '--pseudo_train_loss_weight', '1.0', '--pseudo_dist', 'smooth', '--lora_dropout', '0.3', '--lora_alpha', '4', '--lora_pos', 'encdec', '--prob_temperature', '1.0', '--combine_option', 'uniform', '--train_random_n_prompts', '5', '--train_data_source', 'validation', '--save_strategy', 'no', '--warmup_steps', '100', '--gradient_accumulation_steps', '4', '--lr_scheduler_type', 'polynomial', '--output_dir', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/checkpoints/rte/11B_ttt_t0.train.source.validation.super_glue.rte.validation.T0pp.peft.lora.lora_alpha4.lora_drop0.3.bn1.pw1.0.np5.bsz1.ga4.lr2e-5.steps.1000_20250623', '--overwrite_output_dir', '--report_to', 'none', '--bf16', '--disable_tqdm', 'True']
+[2025-06-23 13:20:54,704] [INFO] [launch.py:256:main] process 1879426 spawned with command: ['/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/bin/python3', '-u', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/examples/pytorch/t0-zero-shot/run_t0.py', '--local_rank=6', '--deepspeed', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/deepspeed_configs/ds_config_zero2.json', '--dataset_name', 'super_glue', '--subset_name', 'rte', '--prompt_set_name', 'super_glue', '--testset_name', 'validation', '--model_name_or_path', 'T0pp', '--per_device_train_batch_size', '1', '--per_device_eval_batch_size', '100', '--test_mode', 'ttt_t0', '--cache_dir', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface', '--metric_name', 'accuracy', '--debug_size', '-1', '--peft_option', 'lora', '--bottleneck_dim', '1', '--do_train', '--logging_steps', '10', '--num_train_epochs', '50', '--max_steps', '1000', '--adam_beta1', '0.9', '--adam_beta2', '0.98', '--adam_epsilon', '1e-6', '--seed', '42', '--debug_size', '10000', '--max_dev_size', '1000', '--learning_rate', '2e-5', '--evaluation_strategy', 'steps', '--eval_steps', '50', '--disable_eval_mode', '0', '--pseudo_target_mode', 'pairwise', '--ensemble_subset_size', '0.0', '--loss_option', 'pseudo_train', '--jsd', '0', '--detach_kl_left', '1', '--detach_kl_right', '0', '--ensemble_option', 'avg_prob', '--pseudo_train_loss_weight', '1.0', '--pseudo_dist', 'smooth', '--lora_dropout', '0.3', '--lora_alpha', '4', '--lora_pos', 'encdec', '--prob_temperature', '1.0', '--combine_option', 'uniform', '--train_random_n_prompts', '5', '--train_data_source', 'validation', '--save_strategy', 'no', '--warmup_steps', '100', '--gradient_accumulation_steps', '4', '--lr_scheduler_type', 'polynomial', '--output_dir', '/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/checkpoints/rte/11B_ttt_t0.train.source.validation.super_glue.rte.validation.T0pp.peft.lora.lora_alpha4.lora_drop0.3.bn1.pw1.0.np5.bsz1.ga4.lr2e-5.steps.1000_20250623', '--overwrite_output_dir', '--report_to', 'none', '--bf16', '--disable_tqdm', 'True']
+/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/lib/python3.9/site-packages/promptsource/templates.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/lib/python3.9/site-packages/promptsource/templates.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/lib/python3.9/site-packages/promptsource/templates.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/lib/python3.9/site-packages/promptsource/templates.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/lib/python3.9/site-packages/promptsource/templates.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/lib/python3.9/site-packages/promptsource/templates.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/venv/lib/python3.9/site-packages/promptsource/templates.py:10: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  import pkg_resources
+[2025-06-23 13:21:00,153] [INFO] [real_accelerator.py:254:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-23 13:21:00,266] [INFO] [real_accelerator.py:254:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-23 13:21:00,283] [INFO] [real_accelerator.py:254:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-23 13:21:00,401] [INFO] [real_accelerator.py:254:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-23 13:21:00,480] [INFO] [real_accelerator.py:254:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-23 13:21:00,566] [INFO] [real_accelerator.py:254:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-23 13:21:00,641] [INFO] [real_accelerator.py:254:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2025-06-23 13:21:02,700] [INFO] [logging.py:107:log_dist] [Rank -1] [TorchCheckpointEngine] Initialized with serialization = False
+[2025-06-23 13:21:02,704] [INFO] [comm.py:675:init_distributed] cdb=None
+[2025-06-23 13:21:03,028] [INFO] [logging.py:107:log_dist] [Rank -1] [TorchCheckpointEngine] Initialized with serialization = False
+[2025-06-23 13:21:03,032] [INFO] [comm.py:675:init_distributed] cdb=None
+[2025-06-23 13:21:03,673] [INFO] [logging.py:107:log_dist] [Rank -1] [TorchCheckpointEngine] Initialized with serialization = False
+[2025-06-23 13:21:03,677] [INFO] [comm.py:675:init_distributed] cdb=None
+[2025-06-23 13:21:03,795] [INFO] [logging.py:107:log_dist] [Rank -1] [TorchCheckpointEngine] Initialized with serialization = False
+[2025-06-23 13:21:03,802] [INFO] [comm.py:675:init_distributed] cdb=None
+[2025-06-23 13:21:03,828] [INFO] [logging.py:107:log_dist] [Rank -1] [TorchCheckpointEngine] Initialized with serialization = False
+[2025-06-23 13:21:03,834] [INFO] [comm.py:675:init_distributed] cdb=None
+[2025-06-23 13:21:03,912] [INFO] [logging.py:107:log_dist] [Rank -1] [TorchCheckpointEngine] Initialized with serialization = False
+[2025-06-23 13:21:03,919] [INFO] [comm.py:675:init_distributed] cdb=None
+[2025-06-23 13:21:04,045] [INFO] [logging.py:107:log_dist] [Rank -1] [TorchCheckpointEngine] Initialized with serialization = False
+[2025-06-23 13:21:04,050] [INFO] [comm.py:675:init_distributed] cdb=None
+[2025-06-23 13:21:04,051] [INFO] [comm.py:706:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+06/23/2025 13:21:05 - WARNING - __main__ - Process rank: 5, device: cuda:5, n_gpu: 1distributed training: True, 16-bits training: False
+06/23/2025 13:21:05 - WARNING - __main__ - Process rank: 6, device: cuda:6, n_gpu: 1distributed training: True, 16-bits training: False
+06/23/2025 13:21:05 - WARNING - __main__ - Process rank: 3, device: cuda:3, n_gpu: 1distributed training: True, 16-bits training: False
+06/23/2025 13:21:05 - WARNING - __main__ - Process rank: 1, device: cuda:1, n_gpu: 1distributed training: True, 16-bits training: False
+06/23/2025 13:21:05 - WARNING - __main__ - Process rank: 2, device: cuda:2, n_gpu: 1distributed training: True, 16-bits training: False
+06/23/2025 13:21:05 - WARNING - __main__ - Process rank: 0, device: cuda:0, n_gpu: 1distributed training: True, 16-bits training: False
+06/23/2025 13:21:05 - WARNING - __main__ - Process rank: 4, device: cuda:4, n_gpu: 1distributed training: True, 16-bits training: False
+[INFO|configuration_utils.py:604] 2025-06-23 13:21:05,523 >> loading configuration file https://huggingface.co/bigscience/T0pp/resolve/main/config.json from cache at /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/4d1146d0ecdfd40f42d8bb242217b1c3525f9a6527d3776ed01d77fd33a7a441.0f92c21f2009b0840bbd769b797c754010294dc29ff942ac5b8e53ce3393c880
+[INFO|configuration_utils.py:641] 2025-06-23 13:21:05,528 >> Model config T5Config {
+  "_name_or_path": "bigscience/T0pp",
+  "architectures": [
+    "T5ForConditionalGeneration"
+  ],
+  "d_ff": 10240,
+  "d_kv": 64,
+  "d_model": 4096,
+  "decoder_start_token_id": 0,
+  "dropout_rate": 0.1,
+  "eos_token_id": 1,
+  "feed_forward_proj": "gated-gelu",
+  "gradient_checkpointing": false,
+  "initializer_factor": 1.0,
+  "is_encoder_decoder": true,
+  "layer_norm_epsilon": 1e-06,
+  "model_type": "t5",
+  "num_decoder_layers": 24,
+  "num_heads": 64,
+  "num_layers": 24,
+  "output_past": true,
+  "pad_token_id": 0,
+  "relative_attention_num_buckets": 32,
+  "tie_word_embeddings": false,
+  "transformers_version": "4.14.0.dev0",
+  "use_cache": true,
+  "vocab_size": 32128
+}
+
+06/23/2025 13:21:05 - INFO - __main__ - Training/evaluation parameters TrainingArguments(
+_n_gpu=1,
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.98,
+adam_epsilon=1e-06,
+bf16=True,
+bf16_full_eval=False,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_pin_memory=True,
+ddp_find_unused_parameters=None,
+debug=[],
+deepspeed=/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/deepspeed_configs/ds_config_zero2.json,
+disable_tqdm=True,
+do_eval=True,
+do_predict=False,
+do_train=True,
+eval_accumulation_steps=None,
+eval_steps=50,
+evaluation_strategy=IntervalStrategy.STEPS,
+fp16=False,
+fp16_backend=auto,
+fp16_full_eval=False,
+fp16_opt_level=O1,
+gradient_accumulation_steps=4,
+gradient_checkpointing=False,
+greater_is_better=None,
+group_by_length=False,
+half_precision_backend=auto,
+hub_model_id=None,
+hub_strategy=HubStrategy.EVERY_SAVE,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=2e-05,
+length_column_name=length,
+load_best_model_at_end=False,
+local_rank=0,
+log_level=-1,
+log_level_replica=-1,
+log_on_each_node=True,
+logging_dir=/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/checkpoints/rte/11B_ttt_t0.train.source.validation.super_glue.rte.validation.T0pp.peft.lora.lora_alpha4.lora_drop0.3.bn1.pw1.0.np5.bsz1.ga4.lr2e-5.steps.1000_20250623/runs/Jun23_13-20-58_bosco,
+logging_first_step=False,
+logging_nan_inf_filter=True,
+logging_steps=10,
+logging_strategy=IntervalStrategy.STEPS,
+lr_scheduler_type=SchedulerType.POLYNOMIAL,
+max_grad_norm=1.0,
+max_steps=1000,
+metric_for_best_model=None,
+mp_parameters=,
+no_cuda=False,
+num_train_epochs=50.0,
+output_dir=/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/checkpoints/rte/11B_ttt_t0.train.source.validation.super_glue.rte.validation.T0pp.peft.lora.lora_alpha4.lora_drop0.3.bn1.pw1.0.np5.bsz1.ga4.lr2e-5.steps.1000_20250623,
+overwrite_output_dir=True,
+past_index=-1,
+per_device_eval_batch_size=100,
+per_device_train_batch_size=1,
+prediction_loss_only=False,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+remove_unused_columns=True,
+report_to=[],
+resume_from_checkpoint=None,
+run_name=/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/checkpoints/rte/11B_ttt_t0.train.source.validation.super_glue.rte.validation.T0pp.peft.lora.lora_alpha4.lora_drop0.3.bn1.pw1.0.np5.bsz1.ga4.lr2e-5.steps.1000_20250623,
+save_on_each_node=False,
+save_steps=500,
+save_strategy=IntervalStrategy.NO,
+save_total_limit=None,
+seed=42,
+sharded_ddp=[],
+skip_memory_metrics=True,
+tf32=None,
+tpu_metrics_debug=False,
+tpu_num_cores=None,
+use_legacy_prediction_loop=False,
+warmup_ratio=0.0,
+warmup_steps=100,
+weight_decay=0.0,
+xpu_backend=None,
+)
+[INFO|configuration_utils.py:604] 2025-06-23 13:21:05,816 >> loading configuration file https://huggingface.co/bigscience/T0pp/resolve/main/config.json from cache at /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/4d1146d0ecdfd40f42d8bb242217b1c3525f9a6527d3776ed01d77fd33a7a441.0f92c21f2009b0840bbd769b797c754010294dc29ff942ac5b8e53ce3393c880
+[INFO|configuration_utils.py:641] 2025-06-23 13:21:05,818 >> Model config T5Config {
+  "_name_or_path": "bigscience/T0pp",
+  "architectures": [
+    "T5ForConditionalGeneration"
+  ],
+  "d_ff": 10240,
+  "d_kv": 64,
+  "d_model": 4096,
+  "decoder_start_token_id": 0,
+  "dropout_rate": 0.1,
+  "eos_token_id": 1,
+  "feed_forward_proj": "gated-gelu",
+  "gradient_checkpointing": false,
+  "initializer_factor": 1.0,
+  "is_encoder_decoder": true,
+  "layer_norm_epsilon": 1e-06,
+  "model_type": "t5",
+  "num_decoder_layers": 24,
+  "num_heads": 64,
+  "num_layers": 24,
+  "output_past": true,
+  "pad_token_id": 0,
+  "relative_attention_num_buckets": 32,
+  "tie_word_embeddings": false,
+  "transformers_version": "4.14.0.dev0",
+  "use_cache": true,
+  "vocab_size": 32128
+}
+
+[INFO|tokenization_utils_base.py:1742] 2025-06-23 13:21:06,527 >> loading file https://huggingface.co/bigscience/T0pp/resolve/main/spiece.model from cache at /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/8114f85106b092be35d1fd155f8e0198e4ab5b91bfde792524b2248496f7009b.d6f0605ae3d57070be74b4c12206072ab332922acff822e6b5458691dbda7551
+[INFO|tokenization_utils_base.py:1742] 2025-06-23 13:21:06,527 >> loading file https://huggingface.co/bigscience/T0pp/resolve/main/tokenizer.json from cache at None
+[INFO|tokenization_utils_base.py:1742] 2025-06-23 13:21:06,527 >> loading file https://huggingface.co/bigscience/T0pp/resolve/main/added_tokens.json from cache at None
+[INFO|tokenization_utils_base.py:1742] 2025-06-23 13:21:06,527 >> loading file https://huggingface.co/bigscience/T0pp/resolve/main/special_tokens_map.json from cache at /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/187314ce7257d07c6c662e057bb8d7b56fa65059b054b505902c338051b5f510.c94798918c92ded6aeef2d2f0e666d2cc4145eca1aa6e1336fde07f2e13e2f46
+[INFO|tokenization_utils_base.py:1742] 2025-06-23 13:21:06,527 >> loading file https://huggingface.co/bigscience/T0pp/resolve/main/tokenizer_config.json from cache at /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/2e98ea1bd83bead9304da27afdce5f9ffd57c298d8fa5e4bbc351c500a1cb69f.b1a2e3c152960fdc6b3d16520fa9f1591e2818d7dd66946c219e651f224894bf
+[INFO|configuration_utils.py:604] 2025-06-23 13:21:06,722 >> loading configuration file https://huggingface.co/bigscience/T0pp/resolve/main/config.json from cache at /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/4d1146d0ecdfd40f42d8bb242217b1c3525f9a6527d3776ed01d77fd33a7a441.0f92c21f2009b0840bbd769b797c754010294dc29ff942ac5b8e53ce3393c880
+[INFO|configuration_utils.py:641] 2025-06-23 13:21:06,724 >> Model config T5Config {
+  "_name_or_path": "bigscience/T0pp",
+  "architectures": [
+    "T5ForConditionalGeneration"
+  ],
+  "d_ff": 10240,
+  "d_kv": 64,
+  "d_model": 4096,
+  "decoder_start_token_id": 0,
+  "dropout_rate": 0.1,
+  "eos_token_id": 1,
+  "feed_forward_proj": "gated-gelu",
+  "gradient_checkpointing": false,
+  "initializer_factor": 1.0,
+  "is_encoder_decoder": true,
+  "layer_norm_epsilon": 1e-06,
+  "model_type": "t5",
+  "num_decoder_layers": 24,
+  "num_heads": 64,
+  "num_layers": 24,
+  "output_past": true,
+  "pad_token_id": 0,
+  "relative_attention_num_buckets": 32,
+  "tie_word_embeddings": false,
+  "transformers_version": "4.14.0.dev0",
+  "use_cache": true,
+  "vocab_size": 32128
+}
+
+[INFO|configuration_utils.py:604] 2025-06-23 13:21:07,008 >> loading configuration file https://huggingface.co/bigscience/T0pp/resolve/main/config.json from cache at /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/4d1146d0ecdfd40f42d8bb242217b1c3525f9a6527d3776ed01d77fd33a7a441.0f92c21f2009b0840bbd769b797c754010294dc29ff942ac5b8e53ce3393c880
+[INFO|configuration_utils.py:641] 2025-06-23 13:21:07,010 >> Model config T5Config {
+  "_name_or_path": "bigscience/T0pp",
+  "architectures": [
+    "T5ForConditionalGeneration"
+  ],
+  "d_ff": 10240,
+  "d_kv": 64,
+  "d_model": 4096,
+  "decoder_start_token_id": 0,
+  "dropout_rate": 0.1,
+  "eos_token_id": 1,
+  "feed_forward_proj": "gated-gelu",
+  "gradient_checkpointing": false,
+  "initializer_factor": 1.0,
+  "is_encoder_decoder": true,
+  "layer_norm_epsilon": 1e-06,
+  "model_type": "t5",
+  "num_decoder_layers": 24,
+  "num_heads": 64,
+  "num_layers": 24,
+  "output_past": true,
+  "pad_token_id": 0,
+  "relative_attention_num_buckets": 32,
+  "tie_word_embeddings": false,
+  "transformers_version": "4.14.0.dev0",
+  "use_cache": true,
+  "vocab_size": 32128
+}
+
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+Overwrite dataset info from restored data version if exists.
+06/23/2025 13:21:11 - INFO - datasets.builder - Overwrite dataset info from restored data version if exists.
+Loading Dataset info from /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646
+06/23/2025 13:21:11 - INFO - datasets.info - Loading Dataset info from /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646
+Found cached dataset super_glue (/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646)
+06/23/2025 13:21:11 - INFO - datasets.builder - Found cached dataset super_glue (/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646)
+Loading Dataset info from /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646
+06/23/2025 13:21:11 - INFO - datasets.info - Loading Dataset info from /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+06/23/2025 13:21:12 - INFO - __main__ - Model parameters T5Config {
+  "_name_or_path": "bigscience/T0pp",
+  "architectures": [
+    "T5ForConditionalGeneration"
+  ],
+  "bottleneck_dim": 1,
+  "combine_option": "uniform",
+  "d_ff": 10240,
+  "d_kv": 64,
+  "d_model": 4096,
+  "debug_size": 10000,
+  "decoder_start_token_id": 0,
+  "detach_kl_left": 1,
+  "detach_kl_right": 0,
+  "disable_eval_mode": 0,
+  "dropout_rate": 0.1,
+  "ensemble_option": "avg_prob",
+  "ensemble_subset_size": 0.0,
+  "eos_token_id": 1,
+  "feed_forward_proj": "gated-gelu",
+  "gradient_checkpointing": false,
+  "initializer_factor": 1.0,
+  "is_encoder_decoder": true,
+  "jsd": 0,
+  "layer_norm_epsilon": 1e-06,
+  "lora_alpha": 4.0,
+  "lora_dropout": 0.3,
+  "lora_layer_k": 24,
+  "lora_pos": "encdec",
+  "loss_option": "pseudo_train",
+  "max_dev_size": 1000,
+  "max_early_stop_patience": 2,
+  "metric_name": "accuracy",
+  "min_train_steps": 300,
+  "model_type": "t5",
+  "num_choices": 2,
+  "num_decoder_layers": 24,
+  "num_heads": 64,
+  "num_layers": 24,
+  "output_past": true,
+  "pad_token_id": 0,
+  "peft_option": "lora",
+  "prob_temperature": 1.0,
+  "prune_prompt": null,
+  "pseudo_dist": "smooth",
+  "pseudo_target_mode": "pairwise",
+  "pseudo_train_loss_weight": 1.0,
+  "relative_attention_num_buckets": 32,
+  "self_train_option": "none",
+  "split_answer_groups": 1,
+  "test_mode": "ttt_t0",
+  "tie_word_embeddings": false,
+  "train_data_source": "validation",
+  "train_duplicates": 1,
+  "train_random_n_prompts": 5,
+  "transformers_version": "4.14.0.dev0",
+  "use_cache": true,
+  "use_deepspeed": false,
+  "vocab_size": 32128
+}
+
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+[INFO|modeling_utils.py:1352] 2025-06-23 13:21:12,393 >> loading weights file https://huggingface.co/bigscience/T0pp/resolve/main/pytorch_model.bin from cache at /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/1f25255af64f1faddb22578b89598cf590af9decc1f32e825724c27d067bf1f2.09d001758c33b10b097a250b8ba56686ad015c7bd75e74a56cd6d8ece9ad2d70
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.0.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.0.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.0.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.0.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.1.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.1.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.1.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.1.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.2.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.2.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.2.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.2.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.3.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.3.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.3.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.3.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.4.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.4.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.4.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.4.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.5.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.5.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.5.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.5.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.6.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.6.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.6.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.6.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.7.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.7.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.7.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.7.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.8.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.8.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.8.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.8.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.9.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.9.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.9.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.9.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.10.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.10.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.10.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.10.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.11.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.11.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.11.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.11.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.12.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.12.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.12.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.12.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.13.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.13.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.13.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.13.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.14.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.14.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.14.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.14.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.15.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.15.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.15.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.15.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.16.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.16.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.16.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.16.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.17.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.17.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.17.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.17.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.18.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.18.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.18.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.18.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.19.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.19.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.19.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.19.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.20.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.20.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.20.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.20.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.21.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.21.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.21.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.21.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.22.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.22.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.22.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.22.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.23.layer.1.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.23.layer.1.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.23.layer.1.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune encoder.block.23.layer.1.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.0.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.0.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.0.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.0.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.1.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.1.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.1.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.1.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.2.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.2.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.2.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.2.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.3.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.3.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.3.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.3.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.4.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.4.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.4.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.4.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.5.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.5.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.5.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.5.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.6.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.6.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.6.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.6.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.7.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.7.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.7.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.7.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.8.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.8.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.8.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.8.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.9.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.9.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.9.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.9.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.10.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.10.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.10.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.10.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.11.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.11.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.11.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.11.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.12.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.12.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.12.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.12.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.13.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.13.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.13.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.13.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.14.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.14.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.14.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.14.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.15.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.15.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.15.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.15.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.16.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.16.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.16.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.16.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.17.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.17.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.17.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.17.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.18.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.18.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.18.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.18.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.19.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.19.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.19.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.19.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.20.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.20.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.20.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.20.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.21.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.21.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.21.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.21.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.22.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.22.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.22.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.22.layer.2.DenseReluDense.wo.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.23.layer.2.DenseReluDense.wi_0.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.23.layer.2.DenseReluDense.wi_0.ef_lora_B
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.23.layer.2.DenseReluDense.wo.ef_lora_A
+06/23/2025 13:23:01 - INFO - __main__ - tune decoder.block.23.layer.2.DenseReluDense.wo.ef_lora_B
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+Building TTT training set: validation!
+06/23/2025 13:23:31 - INFO - __main__ - there are 10 prompts in total
+06/23/2025 13:23:31 - INFO - __main__ - using 5 prompts  during training
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+Building TTT training set: validation!
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+Building TTT training set: validation!
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+Building TTT evaluation test set!
+Overwrite dataset info from restored data version if exists.
+06/23/2025 13:23:33 - INFO - datasets.builder - Overwrite dataset info from restored data version if exists.
+Loading Dataset info from /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646
+06/23/2025 13:23:33 - INFO - datasets.info - Loading Dataset info from /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646
+Found cached dataset super_glue (/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646)
+06/23/2025 13:23:33 - INFO - datasets.builder - Found cached dataset super_glue (/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646)
+Loading Dataset info from /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646
+06/23/2025 13:23:33 - INFO - datasets.info - Loading Dataset info from /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+06/23/2025 13:23:33 - INFO - __main__ - train data number prompts: 10
+Building TTT training set: validation!
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+Building TTT training set: validation!
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+Building TTT training set: validation!
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+Building TTT training set: validation!
+Building TTT evaluation test set!
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+Building TTT evaluation test set!
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+Building TTT evaluation test set!
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+Building TTT evaluation test set!
+Overwrite dataset info from restored data version if exists.
+06/23/2025 13:23:40 - INFO - datasets.builder - Overwrite dataset info from restored data version if exists.
+Loading Dataset info from /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646
+06/23/2025 13:23:40 - INFO - datasets.info - Loading Dataset info from /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646
+Found cached dataset super_glue (/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646)
+06/23/2025 13:23:40 - INFO - datasets.builder - Found cached dataset super_glue (/home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646)
+Loading Dataset info from /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646
+06/23/2025 13:23:40 - INFO - datasets.info - Loading Dataset info from /home/parsa/Codebases/GitHub_Repositories/swarm-distillation-zero-shot/pretrain_models/huggingface/super_glue/rte/0.0.0/3de24cf8022e94f4ee4b9d55a6f539891524d646
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+Building TTT evaluation test set!
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+Building TTT evaluation test set!
+super_glue/rte has 10 original task prompts, number choices = 2, total test examples = 277
+Building TTT evaluation test set!
+Building TTT evaluation test set!
+Building TTT evaluation test set!
+Building TTT evaluation test set!
+Building TTT evaluation test set!
+Building TTT evaluation test set!
+Building TTT evaluation test set!
+06/23/2025 13:23:54 - INFO - __main__ - prompt groups [[0], [1, 2, 3, 4, 5, 6, 7, 8, 9]]
+[INFO|trainer.py:430] 2025-06-23 13:23:54,165 >> max_steps is given, it will override any value given in num_train_epochs
+[INFO|trainer.py:450] 2025-06-23 13:23:54,165 >> Using amp half precision backend
+[INFO|trainer.py:634] 2025-06-23 13:23:54,166 >> build train sampler!
+[INFO|deepspeed.py:336] 2025-06-23 13:23:54,167 >> Detected ZeRO Offload and non-DeepSpeed optimizers: This combination should work as long as the custom optimizer has both CPU and GPU implementation (except LAMB)
+[2025-06-23 13:23:54,202] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed info: version=0.17.1, git-hash=unknown, git-branch=unknown
+[2025-06-23 13:23:54,203] [INFO] [config.py:655:__init__] Config mesh_device None world_size = 7
+[2025-06-23 13:24:25,923] [INFO] [engine.py:1325:_configure_distributed_model] ********** distributed groups summary **********
+	 self.dp_world_size=7
+	 self.mp_world_size=1
+	 self.seq_dp_world_size=7
+	 self.sequence_parallel_size=1
+***********************************************
+bosco:1879420:1879420 [0] NCCL INFO Bootstrap: Using enp3s0f0:10.32.37.23<0>
+bosco:1879420:1879420 [0] NCCL INFO cudaDriverVersion 12080
+bosco:1879420:1879420 [0] NCCL INFO NCCL version 2.26.2+cuda12.2
+bosco:1879420:1879420 [0] NCCL INFO Comm config Blocking set to 1
+bosco:1879426:1879426 [6] NCCL INFO cudaDriverVersion 12080
+bosco:1879426:1879426 [6] NCCL INFO Bootstrap: Using enp3s0f0:10.32.37.23<0>
+bosco:1879426:1879426 [6] NCCL INFO NCCL version 2.26.2+cuda12.2
+bosco:1879426:1879426 [6] NCCL INFO Comm config Blocking set to 1
+bosco:1879424:1879424 [4] NCCL INFO cudaDriverVersion 12080
+bosco:1879423:1879423 [3] NCCL INFO cudaDriverVersion 12080
+bosco:1879424:1879424 [4] NCCL INFO Bootstrap: Using enp3s0f0:10.32.37.23<0>
+bosco:1879424:1879424 [4] NCCL INFO NCCL version 2.26.2+cuda12.2
+bosco:1879423:1879423 [3] NCCL INFO Bootstrap: Using enp3s0f0:10.32.37.23<0>
+bosco:1879423:1879423 [3] NCCL INFO NCCL version 2.26.2+cuda12.2
+bosco:1879423:1879423 [3] NCCL INFO Comm config Blocking set to 1
+bosco:1879424:1879424 [4] NCCL INFO Comm config Blocking set to 1
+bosco:1879420:1882972 [0] NCCL INFO NET/Plugin: Could not find: libnccl-net.so. Using internal net plugin.
+bosco:1879420:1882972 [0] NCCL INFO NET/IB : No device found.
+bosco:1879420:1882972 [0] NCCL INFO NET/IB : Using [RO]; OOB enp3s0f0:10.32.37.23<0>
+bosco:1879420:1882972 [0] NCCL INFO NET/Socket : Using [0]enp3s0f0:10.32.37.23<0>
+bosco:1879420:1882972 [0] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so. 
+bosco:1879420:1882972 [0] NCCL INFO Using network Socket
+bosco:1879420:1882972 [0] NCCL INFO ncclCommInitRankConfig comm 0x56093dcd9900 rank 0 nranks 7 cudaDev 0 nvmlDev 0 busId 2d000 commId 0x9aa3b783e7ff82ed - Init START
+bosco:1879426:1882973 [6] NCCL INFO NET/Plugin: Could not find: libnccl-net.so. Using internal net plugin.
+bosco:1879426:1882973 [6] NCCL INFO NET/IB : No device found.
+bosco:1879426:1882973 [6] NCCL INFO NET/IB : Using [RO]; OOB enp3s0f0:10.32.37.23<0>
+bosco:1879426:1882973 [6] NCCL INFO NET/Socket : Using [0]enp3s0f0:10.32.37.23<0>
+bosco:1879426:1882973 [6] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so. 
+bosco:1879426:1882973 [6] NCCL INFO Using network Socket
+bosco:1879426:1882973 [6] NCCL INFO ncclCommInitRankConfig comm 0x55aef5fff6a0 rank 6 nranks 7 cudaDev 6 nvmlDev 6 busId bd000 commId 0x9aa3b783e7ff82ed - Init START
+bosco:1879421:1879421 [1] NCCL INFO cudaDriverVersion 12080
+bosco:1879421:1879421 [1] NCCL INFO Bootstrap: Using enp3s0f0:10.32.37.23<0>
+bosco:1879421:1879421 [1] NCCL INFO NCCL version 2.26.2+cuda12.2
+bosco:1879421:1879421 [1] NCCL INFO Comm config Blocking set to 1
+bosco:1879424:1882975 [4] NCCL INFO NET/Plugin: Could not find: libnccl-net.so. Using internal net plugin.
+bosco:1879424:1882975 [4] NCCL INFO NET/IB : No device found.
+bosco:1879424:1882975 [4] NCCL INFO NET/IB : Using [RO]; OOB enp3s0f0:10.32.37.23<0>
+bosco:1879424:1882975 [4] NCCL INFO NET/Socket : Using [0]enp3s0f0:10.32.37.23<0>
+bosco:1879424:1882975 [4] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so. 
+bosco:1879424:1882975 [4] NCCL INFO Using network Socket
+bosco:1879423:1882974 [3] NCCL INFO NET/Plugin: Could not find: libnccl-net.so. Using internal net plugin.
+bosco:1879423:1882974 [3] NCCL INFO NET/IB : No device found.
+bosco:1879423:1882974 [3] NCCL INFO NET/IB : Using [RO]; OOB enp3s0f0:10.32.37.23<0>
+bosco:1879423:1882974 [3] NCCL INFO NET/Socket : Using [0]enp3s0f0:10.32.37.23<0>
+bosco:1879423:1882974 [3] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so. 
+bosco:1879423:1882974 [3] NCCL INFO Using network Socket
+bosco:1879424:1882975 [4] NCCL INFO ncclCommInitRankConfig comm 0x55c873c52be0 rank 4 nranks 7 cudaDev 4 nvmlDev 4 busId ad000 commId 0x9aa3b783e7ff82ed - Init START
+bosco:1879423:1882974 [3] NCCL INFO ncclCommInitRankConfig comm 0x563c526c7e20 rank 3 nranks 7 cudaDev 3 nvmlDev 3 busId 3c000 commId 0x9aa3b783e7ff82ed - Init START
+bosco:1879421:1882980 [1] NCCL INFO NET/Plugin: Could not find: libnccl-net.so. Using internal net plugin.
+bosco:1879421:1882980 [1] NCCL INFO NET/IB : No device found.
+bosco:1879421:1882980 [1] NCCL INFO NET/IB : Using [RO]; OOB enp3s0f0:10.32.37.23<0>
+bosco:1879421:1882980 [1] NCCL INFO NET/Socket : Using [0]enp3s0f0:10.32.37.23<0>
+bosco:1879421:1882980 [1] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so. 
+bosco:1879421:1882980 [1] NCCL INFO Using network Socket
+bosco:1879421:1882980 [1] NCCL INFO ncclCommInitRankConfig comm 0x55e68f356b90 rank 1 nranks 7 cudaDev 1 nvmlDev 1 busId 3a000 commId 0x9aa3b783e7ff82ed - Init START
+bosco:1879420:1882972 [0] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+bosco:1879422:1879422 [2] NCCL INFO cudaDriverVersion 12080
+bosco:1879422:1879422 [2] NCCL INFO Bootstrap: Using enp3s0f0:10.32.37.23<0>
+bosco:1879422:1879422 [2] NCCL INFO NCCL version 2.26.2+cuda12.2
+bosco:1879422:1879422 [2] NCCL INFO Comm config Blocking set to 1
+bosco:1879422:1882995 [2] NCCL INFO NET/Plugin: Could not find: libnccl-net.so. Using internal net plugin.
+bosco:1879422:1882995 [2] NCCL INFO NET/IB : No device found.
+bosco:1879422:1882995 [2] NCCL INFO NET/IB : Using [RO]; OOB enp3s0f0:10.32.37.23<0>
+bosco:1879422:1882995 [2] NCCL INFO NET/Socket : Using [0]enp3s0f0:10.32.37.23<0>
+bosco:1879422:1882995 [2] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so. 
+bosco:1879422:1882995 [2] NCCL INFO Using network Socket
+bosco:1879422:1882995 [2] NCCL INFO ncclCommInitRankConfig comm 0x55b3ad000e80 rank 2 nranks 7 cudaDev 2 nvmlDev 2 busId 3b000 commId 0x9aa3b783e7ff82ed - Init START
+bosco:1879421:1882980 [1] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+bosco:1879422:1882995 [2] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+bosco:1879423:1882974 [3] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+bosco:1879425:1879425 [5] NCCL INFO cudaDriverVersion 12080
+bosco:1879425:1879425 [5] NCCL INFO Bootstrap: Using enp3s0f0:10.32.37.23<0>
+bosco:1879425:1879425 [5] NCCL INFO NCCL version 2.26.2+cuda12.2
+bosco:1879425:1879425 [5] NCCL INFO Comm config Blocking set to 1
+bosco:1879425:1883008 [5] NCCL INFO NET/Plugin: Could not find: libnccl-net.so. Using internal net plugin.
+bosco:1879425:1883008 [5] NCCL INFO NET/IB : No device found.
+bosco:1879425:1883008 [5] NCCL INFO NET/IB : Using [RO]; OOB enp3s0f0:10.32.37.23<0>
+bosco:1879425:1883008 [5] NCCL INFO NET/Socket : Using [0]enp3s0f0:10.32.37.23<0>
+bosco:1879425:1883008 [5] NCCL INFO PROFILER/Plugin: Could not find: libnccl-profiler.so. 
+bosco:1879425:1883008 [5] NCCL INFO Using network Socket
+bosco:1879425:1883008 [5] NCCL INFO ncclCommInitRankConfig comm 0x55f593c224d0 rank 5 nranks 7 cudaDev 5 nvmlDev 5 busId ae000 commId 0x9aa3b783e7ff82ed - Init START
+bosco:1879424:1882975 [4] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+bosco:1879425:1883008 [5] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+bosco:1879426:1882973 [6] NCCL INFO RAS client listening socket at 127.0.0.1<28028>
+bosco:1879424:1882975 [4] NCCL INFO Bootstrap timings total 4.551713 (create 0.000024, send 0.000121, recv 4.550766, ring 0.000396, delay 0.000000)
+bosco:1879425:1883008 [5] NCCL INFO Bootstrap timings total 0.001197 (create 0.000027, send 0.000106, recv 0.000413, ring 0.000417, delay 0.000000)
+bosco:1879426:1882973 [6] NCCL INFO Bootstrap timings total 4.576193 (create 0.000023, send 0.000091, recv 0.000430, ring 0.000205, delay 0.000000)
+bosco:1879420:1882972 [0] NCCL INFO Bootstrap timings total 4.626248 (create 0.000029, send 0.000129, recv 0.199389, ring 4.426360, delay 0.000000)
+bosco:1879423:1882974 [3] NCCL INFO Bootstrap timings total 4.545402 (create 0.000028, send 0.000129, recv 0.000271, ring 3.375358, delay 0.000000)
+bosco:1879421:1882980 [1] NCCL INFO Bootstrap timings total 4.427058 (create 0.000026, send 0.000117, recv 1.051123, ring 3.375444, delay 0.000000)
+bosco:1879422:1882995 [2] NCCL INFO Bootstrap timings total 3.376223 (create 0.000025, send 0.000097, recv 0.000434, ring 3.375411, delay 0.000000)
+bosco:1879423:1882974 [3] NCCL INFO NCCL_P2P_DISABLE set by environment to 1
+bosco:1879423:1882974 [3] NCCL INFO Setting affinity for GPU 3 to ff,ffffffff,ffff0000,00000000,00ffffff,ffffffff
+bosco:1879423:1882974 [3] NCCL INFO NVLS multicast support is not available on dev 3
+bosco:1879422:1882995 [2] NCCL INFO NCCL_P2P_DISABLE set by environment to 1
+bosco:1879422:1882995 [2] NCCL INFO Setting affinity for GPU 2 to ff,ffffffff,ffff0000,00000000,00ffffff,ffffffff
+bosco:1879421:1882980 [1] NCCL INFO NCCL_P2P_DISABLE set by environment to 1
+bosco:1879422:1882995 [2] NCCL INFO NVLS multicast support is not available on dev 2
+bosco:1879421:1882980 [1] NCCL INFO Setting affinity for GPU 1 to ff,ffffffff,ffff0000,00000000,00ffffff,ffffffff
+bosco:1879424:1882975 [4] NCCL INFO NCCL_P2P_DISABLE set by environment to 1
+bosco:1879421:1882980 [1] NCCL INFO NVLS multicast support is not available on dev 1
+bosco:1879424:1882975 [4] NCCL INFO Setting affinity for GPU 4 to ffffffff,ffffff00,00000000,0000ffff,ffffffff,ff000000,00000000
+bosco:1879424:1882975 [4] NCCL INFO NVLS multicast support is not available on dev 4
+bosco:1879425:1883008 [5] NCCL INFO NCCL_P2P_DISABLE set by environment to 1
+bosco:1879425:1883008 [5] NCCL INFO Setting affinity for GPU 5 to ffffffff,ffffff00,00000000,0000ffff,ffffffff,ff000000,00000000
+bosco:1879425:1883008 [5] NCCL INFO NVLS multicast support is not available on dev 5
+bosco:1879420:1882972 [0] NCCL INFO NCCL_P2P_DISABLE set by environment to 1
+bosco:1879420:1882972 [0] NCCL INFO Setting affinity for GPU 0 to ff,ffffffff,ffff0000,00000000,00ffffff,ffffffff
+bosco:1879420:1882972 [0] NCCL INFO NVLS multicast support is not available on dev 0
+bosco:1879426:1882973 [6] NCCL INFO NCCL_P2P_DISABLE set by environment to 1
+bosco:1879426:1882973 [6] NCCL INFO Setting affinity for GPU 6 to ffffffff,ffffff00,00000000,0000ffff,ffffffff,ff000000,00000000
+bosco:1879426:1882973 [6] NCCL INFO NVLS multicast support is not available on dev 6
+bosco:1879426:1882973 [6] NCCL INFO comm 0x55aef5fff6a0 rank 6 nRanks 7 nNodes 1 localRanks 7 localRank 6 MNNVL 0
+bosco:1879422:1882995 [2] NCCL INFO comm 0x55b3ad000e80 rank 2 nRanks 7 nNodes 1 localRanks 7 localRank 2 MNNVL 0
+bosco:1879425:1883008 [5] NCCL INFO comm 0x55f593c224d0 rank 5 nRanks 7 nNodes 1 localRanks 7 localRank 5 MNNVL 0
+bosco:1879420:1882972 [0] NCCL INFO comm 0x56093dcd9900 rank 0 nRanks 7 nNodes 1 localRanks 7 localRank 0 MNNVL 0
+bosco:1879421:1882980 [1] NCCL INFO comm 0x55e68f356b90 rank 1 nRanks 7 nNodes 1 localRanks 7 localRank 1 MNNVL 0
+bosco:1879425:1883008 [5] NCCL INFO Trees [0] 6/-1/-1->5->4 [1] 6/-1/-1->5->4 [2] 6/-1/-1->5->4 [3] 6/-1/-1->5->4
+bosco:1879425:1883008 [5] NCCL INFO P2P Chunksize set to 131072
+bosco:1879423:1882974 [3] NCCL INFO comm 0x563c526c7e20 rank 3 nRanks 7 nNodes 1 localRanks 7 localRank 3 MNNVL 0
+bosco:1879422:1882995 [2] NCCL INFO Trees [0] 4/-1/-1->2->1 [1] 4/-1/-1->2->1 [2] 4/-1/-1->2->1 [3] 4/-1/-1->2->1
+bosco:1879422:1882995 [2] NCCL INFO P2P Chunksize set to 131072
+bosco:1879426:1882973 [6] NCCL INFO Trees [0] 3/-1/-1->6->5 [1] 3/-1/-1->6->5 [2] 3/-1/-1->6->5 [3] 3/-1/-1->6->5
+bosco:1879426:1882973 [6] NCCL INFO P2P Chunksize set to 131072
+bosco:1879421:1882980 [1] NCCL INFO Trees [0] 2/-1/-1->1->0 [1] 2/-1/-1->1->0 [2] 2/-1/-1->1->0 [3] 2/-1/-1->1->0
+bosco:1879424:1882975 [4] NCCL INFO comm 0x55c873c52be0 rank 4 nRanks 7 nNodes 1 localRanks 7 localRank 4 MNNVL 0
+bosco:1879421:1882980 [1] NCCL INFO P2P Chunksize set to 131072
+bosco:1879420:1882972 [0] NCCL INFO Channel 00/04 : 0 1 2 4 5 6 3
+bosco:1879423:1882974 [3] NCCL INFO Trees [0] -1/-1/-1->3->6 [1] -1/-1/-1->3->6 [2] -1/-1/-1->3->6 [3] -1/-1/-1->3->6
+bosco:1879420:1882972 [0] NCCL INFO Channel 01/04 : 0 1 2 4 5 6 3
+bosco:1879423:1882974 [3] NCCL INFO P2P Chunksize set to 131072
+bosco:1879420:1882972 [0] NCCL INFO Channel 02/04 : 0 1 2 4 5 6 3
+bosco:1879420:1882972 [0] NCCL INFO Channel 03/04 : 0 1 2 4 5 6 3
+bosco:1879424:1882975 [4] NCCL INFO Trees [0] 5/-1/-1->4->2 [1] 5/-1/-1->4->2 [2] 5/-1/-1->4->2 [3] 5/-1/-1->4->2
+bosco:1879424:1882975 [4] NCCL INFO P2P Chunksize set to 131072
+bosco:1879420:1882972 [0] NCCL INFO Trees [0] 1/-1/-1->0->-1 [1] 1/-1/-1->0->-1 [2] 1/-1/-1->0->-1 [3] 1/-1/-1->0->-1
+bosco:1879420:1882972 [0] NCCL INFO P2P Chunksize set to 131072
+bosco:1879420:1882972 [0] NCCL INFO Check P2P Type intraNodeP2pSupport 0 directMode 0
+bosco:1879424:1883017 [4] NCCL INFO [Proxy Service] Device 4 CPU core 57
+bosco:1879425:1883013 [5] NCCL INFO [Proxy Service] Device 5 CPU core 194
+bosco:1879424:1883021 [4] NCCL INFO [Proxy Service UDS] Device 4 CPU core 170
+bosco:1879422:1883016 [2] NCCL INFO [Proxy Service] Device 2 CPU core 55
+bosco:1879426:1883014 [6] NCCL INFO [Proxy Service] Device 6 CPU core 205
+bosco:1879425:1883015 [5] NCCL INFO [Proxy Service UDS] Device 5 CPU core 196
+bosco:1879421:1883020 [1] NCCL INFO [Proxy Service] Device 1 CPU core 4
+bosco:1879422:1883019 [2] NCCL INFO [Proxy Service UDS] Device 2 CPU core 114
+bosco:1879420:1883026 [0] NCCL INFO [Proxy Service UDS] Device 0 CPU core 10
+bosco:1879420:1883025 [0] NCCL INFO [Proxy Service] Device 0 CPU core 53
+bosco:1879423:1883022 [3] NCCL INFO [Proxy Service] Device 3 CPU core 117
+bosco:1879423:1883023 [3] NCCL INFO [Proxy Service UDS] Device 3 CPU core 119
+bosco:1879421:1883024 [1] NCCL INFO [Proxy Service UDS] Device 1 CPU core 118
+bosco:1879426:1883018 [6] NCCL INFO [Proxy Service UDS] Device 6 CPU core 206
+bosco:1879425:1883008 [5] NCCL INFO threadThresholds 8/8/64 | 56/8/64 | 512 | 512
+bosco:1879425:1883008 [5] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+bosco:1879421:1882980 [1] NCCL INFO threadThresholds 8/8/64 | 56/8/64 | 512 | 512
+bosco:1879421:1882980 [1] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+bosco:1879420:1882972 [0] NCCL INFO threadThresholds 8/8/64 | 56/8/64 | 512 | 512
+bosco:1879420:1882972 [0] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+bosco:1879422:1882995 [2] NCCL INFO threadThresholds 8/8/64 | 56/8/64 | 512 | 512
+bosco:1879422:1882995 [2] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+bosco:1879426:1882973 [6] NCCL INFO threadThresholds 8/8/64 | 56/8/64 | 512 | 512
+bosco:1879420:1882972 [0] NCCL INFO CC Off, workFifoBytes 1048576
+bosco:1879426:1882973 [6] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+bosco:1879424:1882975 [4] NCCL INFO threadThresholds 8/8/64 | 56/8/64 | 512 | 512
+bosco:1879424:1882975 [4] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+bosco:1879423:1882974 [3] NCCL INFO threadThresholds 8/8/64 | 56/8/64 | 512 | 512
+bosco:1879423:1882974 [3] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+bosco:1879425:1883008 [5] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so. Using internal tuner plugin.
+bosco:1879425:1883008 [5] NCCL INFO ncclCommInitRankConfig comm 0x55f593c224d0 rank 5 nranks 7 cudaDev 5 nvmlDev 5 busId ae000 commId 0x9aa3b783e7ff82ed - Init COMPLETE
+bosco:1879425:1883008 [5] NCCL INFO Init timings - ncclCommInitRankConfig: rank 5 nranks 7 total 0.29 (kernels 0.13, alloc 0.01, bootstrap 0.00, allgathers 0.06, topo 0.04, graphs 0.03, connections 0.01, rest 0.01)
+bosco:1879424:1882975 [4] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so. Using internal tuner plugin.
+bosco:1879424:1882975 [4] NCCL INFO ncclCommInitRankConfig comm 0x55c873c52be0 rank 4 nranks 7 cudaDev 4 nvmlDev 4 busId ad000 commId 0x9aa3b783e7ff82ed - Init COMPLETE
+bosco:1879424:1882975 [4] NCCL INFO Init timings - ncclCommInitRankConfig: rank 4 nranks 7 total 4.90 (kernels 0.18, alloc 0.02, bootstrap 4.55, allgathers 0.06, topo 0.04, graphs 0.03, connections 0.02, rest 0.00)
+bosco:1879426:1882973 [6] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so. Using internal tuner plugin.
+bosco:1879426:1882973 [6] NCCL INFO ncclCommInitRankConfig comm 0x55aef5fff6a0 rank 6 nranks 7 cudaDev 6 nvmlDev 6 busId bd000 commId 0x9aa3b783e7ff82ed - Init COMPLETE
+bosco:1879426:1882973 [6] NCCL INFO Init timings - ncclCommInitRankConfig: rank 6 nranks 7 total 4.91 (kernels 0.16, alloc 0.02, bootstrap 4.58, allgathers 0.03, topo 0.04, graphs 0.06, connections 0.02, rest 0.00)
+bosco:1879422:1882995 [2] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so. Using internal tuner plugin.
+bosco:1879422:1882995 [2] NCCL INFO ncclCommInitRankConfig comm 0x55b3ad000e80 rank 2 nranks 7 cudaDev 2 nvmlDev 2 busId 3b000 commId 0x9aa3b783e7ff82ed - Init COMPLETE
+bosco:1879422:1882995 [2] NCCL INFO Init timings - ncclCommInitRankConfig: rank 2 nranks 7 total 3.67 (kernels 0.14, alloc 0.01, bootstrap 3.38, allgathers 0.07, topo 0.04, graphs 0.03, connections 0.02, rest 0.00)
+bosco:1879421:1882980 [1] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so. Using internal tuner plugin.
+bosco:1879421:1882980 [1] NCCL INFO ncclCommInitRankConfig comm 0x55e68f356b90 rank 1 nranks 7 cudaDev 1 nvmlDev 1 busId 3a000 commId 0x9aa3b783e7ff82ed - Init COMPLETE
+bosco:1879423:1882974 [3] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so. Using internal tuner plugin.
+bosco:1879423:1882974 [3] NCCL INFO ncclCommInitRankConfig comm 0x563c526c7e20 rank 3 nranks 7 cudaDev 3 nvmlDev 3 busId 3c000 commId 0x9aa3b783e7ff82ed - Init COMPLETE
+bosco:1879421:1882980 [1] NCCL INFO Init timings - ncclCommInitRankConfig: rank 1 nranks 7 total 4.72 (kernels 0.13, alloc 0.01, bootstrap 4.43, allgathers 0.00, topo 0.04, graphs 0.09, connections 0.01, rest 0.01)
+bosco:1879423:1882974 [3] NCCL INFO Init timings - ncclCommInitRankConfig: rank 3 nranks 7 total 4.90 (kernels 0.19, alloc 0.01, bootstrap 4.55, allgathers 0.00, topo 0.04, graphs 0.09, connections 0.02, rest 0.00)
+bosco:1879420:1882972 [0] NCCL INFO TUNER/Plugin: Could not find: libnccl-tuner.so. Using internal tuner plugin.
+bosco:1879420:1882972 [0] NCCL INFO ncclCommInitRankConfig comm 0x56093dcd9900 rank 0 nranks 7 cudaDev 0 nvmlDev 0 busId 2d000 commId 0x9aa3b783e7ff82ed - Init COMPLETE
+bosco:1879420:1882972 [0] NCCL INFO Init timings - ncclCommInitRankConfig: rank 0 nranks 7 total 4.94 (kernels 0.15, alloc 0.01, bootstrap 4.63, allgathers 0.03, topo 0.04, graphs 0.06, connections 0.01, rest 0.01)
+bosco:1879424:1883033 [4] NCCL INFO Channel 00 : 4[4] -> 5[5] via SHM/direct/direct
+bosco:1879420:1883028 [0] NCCL INFO Channel 00 : 0[0] -> 1[1] via SHM/direct/direct
+bosco:1879424:1883033 [4] NCCL INFO Channel 01 : 4[4] -> 5[5] via SHM/direct/direct
+bosco:1879420:1883028 [0] NCCL INFO Channel 01 : 0[0] -> 1[1] via SHM/direct/direct
+bosco:1879425:1883027 [5] NCCL INFO Channel 00 : 5[5] -> 6[6] via SHM/direct/direct
+bosco:1879424:1883033 [4] NCCL INFO Channel 02 : 4[4] -> 5[5] via SHM/direct/direct
+bosco:1879420:1883028 [0] NCCL INFO Channel 02 : 0[0] -> 1[1] via SHM/direct/direct
+bosco:1879424:1883033 [4] NCCL INFO Channel 03 : 4[4] -> 5[5] via SHM/direct/direct
+bosco:1879425:1883027 [5] NCCL INFO Channel 01 : 5[5] -> 6[6] via SHM/direct/direct
+bosco:1879420:1883028 [0] NCCL INFO Channel 03 : 0[0] -> 1[1] via SHM/direct/direct
+bosco:1879425:1883027 [5] NCCL INFO Channel 02 : 5[5] -> 6[6] via SHM/direct/direct
+bosco:1879423:1883032 [3] NCCL INFO Channel 00 : 3[3] -> 0[0] via SHM/direct/direct
+bosco:1879421:1883029 [1] NCCL INFO Channel 00 : 1[1] -> 2[2] via SHM/direct/direct
+bosco:1879425:1883027 [5] NCCL INFO Channel 03 : 5[5] -> 6[6] via SHM/direct/direct
+bosco:1879421:1883029 [1] NCCL INFO Channel 01 : 1[1] -> 2[2] via SHM/direct/direct
+bosco:1879426:1883030 [6] NCCL INFO Channel 00 : 6[6] -> 3[3] via SHM/direct/direct
+bosco:1879423:1883032 [3] NCCL INFO Channel 01 : 3[3] -> 0[0] via SHM/direct/direct
+bosco:1879423:1883032 [3] NCCL INFO Channel 02 : 3[3] -> 0[0] via SHM/direct/direct
+bosco:1879421:1883029 [1] NCCL INFO Channel 02 : 1[1] -> 2[2] via SHM/direct/direct
+bosco:1879426:1883030 [6] NCCL INFO Channel 01 : 6[6] -> 3[3] via SHM/direct/direct
+bosco:1879423:1883032 [3] NCCL INFO Channel 03 : 3[3] -> 0[0] via SHM/direct/direct
+bosco:1879426:1883030 [6] NCCL INFO Channel 02 : 6[6] -> 3[3] via SHM/direct/direct
+bosco:1879421:1883029 [1] NCCL INFO Channel 03 : 1[1] -> 2[2] via SHM/direct/direct
+bosco:1879426:1883030 [6] NCCL INFO Channel 03 : 6[6] -> 3[3] via SHM/direct/direct
+bosco:1879422:1883031 [2] NCCL INFO Channel 00 : 2[2] -> 4[4] via SHM/direct/direct
+bosco:1879422:1883031 [2] NCCL INFO Channel 01 : 2[2] -> 4[4] via SHM/direct/direct
+bosco:1879422:1883031 [2] NCCL INFO Channel 02 : 2[2] -> 4[4] via SHM/direct/direct
+bosco:1879422:1883031 [2] NCCL INFO Channel 03 : 2[2] -> 4[4] via SHM/direct/direct
+bosco:1879425:1883027 [5] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+bosco:1879422:1883031 [2] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+bosco:1879421:1883029 [1] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+bosco:1879423:1883032 [3] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+bosco:1879420:1883028 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+bosco:1879424:1883033 [4] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+bosco:1879426:1883030 [6] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+[2025-06-23 13:24:31,268] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+[2025-06-23 13:24:31,270] [INFO] [logging.py:107:log_dist] [Rank 0] Using client Optimizer as basic optimizer
+[2025-06-23 13:24:31,270] [INFO] [logging.py:107:log_dist] [Rank 0] Removing param_group that has no 'params' in the basic Optimizer
+[2025-06-23 13:24:31,307] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed Basic Optimizer = AdamW
+[2025-06-23 13:24:31,307] [INFO] [utils.py:59:is_zero_supported_optimizer] Checking ZeRO support for optimizer=AdamW type=<class 'transformers.optimization.AdamW'>
+[2025-06-23 13:24:31,307] [WARNING] [engine.py:1359:_do_optimizer_sanity_check] **** You are using ZeRO with an untested optimizer, proceed with caution *****
+[2025-06-23 13:24:31,307] [INFO] [logging.py:107:log_dist] [Rank 0] Creating torch.bfloat16 ZeRO stage 2 optimizer
+[2025-06-23 13:24:31,307] [INFO] [stage_1_and_2.py:151:__init__] Reduce bucket size 200000000
+[2025-06-23 13:24:31,307] [INFO] [stage_1_and_2.py:152:__init__] Allgather bucket size 200000000
+[2025-06-23 13:24:31,307] [INFO] [stage_1_and_2.py:153:__init__] CPU Offload: True
+[2025-06-23 13:24:31,307] [INFO] [stage_1_and_2.py:154:__init__] Round robin gradient partitioning: False
+run dev evaluation first to collect initial predictions
+run dev evaluation first to collect initial predictions
+run dev evaluation first to collect initial predictions
+run dev evaluation first to collect initial predictions
+run dev evaluation first to collect initial predictions
+run dev evaluation first to collect initial predictions
+[2025-06-23 13:24:33,453] [INFO] [utils.py:781:see_memory_usage] Before initializing optimizer states
+[2025-06-23 13:24:33,453] [INFO] [utils.py:782:see_memory_usage] MA 20.75 GB         Max_MA 20.75 GB         CA 20.77 GB         Max_CA 21 GB 
+[2025-06-23 13:24:33,453] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 168.41 GB, percent = 8.4%
+[2025-06-23 13:24:33,636] [INFO] [utils.py:781:see_memory_usage] After initializing optimizer states
+[2025-06-23 13:24:33,636] [INFO] [utils.py:782:see_memory_usage] MA 20.75 GB         Max_MA 20.75 GB         CA 20.77 GB         Max_CA 21 GB 
+[2025-06-23 13:24:33,636] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 169.45 GB, percent = 8.4%
+[2025-06-23 13:24:33,637] [INFO] [stage_1_and_2.py:573:__init__] optimizer state initialized
+[2025-06-23 13:24:33,763] [INFO] [utils.py:781:see_memory_usage] After initializing ZeRO optimizer
+[2025-06-23 13:24:33,764] [INFO] [utils.py:782:see_memory_usage] MA 20.75 GB         Max_MA 20.75 GB         CA 20.77 GB         Max_CA 21 GB 
+[2025-06-23 13:24:33,764] [INFO] [utils.py:789:see_memory_usage] CPU Virtual Memory:  used = 169.45 GB, percent = 8.4%
+[2025-06-23 13:24:33,765] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed Final Optimizer = DeepSpeedZeroOptimizer
+[2025-06-23 13:24:33,765] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed using client LR scheduler
+[2025-06-23 13:24:33,765] [INFO] [logging.py:107:log_dist] [Rank 0] DeepSpeed LR Scheduler = <torch.optim.lr_scheduler.LambdaLR object at 0x7fc530974ee0>
+[2025-06-23 13:24:33,765] [INFO] [logging.py:107:log_dist] [Rank 0] step=0, skipped=0, lr=[0.0], mom=[(0.9, 0.98)]
+[2025-06-23 13:24:33,767] [INFO] [logging.py:107:log_dist] [Rank 0] [TorchCheckpointEngine] Initialized with serialization = True
+[2025-06-23 13:24:33,767] [INFO] [config.py:921:print] DeepSpeedEngine configuration:
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'intra_op_parallelism': 1, 'single_submit': False, 'overlap_events': True, 'use_gds': False}
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   amp_enabled .................. False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   amp_params ................... False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": "autotuning_results", 
+    "exps_dir": "autotuning_exps", 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   bfloat16_config .............. enabled=True immediate_grad_update=False check_grad_overflow=False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   checkpoint_config ............ {'tag_validation': 'WARN', 'checkpoint_serialization': True, 'writer': None}
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   checkpoint_parallel_write_pipeline  False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   checkpoint_tag_validation_enabled  True
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   checkpoint_tag_validation_fail  False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x7fc5309746a0>
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   communication_data_type ...... None
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   compile_config ............... deepcompile=False free_activation=False offload_activation=False offload_opt_states=False double_buffer=True symmetric_memory=False debug_log=False offload_parameters=False sync_before_reduce=False sync_after_reduce=False sync_before_allgather=False sync_after_allgather=False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   curriculum_enabled_legacy .... False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   curriculum_params_legacy ..... False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   data_efficiency_config ....... {'enabled': False, 'seed': 1234, 'data_sampling': {'enabled': False, 'num_epochs': 1000, 'num_workers': 0, 'pin_memory': False, 'curriculum_learning': {'enabled': False}, 'dynamic_batching': {'enabled': False, 'lr_scaling_method': 'linear', 'min_batch_size': 1, 'max_batch_size': None, 'sequence_picking_order': 'dataloader', 'verbose': False}}, 'data_routing': {'enabled': False, 'random_ltd': {'enabled': False, 'layer_token_lr_schedule': {'enabled': False}}}}
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   data_efficiency_enabled ...... False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   dataloader_drop_last ......... False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   disable_allgather ............ False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   dump_state ................... False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   eigenvalue_enabled ........... False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   eigenvalue_gas_boundary_resolution  1
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   eigenvalue_layer_num ......... 0
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   eigenvalue_max_iter .......... 100
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   eigenvalue_stability ......... 1e-06
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   eigenvalue_tol ............... 0.01
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   eigenvalue_verbose ........... False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   elasticity_enabled ........... False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   float16_config ............... enabled=False auto_cast=False loss_scale=0.0 initial_scale_power=16 loss_scale_window=1000 hysteresis=2 consecutive_hysteresis=False min_loss_scale=1 fp16_master_weights_and_grads=False
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "recompute_fwd_factor": 0.0, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   global_rank .................. 0
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   grad_accum_dtype ............. None
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   gradient_accumulation_steps .. 4
+[2025-06-23 13:24:33,768] [INFO] [config.py:925:print]   gradient_clipping ............ 1.0
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   gradient_predivide_factor .... 1.0
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   graph_harvesting ............. False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   load_universal_checkpoint .... False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   memory_breakdown ............. False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   mics_hierarchial_params_gather  False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   mics_shard_size .............. -1
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') comet=CometConfig(enabled=False, samples_log_interval=100, project=None, workspace=None, api_key=None, experiment_name=None, experiment_key=None, online=None, mode=None) wandb=WandbConfig(enabled=False, group=None, team=None, project='deepspeed') csv_monitor=CSVConfig(enabled=False, output_path='', job_name='DeepSpeedJobName')
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   nebula_config ................ {
+    "enabled": false, 
+    "persistent_storage_path": null, 
+    "persistent_time_interval": 100, 
+    "num_of_version_in_retention": 2, 
+    "enable_nebula_load": true, 
+    "load_path": null
+}
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   optimizer_legacy_fusion ...... False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   optimizer_name ............... None
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   optimizer_params ............. None
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0, 'pipe_partitioned': True, 'grad_partitioned': True}
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   pld_enabled .................. False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   pld_params ................... False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   prescale_gradients ........... False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   scheduler_name ............... None
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   scheduler_params ............. None
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   seq_parallel_communication_data_type  torch.float32
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   sparse_attention ............. None
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   sparse_gradients_enabled ..... False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   steps_per_print .............. 2000
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   tensor_parallel_config ....... dtype=torch.float16 autotp_size=0 tp_overlap_comm=False tensor_parallel=TPConfig(tp_size=1, tp_grain_size=1, mpu=None, tp_group=None) injection_policy_tuple=None keep_module_on_host=False replace_with_kernel_inject=False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   timers_config ................ enabled=True synchronized=True
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   train_batch_size ............. 28
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   train_micro_batch_size_per_gpu  1
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   use_data_before_expert_parallel_  False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   use_node_local_storage ....... False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   wall_clock_breakdown ......... False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   weight_quantization_config ... None
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   world_size ................... 7
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   zero_allow_untested_optimizer  True
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   zero_config .................. stage=2 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=200000000 use_multi_rank_bucket_allreduce=True allgather_partitions=True allgather_bucket_size=200000000 overlap_comm=True load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=DeepSpeedZeroOffloadOptimizerConfig(device='cpu', nvme_path=None, buffer_count=4, pin_memory=True, pipeline_read=False, pipeline_write=False, fast_init=False, ratio=1.0) sub_group_size=1000000000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=50000000 param_persistence_threshold=100000 model_persistence_threshold=9223372036854775807 max_live_parameters=1000000000 max_reuse_distance=1000000000 gather_16bit_weights_on_model_save=False module_granularity_threshold=0 use_all_reduce_for_fetch_params=False stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False zeropp_loco_param=None mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True log_trace_cache_warnings=False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   zero_enabled ................. True
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   zero_force_ds_cpu_optimizer .. False
+[2025-06-23 13:24:33,769] [INFO] [config.py:925:print]   zero_optimization_stage ...... 2
+[2025-06-23 13:24:33,769] [INFO] [config.py:911:print_user_config]   json = {
+    "bfloat16": {
+        "enabled": true
+    }, 
+    "fp16": {
+        "enabled": false, 
+        "loss_scale": 0, 
+        "loss_scale_window": 1000, 
+        "hysteresis": 2, 
+        "min_loss_scale": 1
+    }, 
+    "zero_optimization": {
+        "stage": 2, 
+        "offload_optimizer": {
+            "device": "cpu", 
+            "pin_memory": true
+        }, 
+        "allgather_partitions": true, 
+        "allgather_bucket_size": 2.000000e+08, 
+        "overlap_comm": true, 
+        "reduce_scatter": true, 
+        "reduce_bucket_size": 2.000000e+08, 
+        "contiguous_gradients": true
+    }, 
+    "zero_allow_untested_optimizer": true, 
+    "zero_force_ds_cpu_optimizer": false, 
+    "gradient_accumulation_steps": 4, 
+    "gradient_clipping": 1.0, 
+    "steps_per_print": 2.000000e+03, 
+    "train_batch_size": 28, 
+    "train_micro_batch_size_per_gpu": 1, 
+    "wall_clock_breakdown": false
+}
+run dev evaluation first to collect initial predictions
+[INFO|trainer.py:2907] 2025-06-23 13:24:33,770 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 13:24:33,770 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 13:24:33,770 >>   Batch size = 100
+bosco:1879420:1879420 [0] NCCL INFO Comm config Blocking set to 1
+bosco:1879420:1883054 [0] NCCL INFO Using network Socket
+bosco:1879425:1879425 [5] NCCL INFO Comm config Blocking set to 1
+bosco:1879421:1879421 [1] NCCL INFO Comm config Blocking set to 1
+bosco:1879423:1879423 [3] NCCL INFO Comm config Blocking set to 1
+bosco:1879422:1879422 [2] NCCL INFO Comm config Blocking set to 1
+bosco:1879425:1883055 [5] NCCL INFO Using network Socket
+bosco:1879424:1879424 [4] NCCL INFO Comm config Blocking set to 1
+bosco:1879421:1883056 [1] NCCL INFO Using network Socket
+bosco:1879423:1883057 [3] NCCL INFO Using network Socket
+bosco:1879422:1883058 [2] NCCL INFO Using network Socket
+bosco:1879424:1883059 [4] NCCL INFO Using network Socket
+bosco:1879425:1883055 [5] NCCL INFO ncclCommInitRankConfig comm 0x55f5c2ae4060 rank 5 nranks 7 cudaDev 5 nvmlDev 5 busId ae000 commId 0x914c6d5338a9fb2b - Init START
+bosco:1879423:1883057 [3] NCCL INFO ncclCommInitRankConfig comm 0x563c82591310 rank 3 nranks 7 cudaDev 3 nvmlDev 3 busId 3c000 commId 0x914c6d5338a9fb2b - Init START
+bosco:1879420:1883054 [0] NCCL INFO ncclCommInitRankConfig comm 0x56096e1555d0 rank 0 nranks 7 cudaDev 0 nvmlDev 0 busId 2d000 commId 0x914c6d5338a9fb2b - Init START
+bosco:1879421:1883056 [1] NCCL INFO ncclCommInitRankConfig comm 0x55e6bf241000 rank 1 nranks 7 cudaDev 1 nvmlDev 1 busId 3a000 commId 0x914c6d5338a9fb2b - Init START
+bosco:1879422:1883058 [2] NCCL INFO ncclCommInitRankConfig comm 0x55b3dcedec40 rank 2 nranks 7 cudaDev 2 nvmlDev 2 busId 3b000 commId 0x914c6d5338a9fb2b - Init START
+bosco:1879424:1883059 [4] NCCL INFO ncclCommInitRankConfig comm 0x55c8a3b2b440 rank 4 nranks 7 cudaDev 4 nvmlDev 4 busId ad000 commId 0x914c6d5338a9fb2b - Init START
+bosco:1879426:1879426 [6] NCCL INFO Comm config Blocking set to 1
+bosco:1879426:1883071 [6] NCCL INFO Using network Socket
+bosco:1879426:1883071 [6] NCCL INFO ncclCommInitRankConfig comm 0x55af25ecbc10 rank 6 nranks 7 cudaDev 6 nvmlDev 6 busId bd000 commId 0x914c6d5338a9fb2b - Init START
+bosco:1879425:1883055 [5] NCCL INFO Bootstrap timings total 0.581640 (create 0.000025, send 0.000092, recv 0.580951, ring 0.000443, delay 0.000000)
+bosco:1879424:1883059 [4] NCCL INFO Bootstrap timings total 0.580970 (create 0.000037, send 0.000175, recv 0.000527, ring 0.580065, delay 0.000000)
+bosco:1879421:1883056 [1] NCCL INFO Bootstrap timings total 0.581364 (create 0.000037, send 0.000186, recv 0.000118, ring 0.580866, delay 0.000000)
+bosco:1879423:1883057 [3] NCCL INFO Bootstrap timings total 0.581405 (create 0.000035, send 0.000185, recv 0.000809, ring 0.580202, delay 0.000000)
+bosco:1879422:1883058 [2] NCCL INFO Bootstrap timings total 0.581307 (create 0.000036, send 0.000165, recv 0.000156, ring 0.580783, delay 0.000000)
+bosco:1879420:1883054 [0] NCCL INFO Bootstrap timings total 0.581389 (create 0.000036, send 0.000182, recv 0.000069, ring 0.000251, delay 0.000000)
+bosco:1879426:1883071 [6] NCCL INFO Bootstrap timings total 0.001234 (create 0.000049, send 0.000221, recv 0.000533, ring 0.000184, delay 0.000000)
+bosco:1879425:1883055 [5] NCCL INFO Setting affinity for GPU 5 to ffffffff,ffffff00,00000000,0000ffff,ffffffff,ff000000,00000000
+bosco:1879425:1883055 [5] NCCL INFO NVLS multicast support is not available on dev 5
+bosco:1879424:1883059 [4] NCCL INFO Setting affinity for GPU 4 to ffffffff,ffffff00,00000000,0000ffff,ffffffff,ff000000,00000000
+bosco:1879424:1883059 [4] NCCL INFO NVLS multicast support is not available on dev 4
+bosco:1879423:1883057 [3] NCCL INFO Setting affinity for GPU 3 to ff,ffffffff,ffff0000,00000000,00ffffff,ffffffff
+bosco:1879423:1883057 [3] NCCL INFO NVLS multicast support is not available on dev 3
+bosco:1879421:1883056 [1] NCCL INFO Setting affinity for GPU 1 to ff,ffffffff,ffff0000,00000000,00ffffff,ffffffff
+bosco:1879422:1883058 [2] NCCL INFO Setting affinity for GPU 2 to ff,ffffffff,ffff0000,00000000,00ffffff,ffffffff
+bosco:1879422:1883058 [2] NCCL INFO NVLS multicast support is not available on dev 2
+bosco:1879421:1883056 [1] NCCL INFO NVLS multicast support is not available on dev 1
+bosco:1879420:1883054 [0] NCCL INFO Setting affinity for GPU 0 to ff,ffffffff,ffff0000,00000000,00ffffff,ffffffff
+bosco:1879420:1883054 [0] NCCL INFO NVLS multicast support is not available on dev 0
+bosco:1879426:1883071 [6] NCCL INFO Setting affinity for GPU 6 to ffffffff,ffffff00,00000000,0000ffff,ffffffff,ff000000,00000000
+bosco:1879426:1883071 [6] NCCL INFO NVLS multicast support is not available on dev 6
+bosco:1879423:1883057 [3] NCCL INFO comm 0x563c82591310 rank 3 nRanks 7 nNodes 1 localRanks 7 localRank 3 MNNVL 0
+bosco:1879425:1883055 [5] NCCL INFO comm 0x55f5c2ae4060 rank 5 nRanks 7 nNodes 1 localRanks 7 localRank 5 MNNVL 0
+bosco:1879422:1883058 [2] NCCL INFO comm 0x55b3dcedec40 rank 2 nRanks 7 nNodes 1 localRanks 7 localRank 2 MNNVL 0
+bosco:1879424:1883059 [4] NCCL INFO comm 0x55c8a3b2b440 rank 4 nRanks 7 nNodes 1 localRanks 7 localRank 4 MNNVL 0
+bosco:1879426:1883071 [6] NCCL INFO comm 0x55af25ecbc10 rank 6 nRanks 7 nNodes 1 localRanks 7 localRank 6 MNNVL 0
+bosco:1879425:1883055 [5] NCCL INFO Trees [0] 6/-1/-1->5->4 [1] 6/-1/-1->5->4 [2] 6/-1/-1->5->4 [3] 6/-1/-1->5->4
+bosco:1879421:1883056 [1] NCCL INFO comm 0x55e6bf241000 rank 1 nRanks 7 nNodes 1 localRanks 7 localRank 1 MNNVL 0
+bosco:1879425:1883055 [5] NCCL INFO P2P Chunksize set to 131072
+bosco:1879420:1883054 [0] NCCL INFO comm 0x56096e1555d0 rank 0 nRanks 7 nNodes 1 localRanks 7 localRank 0 MNNVL 0
+bosco:1879422:1883058 [2] NCCL INFO Trees [0] 4/-1/-1->2->1 [1] 4/-1/-1->2->1 [2] 4/-1/-1->2->1 [3] 4/-1/-1->2->1
+bosco:1879421:1883056 [1] NCCL INFO Trees [0] 2/-1/-1->1->0 [1] 2/-1/-1->1->0 [2] 2/-1/-1->1->0 [3] 2/-1/-1->1->0
+bosco:1879422:1883058 [2] NCCL INFO P2P Chunksize set to 131072
+bosco:1879421:1883056 [1] NCCL INFO P2P Chunksize set to 131072
+bosco:1879423:1883057 [3] NCCL INFO Trees [0] -1/-1/-1->3->6 [1] -1/-1/-1->3->6 [2] -1/-1/-1->3->6 [3] -1/-1/-1->3->6
+bosco:1879423:1883057 [3] NCCL INFO P2P Chunksize set to 131072
+bosco:1879426:1883071 [6] NCCL INFO Trees [0] 3/-1/-1->6->5 [1] 3/-1/-1->6->5 [2] 3/-1/-1->6->5 [3] 3/-1/-1->6->5
+bosco:1879424:1883059 [4] NCCL INFO Trees [0] 5/-1/-1->4->2 [1] 5/-1/-1->4->2 [2] 5/-1/-1->4->2 [3] 5/-1/-1->4->2
+bosco:1879420:1883054 [0] NCCL INFO Channel 00/04 : 0 1 2 4 5 6 3
+bosco:1879424:1883059 [4] NCCL INFO P2P Chunksize set to 131072
+bosco:1879426:1883071 [6] NCCL INFO P2P Chunksize set to 131072
+bosco:1879420:1883054 [0] NCCL INFO Channel 01/04 : 0 1 2 4 5 6 3
+bosco:1879420:1883054 [0] NCCL INFO Channel 02/04 : 0 1 2 4 5 6 3
+bosco:1879420:1883054 [0] NCCL INFO Channel 03/04 : 0 1 2 4 5 6 3
+bosco:1879420:1883054 [0] NCCL INFO Trees [0] 1/-1/-1->0->-1 [1] 1/-1/-1->0->-1 [2] 1/-1/-1->0->-1 [3] 1/-1/-1->0->-1
+bosco:1879420:1883054 [0] NCCL INFO P2P Chunksize set to 131072
+bosco:1879420:1883054 [0] NCCL INFO Check P2P Type intraNodeP2pSupport 0 directMode 0
+bosco:1879420:1883076 [0] NCCL INFO [Proxy Service] Device 0 CPU core 125
+bosco:1879420:1883083 [0] NCCL INFO [Proxy Service UDS] Device 0 CPU core 126
+bosco:1879422:1883080 [2] NCCL INFO [Proxy Service UDS] Device 2 CPU core 10
+bosco:1879426:1883084 [6] NCCL INFO [Proxy Service UDS] Device 6 CPU core 171
+bosco:1879422:1883073 [2] NCCL INFO [Proxy Service] Device 2 CPU core 4
+bosco:1879424:1883085 [4] NCCL INFO [Proxy Service UDS] Device 4 CPU core 175
+bosco:1879421:1883075 [1] NCCL INFO [Proxy Service] Device 1 CPU core 121
+bosco:1879424:1883078 [4] NCCL INFO [Proxy Service] Device 4 CPU core 58
+bosco:1879421:1883081 [1] NCCL INFO [Proxy Service UDS] Device 1 CPU core 122
+bosco:1879425:1883077 [5] NCCL INFO [Proxy Service UDS] Device 5 CPU core 84
+bosco:1879425:1883072 [5] NCCL INFO [Proxy Service] Device 5 CPU core 83
+bosco:1879423:1883082 [3] NCCL INFO [Proxy Service UDS] Device 3 CPU core 2
+bosco:1879423:1883074 [3] NCCL INFO [Proxy Service] Device 3 CPU core 1
+bosco:1879426:1883079 [6] NCCL INFO [Proxy Service] Device 6 CPU core 60
+bosco:1879423:1883057 [3] NCCL INFO threadThresholds 8/8/64 | 56/8/64 | 512 | 512
+bosco:1879423:1883057 [3] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+bosco:1879424:1883059 [4] NCCL INFO threadThresholds 8/8/64 | 56/8/64 | 512 | 512
+bosco:1879424:1883059 [4] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+bosco:1879421:1883056 [1] NCCL INFO threadThresholds 8/8/64 | 56/8/64 | 512 | 512
+bosco:1879421:1883056 [1] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+bosco:1879426:1883071 [6] NCCL INFO threadThresholds 8/8/64 | 56/8/64 | 512 | 512
+bosco:1879426:1883071 [6] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+bosco:1879422:1883058 [2] NCCL INFO threadThresholds 8/8/64 | 56/8/64 | 512 | 512
+bosco:1879422:1883058 [2] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+bosco:1879420:1883054 [0] NCCL INFO threadThresholds 8/8/64 | 56/8/64 | 512 | 512
+bosco:1879420:1883054 [0] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+bosco:1879420:1883054 [0] NCCL INFO CC Off, workFifoBytes 1048576
+bosco:1879425:1883055 [5] NCCL INFO threadThresholds 8/8/64 | 56/8/64 | 512 | 512
+bosco:1879425:1883055 [5] NCCL INFO 4 coll channels, 4 collnet channels, 0 nvls channels, 4 p2p channels, 2 p2p channels per peer
+bosco:1879421:1883056 [1] NCCL INFO ncclCommInitRankConfig comm 0x55e6bf241000 rank 1 nranks 7 cudaDev 1 nvmlDev 1 busId 3a000 commId 0x914c6d5338a9fb2b - Init COMPLETE
+bosco:1879421:1883056 [1] NCCL INFO Init timings - ncclCommInitRankConfig: rank 1 nranks 7 total 0.69 (kernels 0.00, alloc 0.00, bootstrap 0.58, allgathers 0.02, topo 0.03, graphs 0.04, connections 0.01, rest 0.00)
+bosco:1879420:1883054 [0] NCCL INFO ncclCommInitRankConfig comm 0x56096e1555d0 rank 0 nranks 7 cudaDev 0 nvmlDev 0 busId 2d000 commId 0x914c6d5338a9fb2b - Init COMPLETE
+bosco:1879420:1883054 [0] NCCL INFO Init timings - ncclCommInitRankConfig: rank 0 nranks 7 total 0.69 (kernels 0.00, alloc 0.00, bootstrap 0.58, allgathers 0.02, topo 0.04, graphs 0.03, connections 0.01, rest 0.00)
+bosco:1879424:1883059 [4] NCCL INFO ncclCommInitRankConfig comm 0x55c8a3b2b440 rank 4 nranks 7 cudaDev 4 nvmlDev 4 busId ad000 commId 0x914c6d5338a9fb2b - Init COMPLETE
+bosco:1879422:1883058 [2] NCCL INFO ncclCommInitRankConfig comm 0x55b3dcedec40 rank 2 nranks 7 cudaDev 2 nvmlDev 2 busId 3b000 commId 0x914c6d5338a9fb2b - Init COMPLETE
+bosco:1879425:1883055 [5] NCCL INFO ncclCommInitRankConfig comm 0x55f5c2ae4060 rank 5 nranks 7 cudaDev 5 nvmlDev 5 busId ae000 commId 0x914c6d5338a9fb2b - Init COMPLETE
+bosco:1879423:1883057 [3] NCCL INFO ncclCommInitRankConfig comm 0x563c82591310 rank 3 nranks 7 cudaDev 3 nvmlDev 3 busId 3c000 commId 0x914c6d5338a9fb2b - Init COMPLETE
+bosco:1879424:1883059 [4] NCCL INFO Init timings - ncclCommInitRankConfig: rank 4 nranks 7 total 0.69 (kernels 0.00, alloc 0.00, bootstrap 0.58, allgathers 0.00, topo 0.03, graphs 0.05, connections 0.01, rest 0.00)
+bosco:1879426:1883071 [6] NCCL INFO ncclCommInitRankConfig comm 0x55af25ecbc10 rank 6 nranks 7 cudaDev 6 nvmlDev 6 busId bd000 commId 0x914c6d5338a9fb2b - Init COMPLETE
+bosco:1879425:1883055 [5] NCCL INFO Init timings - ncclCommInitRankConfig: rank 5 nranks 7 total 0.69 (kernels 0.00, alloc 0.00, bootstrap 0.58, allgathers 0.03, topo 0.03, graphs 0.03, connections 0.01, rest 0.00)
+bosco:1879423:1883057 [3] NCCL INFO Init timings - ncclCommInitRankConfig: rank 3 nranks 7 total 0.69 (kernels 0.00, alloc 0.00, bootstrap 0.58, allgathers 0.02, topo 0.03, graphs 0.03, connections 0.01, rest 0.00)
+bosco:1879426:1883071 [6] NCCL INFO Init timings - ncclCommInitRankConfig: rank 6 nranks 7 total 0.11 (kernels 0.00, alloc 0.00, bootstrap 0.00, allgathers 0.01, topo 0.04, graphs 0.05, connections 0.01, rest 0.00)
+bosco:1879422:1883058 [2] NCCL INFO Init timings - ncclCommInitRankConfig: rank 2 nranks 7 total 0.69 (kernels 0.00, alloc 0.00, bootstrap 0.58, allgathers 0.00, topo 0.04, graphs 0.06, connections 0.01, rest 0.00)
+bosco:1879420:1883086 [0] NCCL INFO Channel 00 : 0[0] -> 1[1] via SHM/direct/direct
+bosco:1879424:1883091 [4] NCCL INFO Channel 00 : 4[4] -> 5[5] via SHM/direct/direct
+bosco:1879420:1883086 [0] NCCL INFO Channel 01 : 0[0] -> 1[1] via SHM/direct/direct
+bosco:1879424:1883091 [4] NCCL INFO Channel 01 : 4[4] -> 5[5] via SHM/direct/direct
+bosco:1879420:1883086 [0] NCCL INFO Channel 02 : 0[0] -> 1[1] via SHM/direct/direct
+bosco:1879424:1883091 [4] NCCL INFO Channel 02 : 4[4] -> 5[5] via SHM/direct/direct
+bosco:1879420:1883086 [0] NCCL INFO Channel 03 : 0[0] -> 1[1] via SHM/direct/direct
+bosco:1879424:1883091 [4] NCCL INFO Channel 03 : 4[4] -> 5[5] via SHM/direct/direct
+bosco:1879423:1883092 [3] NCCL INFO Channel 00 : 3[3] -> 0[0] via SHM/direct/direct
+bosco:1879425:1883088 [5] NCCL INFO Channel 00 : 5[5] -> 6[6] via SHM/direct/direct
+bosco:1879421:1883090 [1] NCCL INFO Channel 00 : 1[1] -> 2[2] via SHM/direct/direct
+bosco:1879423:1883092 [3] NCCL INFO Channel 01 : 3[3] -> 0[0] via SHM/direct/direct
+bosco:1879421:1883090 [1] NCCL INFO Channel 01 : 1[1] -> 2[2] via SHM/direct/direct
+bosco:1879425:1883088 [5] NCCL INFO Channel 01 : 5[5] -> 6[6] via SHM/direct/direct
+bosco:1879423:1883092 [3] NCCL INFO Channel 02 : 3[3] -> 0[0] via SHM/direct/direct
+bosco:1879421:1883090 [1] NCCL INFO Channel 02 : 1[1] -> 2[2] via SHM/direct/direct
+bosco:1879425:1883088 [5] NCCL INFO Channel 02 : 5[5] -> 6[6] via SHM/direct/direct
+bosco:1879423:1883092 [3] NCCL INFO Channel 03 : 3[3] -> 0[0] via SHM/direct/direct
+bosco:1879421:1883090 [1] NCCL INFO Channel 03 : 1[1] -> 2[2] via SHM/direct/direct
+bosco:1879425:1883088 [5] NCCL INFO Channel 03 : 5[5] -> 6[6] via SHM/direct/direct
+bosco:1879422:1883087 [2] NCCL INFO Channel 00 : 2[2] -> 4[4] via SHM/direct/direct
+bosco:1879426:1883089 [6] NCCL INFO Channel 00 : 6[6] -> 3[3] via SHM/direct/direct
+bosco:1879426:1883089 [6] NCCL INFO Channel 01 : 6[6] -> 3[3] via SHM/direct/direct
+bosco:1879422:1883087 [2] NCCL INFO Channel 01 : 2[2] -> 4[4] via SHM/direct/direct
+bosco:1879422:1883087 [2] NCCL INFO Channel 02 : 2[2] -> 4[4] via SHM/direct/direct
+bosco:1879426:1883089 [6] NCCL INFO Channel 02 : 6[6] -> 3[3] via SHM/direct/direct
+bosco:1879426:1883089 [6] NCCL INFO Channel 03 : 6[6] -> 3[3] via SHM/direct/direct
+bosco:1879422:1883087 [2] NCCL INFO Channel 03 : 2[2] -> 4[4] via SHM/direct/direct
+bosco:1879422:1883087 [2] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+bosco:1879426:1883089 [6] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+bosco:1879421:1883090 [1] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+bosco:1879420:1883086 [0] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+bosco:1879424:1883091 [4] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+bosco:1879425:1883088 [5] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+bosco:1879423:1883092 [3] NCCL INFO Connected all rings, use ring PXN 0 GDR 1
+finish collecting initial predictions before optimization
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6821526908806048 0.69314066410481 0.69298426068761 0.6841994535753173 0.6798927230435231 0.6429795215301972 0.6560306638491367
+avg entropy: 0.6729323563153212
+avg cont entropy: 0.6836025318868095
+finish collecting initial predictions before optimization
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6821526908806048 0.69314066410481 0.69298426068761 0.6841994535753173 0.6798927230435231 0.6429795215301972 0.6560306638491367
+avg entropy: 0.6729323563153212
+avg cont entropy: 0.6836025318868095
+finish collecting initial predictions before optimization
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6821526908806048 0.69314066410481 0.69298426068761 0.6841994535753173 0.6798927230435231 0.6429795215301972 0.6560306638491367
+avg entropy: 0.6729323563153212
+avg cont entropy: 0.6836025318868095
+finish collecting initial predictions before optimization
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6821526908806048 0.69314066410481 0.69298426068761 0.6841994535753173 0.6798927230435231 0.6429795215301972 0.6560306638491367
+avg entropy: 0.6729323563153212
+avg cont entropy: 0.6836025318868095
+finish collecting initial predictions before optimization
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6821526908806048 0.69314066410481 0.69298426068761 0.6841994535753173 0.6798927230435231 0.6429795215301972 0.6560306638491367
+avg entropy: 0.6729323563153212
+avg cont entropy: 0.6836025318868095
+[INFO|trainer.py:1740] 2025-06-23 13:25:00,986 >> ***** Running training *****
+[INFO|trainer.py:1741] 2025-06-23 13:25:00,986 >>   Num examples = 277
+[INFO|trainer.py:1742] 2025-06-23 13:25:00,986 >>   Num Epochs = 100
+[INFO|trainer.py:1743] 2025-06-23 13:25:00,986 >>   Instantaneous batch size per device = 1
+[INFO|trainer.py:1744] 2025-06-23 13:25:00,986 >>   Total train batch size (w. parallel, distributed & accumulation) = 28
+[INFO|trainer.py:1745] 2025-06-23 13:25:00,986 >>   Gradient Accumulation steps = 4
+[INFO|trainer.py:1746] 2025-06-23 13:25:00,986 >>   Total optimization steps = 1000
+finish collecting initial predictions before optimization
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6821526908806048 0.69314066410481 0.69298426068761 0.6841994535753173 0.6798927230435231 0.6429795215301972 0.6560306638491367
+avg entropy: 0.6729323563153212
+avg cont entropy: 0.6836025318868095
+finish collecting initial predictions before optimization
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6821526908806048 0.69314066410481 0.69298426068761 0.6841994535753173 0.6798927230435231 0.6429795215301972 0.6560306638491367
+avg entropy: 0.6729323563153212
+avg cont entropy: 0.6836025318868095
+{'loss': 0.2475, 'learning_rate': 2.0000000000000003e-06, 'epoch': 1.0}
+{'loss': 0.248, 'learning_rate': 4.000000000000001e-06, 'epoch': 2.0}
+{'loss': 0.2565, 'learning_rate': 6e-06, 'epoch': 3.0}
+{'loss': 0.2495, 'learning_rate': 8.000000000000001e-06, 'epoch': 4.0}
+{'loss': 0.2524, 'learning_rate': 1e-05, 'epoch': 5.0}
+[INFO|trainer.py:2907] 2025-06-23 13:30:48,350 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 13:30:48,350 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 13:30:48,350 >>   Batch size = 100
+{'max_accuracy': np.float64(90.25), 'median_accuracy': np.float64(85.02), 'mean_accuracy': np.float64(85.31), 'min_accuracy': np.float64(81.95), 'std_accuracy': np.float64(2.41), 'avg_ensemble_accuracy': 85.56, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(90.25), 'median_accuracy': np.float64(85.02), 'mean_accuracy': np.float64(85.31), 'min_accuracy': np.float64(81.95), 'std_accuracy': np.float64(2.41), 'avg_ensemble_accuracy': 85.56, 'vote_ensemble_accuracy': 85.92}
+[INFO|trainer.py:2907] 2025-06-23 13:31:15,986 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 13:31:15,986 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 13:31:15,986 >>   Batch size = 100
+{'max_accuracy': np.float64(90.25), 'median_accuracy': np.float64(85.02), 'mean_accuracy': np.float64(85.31), 'min_accuracy': np.float64(81.95), 'std_accuracy': np.float64(2.41), 'avg_ensemble_accuracy': 85.56, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(90.25), 'median_accuracy': np.float64(85.02), 'mean_accuracy': np.float64(85.31), 'min_accuracy': np.float64(81.95), 'std_accuracy': np.float64(2.41), 'avg_ensemble_accuracy': 85.56, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(90.25), 'median_accuracy': np.float64(85.02), 'mean_accuracy': np.float64(85.31), 'min_accuracy': np.float64(81.95), 'std_accuracy': np.float64(2.41), 'avg_ensemble_accuracy': 85.56, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(90.25), 'median_accuracy': np.float64(85.02), 'mean_accuracy': np.float64(85.31), 'min_accuracy': np.float64(81.95), 'std_accuracy': np.float64(2.41), 'avg_ensemble_accuracy': 85.56, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(90.25), 'median_accuracy': np.float64(85.02), 'mean_accuracy': np.float64(85.31), 'min_accuracy': np.float64(81.95), 'std_accuracy': np.float64(2.41), 'avg_ensemble_accuracy': 85.56, 'vote_ensemble_accuracy': 85.92}
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6810494166250649 0.69298426068761 0.69298426068761 0.6841994535753173 0.6810494166250649 0.6429795215301972 0.6560306638491367
+avg entropy: 0.6729220579062014
+avg cont entropy: 0.6835847201191584
+delta all entropy: 0.0 0.0 0.0 -0.00110327425553991 -0.00015640341720002393 0.0 0.0 0.0011566935815418011 0.0 0.0
+delta avg entropy: -1.0298409119813279e-05
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6810494166250649 0.69298426068761 0.69298426068761 0.6841994535753173 0.6810494166250649 0.6429795215301972 0.6560306638491367
+avg entropy: 0.6729220579062014
+avg cont entropy: 0.6835847201191584
+delta all entropy: 0.0 0.0 0.0 -0.00110327425553991 -0.00015640341720002393 0.0 0.0 0.0011566935815418011 0.0 0.0
+delta avg entropy: -1.0298409119813279e-05
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6810494166250649 0.69298426068761 0.69298426068761 0.6841994535753173 0.6810494166250649 0.6429795215301972 0.6560306638491367
+avg entropy: 0.6729220579062014
+avg cont entropy: 0.6835847201191584
+delta all entropy: 0.0 0.0 0.0 -0.00110327425553991 -0.00015640341720002393 0.0 0.0 0.0011566935815418011 0.0 0.0
+delta avg entropy: -1.0298409119813279e-05
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6810494166250649 0.69298426068761 0.69298426068761 0.6841994535753173 0.6810494166250649 0.6429795215301972 0.6560306638491367
+avg entropy: 0.6729220579062014
+avg cont entropy: 0.6835847201191584
+delta all entropy: 0.0 0.0 0.0 -0.00110327425553991 -0.00015640341720002393 0.0 0.0 0.0011566935815418011 0.0 0.0
+delta avg entropy: -1.0298409119813279e-05
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6810494166250649 0.69298426068761 0.69298426068761 0.6841994535753173 0.6810494166250649 0.6429795215301972 0.6560306638491367
+avg entropy: 0.6729220579062014
+avg cont entropy: 0.6835847201191584
+delta all entropy: 0.0 0.0 0.0 -0.00110327425553991 -0.00015640341720002393 0.0 0.0 0.0011566935815418011 0.0 0.0
+delta avg entropy: -1.0298409119813279e-05
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6810494166250649 0.69298426068761 0.69298426068761 0.6841994535753173 0.6810494166250649 0.6429795215301972 0.6560306638491367
+avg entropy: 0.6729220579062014
+avg cont entropy: 0.6835847201191584
+delta all entropy: 0.0 0.0 0.0 -0.00110327425553991 -0.00015640341720002393 0.0 0.0 0.0011566935815418011 0.0 0.0
+delta avg entropy: -1.0298409119813279e-05
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6810494166250649 0.69298426068761 0.69298426068761 0.6841994535753173 0.6810494166250649 0.6429795215301972 0.6560306638491367
+avg entropy: 0.6729220579062014
+avg cont entropy: 0.6835847201191584
+delta all entropy: 0.0 0.0 0.0 -0.00110327425553991 -0.00015640341720002393 0.0 0.0 0.0011566935815418011 0.0 0.0
+delta avg entropy: -1.0298409119813279e-05
+{'loss': 0.2519, 'learning_rate': 1.2e-05, 'epoch': 6.0}
+{'loss': 0.2528, 'learning_rate': 1.4e-05, 'epoch': 7.0}
+{'loss': 0.2501, 'learning_rate': 1.6000000000000003e-05, 'epoch': 8.0}
+{'loss': 0.2518, 'learning_rate': 1.8e-05, 'epoch': 9.0}
+{'loss': 0.2455, 'learning_rate': 2e-05, 'epoch': 10.0}
+[INFO|trainer.py:2907] 2025-06-23 13:37:29,182 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 13:37:29,182 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 13:37:29,182 >>   Batch size = 100
+{'max_accuracy': np.float64(90.61), 'median_accuracy': np.float64(84.48), 'mean_accuracy': np.float64(85.27), 'min_accuracy': np.float64(81.95), 'std_accuracy': np.float64(2.49), 'avg_ensemble_accuracy': 85.56, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(90.61), 'median_accuracy': np.float64(84.48), 'mean_accuracy': np.float64(85.27), 'min_accuracy': np.float64(81.95), 'std_accuracy': np.float64(2.49), 'avg_ensemble_accuracy': 85.56, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(90.61), 'median_accuracy': np.float64(84.48), 'mean_accuracy': np.float64(85.27), 'min_accuracy': np.float64(81.95), 'std_accuracy': np.float64(2.49), 'avg_ensemble_accuracy': 85.56, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(90.61), 'median_accuracy': np.float64(84.48), 'mean_accuracy': np.float64(85.27), 'min_accuracy': np.float64(81.95), 'std_accuracy': np.float64(2.49), 'avg_ensemble_accuracy': 85.56, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(90.61), 'median_accuracy': np.float64(84.48), 'mean_accuracy': np.float64(85.27), 'min_accuracy': np.float64(81.95), 'std_accuracy': np.float64(2.49), 'avg_ensemble_accuracy': 85.56, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(90.61), 'median_accuracy': np.float64(84.48), 'mean_accuracy': np.float64(85.27), 'min_accuracy': np.float64(81.95), 'std_accuracy': np.float64(2.49), 'avg_ensemble_accuracy': 85.56, 'vote_ensemble_accuracy': 85.92}
+[INFO|trainer.py:2907] 2025-06-23 13:37:57,422 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 13:37:57,422 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 13:37:57,422 >>   Batch size = 100
+{'max_accuracy': np.float64(90.61), 'median_accuracy': np.float64(84.48), 'mean_accuracy': np.float64(85.27), 'min_accuracy': np.float64(81.95), 'std_accuracy': np.float64(2.49), 'avg_ensemble_accuracy': 85.56, 'vote_ensemble_accuracy': 85.92}
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6810494166250649 0.6930885314445381 0.6930885314445381 0.6841994535753173 0.678682484276075 0.6429795215301972 0.653997573824967
+avg entropy: 0.672502909820271
+avg cont entropy: 0.6835687308001381
+delta all entropy: 0.0 0.0 0.0 -0.00110327425553991 -5.213266027193075e-05 0.00010427075692809318 0.0 -0.0012102387674480797 0.0 -0.002033090024169626
+delta avg entropy: -0.0004294464950501453
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6810494166250649 0.6930885314445381 0.6930885314445381 0.6841994535753173 0.678682484276075 0.6429795215301972 0.653997573824967
+avg entropy: 0.672502909820271all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6810494166250649 0.6930885314445381 0.6930885314445381 0.6841994535753173 0.678682484276075 0.6429795215301972 0.653997573824967
+avg cont entropy: 0.6835687308001381
+
+delta all entropy: 0.0 0.0 0.0 -0.00110327425553991 -5.213266027193075e-05 0.00010427075692809318 0.0 -0.0012102387674480797 0.0 -0.002033090024169626
+delta avg entropy: -0.0004294464950501453
+avg entropy: 0.672502909820271
+avg cont entropy: 0.6835687308001381
+delta all entropy: 0.0 0.0 0.0 -0.00110327425553991 -5.213266027193075e-05 0.00010427075692809318 0.0 -0.0012102387674480797 0.0 -0.002033090024169626
+delta avg entropy: -0.0004294464950501453
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6810494166250649 0.6930885314445381 0.6930885314445381 0.6841994535753173 0.678682484276075 0.6429795215301972 0.653997573824967all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6810494166250649 0.6930885314445381 0.6930885314445381 0.6841994535753173 0.678682484276075 0.6429795215301972 0.653997573824967
+
+avg entropy: 0.672502909820271
+avg entropy: 0.672502909820271
+avg cont entropy: 0.6835687308001381
+avg cont entropy: 0.6835687308001381
+delta all entropy: 0.0 0.0 0.0 -0.00110327425553991 -5.213266027193075e-05 0.00010427075692809318 0.0 -0.0012102387674480797 0.0 -0.002033090024169626delta all entropy: 0.0 0.0 0.0 -0.00110327425553991 -5.213266027193075e-05 0.00010427075692809318 0.0 -0.0012102387674480797 0.0 -0.002033090024169626
+
+delta avg entropy: -0.0004294464950501453delta avg entropy: -0.0004294464950501453
+
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6810494166250649 0.6930885314445381 0.6930885314445381 0.6841994535753173 0.678682484276075 0.6429795215301972 0.653997573824967
+avg entropy: 0.672502909820271
+avg cont entropy: 0.6835687308001381
+delta all entropy: 0.0 0.0 0.0 -0.00110327425553991 -5.213266027193075e-05 0.00010427075692809318 0.0 -0.0012102387674480797 0.0 -0.002033090024169626
+delta avg entropy: -0.0004294464950501453
+all entropy: 0.653997573824967 0.6617933207764413 0.6821526908806048 0.6810494166250649 0.6930885314445381 0.6930885314445381 0.6841994535753173 0.678682484276075 0.6429795215301972 0.653997573824967
+avg entropy: 0.672502909820271
+avg cont entropy: 0.6835687308001381
+delta all entropy: 0.0 0.0 0.0 -0.00110327425553991 -5.213266027193075e-05 0.00010427075692809318 0.0 -0.0012102387674480797 0.0 -0.002033090024169626
+delta avg entropy: -0.0004294464950501453
+{'loss': 0.256, 'learning_rate': 1.9778888888888892e-05, 'epoch': 11.0}
+{'loss': 0.2525, 'learning_rate': 1.955777777777778e-05, 'epoch': 12.0}
+{'loss': 0.252, 'learning_rate': 1.9336666666666667e-05, 'epoch': 13.0}
+{'loss': 0.2557, 'learning_rate': 1.9115555555555558e-05, 'epoch': 14.0}
+{'loss': 0.2638, 'learning_rate': 1.8894444444444446e-05, 'epoch': 15.0}
+[INFO|trainer.py:2907] 2025-06-23 13:44:14,938 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 13:44:14,938 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 13:44:14,938 >>   Batch size = 100
+{'max_accuracy': np.float64(89.89), 'median_accuracy': np.float64(84.84), 'mean_accuracy': np.float64(85.09), 'min_accuracy': np.float64(81.59), 'std_accuracy': np.float64(2.48), 'avg_ensemble_accuracy': 85.92, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(89.89), 'median_accuracy': np.float64(84.84), 'mean_accuracy': np.float64(85.09), 'min_accuracy': np.float64(81.59), 'std_accuracy': np.float64(2.48), 'avg_ensemble_accuracy': 85.92, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(89.89), 'median_accuracy': np.float64(84.84), 'mean_accuracy': np.float64(85.09), 'min_accuracy': np.float64(81.59), 'std_accuracy': np.float64(2.48), 'avg_ensemble_accuracy': 85.92, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(89.89), 'median_accuracy': np.float64(84.84), 'mean_accuracy': np.float64(85.09), 'min_accuracy': np.float64(81.59), 'std_accuracy': np.float64(2.48), 'avg_ensemble_accuracy': 85.92, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(89.89), 'median_accuracy': np.float64(84.84), 'mean_accuracy': np.float64(85.09), 'min_accuracy': np.float64(81.59), 'std_accuracy': np.float64(2.48), 'avg_ensemble_accuracy': 85.92, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(89.89), 'median_accuracy': np.float64(84.84), 'mean_accuracy': np.float64(85.09), 'min_accuracy': np.float64(81.59), 'std_accuracy': np.float64(2.48), 'avg_ensemble_accuracy': 85.92, 'vote_ensemble_accuracy': 85.92}
+{'max_accuracy': np.float64(89.89), 'median_accuracy': np.float64(84.84), 'mean_accuracy': np.float64(85.09), 'min_accuracy': np.float64(81.59), 'std_accuracy': np.float64(2.48), 'avg_ensemble_accuracy': 85.92, 'vote_ensemble_accuracy': 85.92}
+[INFO|trainer.py:2907] 2025-06-23 13:44:43,225 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 13:44:43,226 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 13:44:43,226 >>   Batch size = 100
+all entropy: 0.6429795215301972 0.6617933207764413 0.6832026653984116 0.6832026653984116 0.692358483831969 0.69314066410481 0.6860338939853872 0.6821526908806048 0.6429795215301972 0.6580074975533652
+avg entropy: 0.6725850924989796
+avg cont entropy: 0.6831453337249339
+delta all entropy: -0.01101805229476982 0.0 0.001049974517806751 0.001049974517806751 -0.0007821802728410487 0.00015640341720002393 0.0018344404100698597 0.002259967837081711 0.0 0.00197683370422852
+delta avg entropy: -0.00034726381634172523
+all entropy: 0.6429795215301972 0.6617933207764413 0.6832026653984116 0.6832026653984116 0.692358483831969 0.69314066410481 0.6860338939853872 0.6821526908806048 0.6429795215301972 0.6580074975533652
+avg entropy: 0.6725850924989796
+avg cont entropy: 0.6831453337249339
+delta all entropy: -0.01101805229476982 0.0 0.001049974517806751 0.001049974517806751 -0.0007821802728410487 0.00015640341720002393 0.0018344404100698597 0.002259967837081711 0.0 0.00197683370422852
+delta avg entropy: -0.00034726381634172523
+all entropy: 0.6429795215301972 0.6617933207764413 0.6832026653984116 0.6832026653984116 0.692358483831969 0.69314066410481 0.6860338939853872 0.6821526908806048 0.6429795215301972 0.6580074975533652
+avg entropy: 0.6725850924989796
+avg cont entropy: 0.6831453337249339
+delta all entropy: -0.01101805229476982 0.0 0.001049974517806751 0.001049974517806751 -0.0007821802728410487 0.00015640341720002393 0.0018344404100698597 0.002259967837081711 0.0 0.00197683370422852
+delta avg entropy: -0.00034726381634172523
+all entropy: 0.6429795215301972 0.6617933207764413 0.6832026653984116 0.6832026653984116 0.692358483831969 0.69314066410481 0.6860338939853872 0.6821526908806048 0.6429795215301972 0.6580074975533652
+avg entropy: 0.6725850924989796
+avg cont entropy: 0.6831453337249339
+delta all entropy: -0.01101805229476982 0.0 0.001049974517806751 0.001049974517806751 -0.0007821802728410487 0.00015640341720002393 0.0018344404100698597 0.002259967837081711 0.0 0.00197683370422852
+delta avg entropy: -0.00034726381634172523
+all entropy: 0.6429795215301972 0.6617933207764413 0.6832026653984116 0.6832026653984116 0.692358483831969 0.69314066410481 0.6860338939853872 0.6821526908806048 0.6429795215301972 0.6580074975533652
+avg entropy: 0.6725850924989796
+avg cont entropy: 0.6831453337249339
+delta all entropy: -0.01101805229476982 0.0 0.001049974517806751 0.001049974517806751 -0.0007821802728410487 0.00015640341720002393 0.0018344404100698597 0.002259967837081711 0.0 0.00197683370422852
+delta avg entropy: -0.00034726381634172523
+all entropy: 0.6429795215301972 0.6617933207764413 0.6832026653984116 0.6832026653984116 0.692358483831969 0.69314066410481 0.6860338939853872 0.6821526908806048 0.6429795215301972 0.6580074975533652
+avg entropy: 0.6725850924989796
+avg cont entropy: 0.6831453337249339
+delta all entropy: -0.01101805229476982 0.0 0.001049974517806751 0.001049974517806751 -0.0007821802728410487 0.00015640341720002393 0.0018344404100698597 0.002259967837081711 0.0 0.00197683370422852
+delta avg entropy: -0.00034726381634172523
+all entropy: 0.6429795215301972 0.6617933207764413 0.6832026653984116 0.6832026653984116 0.692358483831969 0.69314066410481 0.6860338939853872 0.6821526908806048 0.6429795215301972 0.6580074975533652
+avg entropy: 0.6725850924989796
+avg cont entropy: 0.6831453337249339
+delta all entropy: -0.01101805229476982 0.0 0.001049974517806751 0.001049974517806751 -0.0007821802728410487 0.00015640341720002393 0.0018344404100698597 0.002259967837081711 0.0 0.00197683370422852
+delta avg entropy: -0.00034726381634172523
+{'loss': 0.2555, 'learning_rate': 1.8673333333333336e-05, 'epoch': 16.0}
+{'loss': 0.2581, 'learning_rate': 1.8452222222222224e-05, 'epoch': 17.0}
+{'loss': 0.2645, 'learning_rate': 1.823111111111111e-05, 'epoch': 18.0}
+{'loss': 0.2644, 'learning_rate': 1.8010000000000002e-05, 'epoch': 19.0}
+{'loss': 0.2689, 'learning_rate': 1.778888888888889e-05, 'epoch': 20.0}
+[INFO|trainer.py:2907] 2025-06-23 13:50:53,965 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 13:50:53,965 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 13:50:53,965 >>   Batch size = 100
+{'max_accuracy': np.float64(89.53), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(84.8), 'min_accuracy': np.float64(81.23), 'std_accuracy': np.float64(2.45), 'avg_ensemble_accuracy': 85.92, 'vote_ensemble_accuracy': 85.2}
+{'max_accuracy': np.float64(89.53), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(84.8), 'min_accuracy': np.float64(81.23), 'std_accuracy': np.float64(2.45), 'avg_ensemble_accuracy': 85.92, 'vote_ensemble_accuracy': 85.2}
+{'max_accuracy': np.float64(89.53), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(84.8), 'min_accuracy': np.float64(81.23), 'std_accuracy': np.float64(2.45), 'avg_ensemble_accuracy': 85.92, 'vote_ensemble_accuracy': 85.2}
+[INFO|trainer.py:2907] 2025-06-23 13:51:21,684 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 13:51:21,684 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 13:51:21,684 >>   Batch size = 100
+{'max_accuracy': np.float64(89.53), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(84.8), 'min_accuracy': np.float64(81.23), 'std_accuracy': np.float64(2.45), 'avg_ensemble_accuracy': 85.92, 'vote_ensemble_accuracy': 85.2}
+{'max_accuracy': np.float64(89.53), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(84.8), 'min_accuracy': np.float64(81.23), 'std_accuracy': np.float64(2.45), 'avg_ensemble_accuracy': 85.92, 'vote_ensemble_accuracy': 85.2}
+{'max_accuracy': np.float64(89.53), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(84.8), 'min_accuracy': np.float64(81.23), 'std_accuracy': np.float64(2.45), 'avg_ensemble_accuracy': 85.92, 'vote_ensemble_accuracy': 85.2}
+{'max_accuracy': np.float64(89.53), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(84.8), 'min_accuracy': np.float64(81.23), 'std_accuracy': np.float64(2.45), 'avg_ensemble_accuracy': 85.92, 'vote_ensemble_accuracy': 85.2}
+all entropy: 0.6223258815178758 0.6702887419175763 0.6860338939853872 0.6841994535753173 0.6920454974061679 0.6928278409578548 0.6890688576857509 0.6851431626922719 0.6519079859154411 0.6686996168320491
+avg entropy: 0.6742540932485692
+avg cont entropy: 0.6820818517744907
+delta all entropy: -0.031671692307091215 0.008495421141134996 0.003881203104782349 0.0020467626947124895 -0.0010951666986420694 -0.00015641972975521945 0.004869404110433573 0.005250439648748828 0.008928464385243862 0.012668952982912485
+delta avg entropy: 0.0013217369332480077
+all entropy: 0.6223258815178758 0.6702887419175763 0.6860338939853872 0.6841994535753173 0.6920454974061679 0.6928278409578548 0.6890688576857509 0.6851431626922719 0.6519079859154411 0.6686996168320491
+avg entropy: 0.6742540932485692
+avg cont entropy: 0.6820818517744907
+delta all entropy: -0.031671692307091215 0.008495421141134996 0.003881203104782349 0.0020467626947124895 -0.0010951666986420694 -0.00015641972975521945 0.004869404110433573 0.005250439648748828 0.008928464385243862 0.012668952982912485
+delta avg entropy: 0.0013217369332480077
+all entropy: 0.6223258815178758 0.6702887419175763 0.6860338939853872 0.6841994535753173 0.6920454974061679 0.6928278409578548 0.6890688576857509 0.6851431626922719 0.6519079859154411 0.6686996168320491
+avg entropy: 0.6742540932485692
+avg cont entropy: 0.6820818517744907
+delta all entropy: -0.031671692307091215 0.008495421141134996 0.003881203104782349 0.0020467626947124895 -0.0010951666986420694 -0.00015641972975521945 0.004869404110433573 0.005250439648748828 0.008928464385243862 0.012668952982912485
+delta avg entropy: 0.0013217369332480077
+all entropy: 0.6223258815178758 0.6702887419175763 0.6860338939853872 0.6841994535753173 0.6920454974061679 0.6928278409578548 0.6890688576857509 0.6851431626922719 0.6519079859154411 0.6686996168320491
+avg entropy: 0.6742540932485692
+avg cont entropy: 0.6820818517744907
+delta all entropy: -0.031671692307091215 0.008495421141134996 0.003881203104782349 0.0020467626947124895 -0.0010951666986420694 -0.00015641972975521945 0.004869404110433573 0.005250439648748828 0.008928464385243862 0.012668952982912485
+delta avg entropy: 0.0013217369332480077
+all entropy: 0.6223258815178758 0.6702887419175763 0.6860338939853872 0.6841994535753173 0.6920454974061679 0.6928278409578548 0.6890688576857509 0.6851431626922719 0.6519079859154411 0.6686996168320491
+avg entropy: 0.6742540932485692
+avg cont entropy: 0.6820818517744907
+delta all entropy: -0.031671692307091215 0.008495421141134996 0.003881203104782349 0.0020467626947124895 -0.0010951666986420694 -0.00015641972975521945 0.004869404110433573 0.005250439648748828 0.008928464385243862 0.012668952982912485
+delta avg entropy: 0.0013217369332480077
+all entropy: 0.6223258815178758 0.6702887419175763 0.6860338939853872 0.6841994535753173 0.6920454974061679 0.6928278409578548 0.6890688576857509 0.6851431626922719 0.6519079859154411 0.6686996168320491
+avg entropy: 0.6742540932485692
+avg cont entropy: 0.6820818517744907
+delta all entropy: -0.031671692307091215 0.008495421141134996 0.003881203104782349 0.0020467626947124895 -0.0010951666986420694 -0.00015641972975521945 0.004869404110433573 0.005250439648748828 0.008928464385243862 0.012668952982912485
+delta avg entropy: 0.0013217369332480077
+all entropy: 0.6223258815178758 0.6702887419175763 0.6860338939853872 0.6841994535753173 0.6920454974061679 0.6928278409578548 0.6890688576857509 0.6851431626922719 0.6519079859154411 0.6686996168320491
+avg entropy: 0.6742540932485692
+avg cont entropy: 0.6820818517744907
+delta all entropy: -0.031671692307091215 0.008495421141134996 0.003881203104782349 0.0020467626947124895 -0.0010951666986420694 -0.00015641972975521945 0.004869404110433573 0.005250439648748828 0.008928464385243862 0.012668952982912485
+delta avg entropy: 0.0013217369332480077
+{'loss': 0.2626, 'learning_rate': 1.756777777777778e-05, 'epoch': 21.0}
+{'loss': 0.2797, 'learning_rate': 1.7346666666666668e-05, 'epoch': 22.0}
+{'loss': 0.2831, 'learning_rate': 1.712555555555556e-05, 'epoch': 23.0}
+{'loss': 0.2831, 'learning_rate': 1.6904444444444446e-05, 'epoch': 24.0}
+{'loss': 0.2895, 'learning_rate': 1.6683333333333337e-05, 'epoch': 25.0}
+[INFO|trainer.py:2907] 2025-06-23 13:57:36,155 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 13:57:36,155 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 13:57:36,155 >>   Batch size = 100
+{'max_accuracy': np.float64(88.45), 'median_accuracy': np.float64(83.94), 'mean_accuracy': np.float64(84.15), 'min_accuracy': np.float64(76.9), 'std_accuracy': np.float64(3.31), 'avg_ensemble_accuracy': 86.64, 'vote_ensemble_accuracy': 85.2}
+{'max_accuracy': np.float64(88.45), 'median_accuracy': np.float64(83.94), 'mean_accuracy': np.float64(84.15), 'min_accuracy': np.float64(76.9), 'std_accuracy': np.float64(3.31), 'avg_ensemble_accuracy': 86.64, 'vote_ensemble_accuracy': 85.2}
+{'max_accuracy': np.float64(88.45), 'median_accuracy': np.float64(83.94), 'mean_accuracy': np.float64(84.15), 'min_accuracy': np.float64(76.9), 'std_accuracy': np.float64(3.31), 'avg_ensemble_accuracy': 86.64, 'vote_ensemble_accuracy': 85.2}
+{'max_accuracy': np.float64(88.45), 'median_accuracy': np.float64(83.94), 'mean_accuracy': np.float64(84.15), 'min_accuracy': np.float64(76.9), 'std_accuracy': np.float64(3.31), 'avg_ensemble_accuracy': 86.64, 'vote_ensemble_accuracy': 85.2}
+{'max_accuracy': np.float64(88.45), 'median_accuracy': np.float64(83.94), 'mean_accuracy': np.float64(84.15), 'min_accuracy': np.float64(76.9), 'std_accuracy': np.float64(3.31), 'avg_ensemble_accuracy': 86.64, 'vote_ensemble_accuracy': 85.2}
+{'max_accuracy': np.float64(88.45), 'median_accuracy': np.float64(83.94), 'mean_accuracy': np.float64(84.15), 'min_accuracy': np.float64(76.9), 'std_accuracy': np.float64(3.31), 'avg_ensemble_accuracy': 86.64, 'vote_ensemble_accuracy': 85.2}
+[INFO|trainer.py:2907] 2025-06-23 13:58:04,217 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 13:58:04,218 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 13:58:04,218 >>   Batch size = 100
+{'max_accuracy': np.float64(88.45), 'median_accuracy': np.float64(83.94), 'mean_accuracy': np.float64(84.15), 'min_accuracy': np.float64(76.9), 'std_accuracy': np.float64(3.31), 'avg_ensemble_accuracy': 86.64, 'vote_ensemble_accuracy': 85.2}
+all entropy: 0.5767250226203613 0.6761008358708656 0.6907928972351914 0.6907928972351914 0.6883891439800401 0.6902706709253009 0.691680263917418 0.6890688576857509 0.6580074975533652 0.6733033357438176
+avg entropy: 0.6725131422767302
+avg cont entropy: 0.6792108237307187
+delta all entropy: -0.07727255120460574 0.014307515094424295 0.008640206354586621 0.008640206354586621 -0.00475152012476987 -0.0027135897623090655 0.0074808103421006855 0.009176134642227773 0.015027976023167966 0.017272671894680958
+delta avg entropy: -0.00041921403859097596
+all entropy: 0.5767250226203613 0.6761008358708656 0.6907928972351914 0.6907928972351914 0.6883891439800401 0.6902706709253009 0.691680263917418 0.6890688576857509 0.6580074975533652 0.6733033357438176
+avg entropy: 0.6725131422767302
+avg cont entropy: 0.6792108237307187
+delta all entropy: -0.07727255120460574 0.014307515094424295 0.008640206354586621 0.008640206354586621 -0.00475152012476987 -0.0027135897623090655 0.0074808103421006855 0.009176134642227773 0.015027976023167966 0.017272671894680958
+delta avg entropy: -0.00041921403859097596
+all entropy: 0.5767250226203613 0.6761008358708656 0.6907928972351914 0.6907928972351914 0.6883891439800401 0.6902706709253009 0.691680263917418 0.6890688576857509 0.6580074975533652 0.6733033357438176
+avg entropy: 0.6725131422767302
+avg cont entropy: 0.6792108237307187
+delta all entropy: -0.07727255120460574 0.014307515094424295 0.008640206354586621 0.008640206354586621 -0.00475152012476987 -0.0027135897623090655 0.0074808103421006855 0.009176134642227773 0.015027976023167966 0.017272671894680958
+delta avg entropy: -0.00041921403859097596
+all entropy: 0.5767250226203613 0.6761008358708656 0.6907928972351914 0.6907928972351914 0.6883891439800401 0.6902706709253009 0.691680263917418 0.6890688576857509 0.6580074975533652 0.6733033357438176
+avg entropy: 0.6725131422767302
+avg cont entropy: 0.6792108237307187
+delta all entropy: -0.07727255120460574 0.014307515094424295 0.008640206354586621 0.008640206354586621 -0.00475152012476987 -0.0027135897623090655 0.0074808103421006855 0.009176134642227773 0.015027976023167966 0.017272671894680958
+delta avg entropy: -0.00041921403859097596
+all entropy: 0.5767250226203613 0.6761008358708656 0.6907928972351914 0.6907928972351914 0.6883891439800401 0.6902706709253009 0.691680263917418 0.6890688576857509 0.6580074975533652 0.6733033357438176
+avg entropy: 0.6725131422767302
+avg cont entropy: 0.6792108237307187
+delta all entropy: -0.07727255120460574 0.014307515094424295 0.008640206354586621 0.008640206354586621 -0.00475152012476987 -0.0027135897623090655 0.0074808103421006855 0.009176134642227773 0.015027976023167966 0.017272671894680958
+delta avg entropy: -0.00041921403859097596
+all entropy: 0.5767250226203613 0.6761008358708656 0.6907928972351914 0.6907928972351914 0.6883891439800401 0.6902706709253009 0.691680263917418 0.6890688576857509 0.6580074975533652 0.6733033357438176
+avg entropy: 0.6725131422767302
+avg cont entropy: 0.6792108237307187
+delta all entropy: -0.07727255120460574 0.014307515094424295 0.008640206354586621 0.008640206354586621 -0.00475152012476987 -0.0027135897623090655 0.0074808103421006855 0.009176134642227773 0.015027976023167966 0.017272671894680958
+delta avg entropy: -0.00041921403859097596
+all entropy: 0.5767250226203613 0.6761008358708656 0.6907928972351914 0.6907928972351914 0.6883891439800401 0.6902706709253009 0.691680263917418 0.6890688576857509 0.6580074975533652 0.6733033357438176
+avg entropy: 0.6725131422767302
+avg cont entropy: 0.6792108237307187
+delta all entropy: -0.07727255120460574 0.014307515094424295 0.008640206354586621 0.008640206354586621 -0.00475152012476987 -0.0027135897623090655 0.0074808103421006855 0.009176134642227773 0.015027976023167966 0.017272671894680958
+delta avg entropy: -0.00041921403859097596
+{'loss': 0.2969, 'learning_rate': 1.6462222222222224e-05, 'epoch': 26.0}
+{'loss': 0.2955, 'learning_rate': 1.624111111111111e-05, 'epoch': 27.0}
+{'loss': 0.2977, 'learning_rate': 1.6020000000000002e-05, 'epoch': 28.0}
+{'loss': 0.3261, 'learning_rate': 1.579888888888889e-05, 'epoch': 29.0}
+{'loss': 0.3114, 'learning_rate': 1.557777777777778e-05, 'epoch': 30.0}
+[INFO|trainer.py:2907] 2025-06-23 14:04:18,544 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 14:04:18,544 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 14:04:18,544 >>   Batch size = 100
+{'max_accuracy': np.float64(88.45), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(83.57), 'min_accuracy': np.float64(72.92), 'std_accuracy': np.float64(4.52), 'avg_ensemble_accuracy': 88.45, 'vote_ensemble_accuracy': 87.0}
+{'max_accuracy': np.float64(88.45), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(83.57), 'min_accuracy': np.float64(72.92), 'std_accuracy': np.float64(4.52), 'avg_ensemble_accuracy': 88.45, 'vote_ensemble_accuracy': 87.0}
+[INFO|trainer.py:2907] 2025-06-23 14:04:46,139 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 14:04:46,139 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 14:04:46,139 >>   Batch size = 100
+{'max_accuracy': np.float64(88.45), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(83.57), 'min_accuracy': np.float64(72.92), 'std_accuracy': np.float64(4.52), 'avg_ensemble_accuracy': 88.45, 'vote_ensemble_accuracy': 87.0}
+{'max_accuracy': np.float64(88.45), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(83.57), 'min_accuracy': np.float64(72.92), 'std_accuracy': np.float64(4.52), 'avg_ensemble_accuracy': 88.45, 'vote_ensemble_accuracy': 87.0}
+{'max_accuracy': np.float64(88.45), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(83.57), 'min_accuracy': np.float64(72.92), 'std_accuracy': np.float64(4.52), 'avg_ensemble_accuracy': 88.45, 'vote_ensemble_accuracy': 87.0}
+{'max_accuracy': np.float64(88.45), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(83.57), 'min_accuracy': np.float64(72.92), 'std_accuracy': np.float64(4.52), 'avg_ensemble_accuracy': 88.45, 'vote_ensemble_accuracy': 87.0}
+{'max_accuracy': np.float64(88.45), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(83.57), 'min_accuracy': np.float64(72.92), 'std_accuracy': np.float64(4.52), 'avg_ensemble_accuracy': 88.45, 'vote_ensemble_accuracy': 87.0}
+all entropy: 0.5131424035104215 0.6832026653984116 0.69314066410481 0.6928278409578548 0.6636027524745085 0.6868717427125868 0.69298426068761 0.69314066410481 0.6686996168320491 0.6832026653984116
+avg entropy: 0.6670815276181473
+avg cont entropy: 0.6742117717184979
+delta all entropy: -0.14085517031454553 0.021409344621970305 0.010987973224205194 0.01067515007724995 -0.029537911630301505 -0.006112517975023213 0.00878480711229268 0.013247941061286905 0.02572009530185193 0.027172001549274905
+delta avg entropy: -0.0058508286971738375
+all entropy: 0.5131424035104215 0.6832026653984116 0.69314066410481 0.6928278409578548 0.6636027524745085 0.6868717427125868 0.69298426068761 0.69314066410481 0.6686996168320491 0.6832026653984116
+avg entropy: 0.6670815276181473
+avg cont entropy: 0.6742117717184979
+delta all entropy: -0.14085517031454553 0.021409344621970305 0.010987973224205194 0.01067515007724995 -0.029537911630301505 -0.006112517975023213 0.00878480711229268 0.013247941061286905 0.02572009530185193 0.027172001549274905
+delta avg entropy: -0.0058508286971738375
+all entropy: 0.5131424035104215 0.6832026653984116 0.69314066410481 0.6928278409578548 0.6636027524745085 0.6868717427125868 0.69298426068761 0.69314066410481 0.6686996168320491 0.6832026653984116
+avg entropy: 0.6670815276181473
+avg cont entropy: 0.6742117717184979
+delta all entropy: -0.14085517031454553 0.021409344621970305 0.010987973224205194 0.01067515007724995 -0.029537911630301505 -0.006112517975023213 0.00878480711229268 0.013247941061286905 0.02572009530185193 0.027172001549274905
+delta avg entropy: -0.0058508286971738375
+all entropy: 0.5131424035104215 0.6832026653984116 0.69314066410481 0.6928278409578548 0.6636027524745085 0.6868717427125868 0.69298426068761 0.69314066410481 0.6686996168320491 0.6832026653984116
+avg entropy: 0.6670815276181473
+avg cont entropy: 0.6742117717184979
+delta all entropy: -0.14085517031454553 0.021409344621970305 0.010987973224205194 0.01067515007724995 -0.029537911630301505 -0.006112517975023213 0.00878480711229268 0.013247941061286905 0.02572009530185193 0.027172001549274905
+delta avg entropy: -0.0058508286971738375
+all entropy: 0.5131424035104215 0.6832026653984116 0.69314066410481 0.6928278409578548 0.6636027524745085 0.6868717427125868 0.69298426068761 0.69314066410481 0.6686996168320491 0.6832026653984116
+avg entropy: 0.6670815276181473
+avg cont entropy: 0.6742117717184979
+delta all entropy: -0.14085517031454553 0.021409344621970305 0.010987973224205194 0.01067515007724995 -0.029537911630301505 -0.006112517975023213 0.00878480711229268 0.013247941061286905 0.02572009530185193 0.027172001549274905
+delta avg entropy: -0.0058508286971738375
+all entropy: 0.5131424035104215 0.6832026653984116 0.69314066410481 0.6928278409578548 0.6636027524745085 0.6868717427125868 0.69298426068761 0.69314066410481 0.6686996168320491 0.6832026653984116
+avg entropy: 0.6670815276181473
+avg cont entropy: 0.6742117717184979
+delta all entropy: -0.14085517031454553 0.021409344621970305 0.010987973224205194 0.01067515007724995 -0.029537911630301505 -0.006112517975023213 0.00878480711229268 0.013247941061286905 0.02572009530185193 0.027172001549274905
+delta avg entropy: -0.0058508286971738375
+all entropy: 0.5131424035104215 0.6832026653984116 0.69314066410481 0.6928278409578548 0.6636027524745085 0.6868717427125868 0.69298426068761 0.69314066410481 0.6686996168320491 0.6832026653984116
+avg entropy: 0.6670815276181473
+avg cont entropy: 0.6742117717184979
+delta all entropy: -0.14085517031454553 0.021409344621970305 0.010987973224205194 0.01067515007724995 -0.029537911630301505 -0.006112517975023213 0.00878480711229268 0.013247941061286905 0.02572009530185193 0.027172001549274905
+delta avg entropy: -0.0058508286971738375
+{'loss': 0.3277, 'learning_rate': 1.5356666666666668e-05, 'epoch': 31.0}
+{'loss': 0.3556, 'learning_rate': 1.5135555555555557e-05, 'epoch': 32.0}
+{'loss': 0.355, 'learning_rate': 1.491444444444445e-05, 'epoch': 33.0}
+{'loss': 0.3627, 'learning_rate': 1.4693333333333337e-05, 'epoch': 34.0}
+{'loss': 0.3718, 'learning_rate': 1.4472222222222225e-05, 'epoch': 35.0}
+[INFO|trainer.py:2907] 2025-06-23 14:11:03,106 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 14:11:03,106 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 14:11:03,106 >>   Batch size = 100
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(82.17), 'min_accuracy': np.float64(70.4), 'std_accuracy': np.float64(5.05), 'avg_ensemble_accuracy': 88.81, 'vote_ensemble_accuracy': 88.81}
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(82.17), 'min_accuracy': np.float64(70.4), 'std_accuracy': np.float64(5.05), 'avg_ensemble_accuracy': 88.81, 'vote_ensemble_accuracy': 88.81}
+[INFO|trainer.py:2907] 2025-06-23 14:11:30,634 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 14:11:30,634 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 14:11:30,634 >>   Batch size = 100
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(82.17), 'min_accuracy': np.float64(70.4), 'std_accuracy': np.float64(5.05), 'avg_ensemble_accuracy': 88.81, 'vote_ensemble_accuracy': 88.81}
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(82.17), 'min_accuracy': np.float64(70.4), 'std_accuracy': np.float64(5.05), 'avg_ensemble_accuracy': 88.81, 'vote_ensemble_accuracy': 88.81}
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(82.17), 'min_accuracy': np.float64(70.4), 'std_accuracy': np.float64(5.05), 'avg_ensemble_accuracy': 88.81, 'vote_ensemble_accuracy': 88.81}
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(82.17), 'min_accuracy': np.float64(70.4), 'std_accuracy': np.float64(5.05), 'avg_ensemble_accuracy': 88.81, 'vote_ensemble_accuracy': 88.81}
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(84.66), 'mean_accuracy': np.float64(82.17), 'min_accuracy': np.float64(70.4), 'std_accuracy': np.float64(5.05), 'avg_ensemble_accuracy': 88.81, 'vote_ensemble_accuracy': 88.81}
+all entropy: 0.466652892436316 0.6883891439800401 0.6876567982159768 0.6890688576857509 0.6356767959779457 0.6702887419175763 0.678682484276075 0.6876567982159768 0.678682484276075 0.692358483831969
+avg entropy: 0.6575113480813701
+avg cont entropy: 0.66284280092778
+delta all entropy: -0.187344681388651 0.02659582320359888 0.005504107335371988 0.006916166805146062 -0.057463868126864326 -0.02269551877003373 -0.00551696929924228 0.007764075172453699 0.03570296274587781 0.0363278199828323
+delta avg entropy: -0.015421008233951062
+all entropy: 0.466652892436316 0.6883891439800401 0.6876567982159768 0.6890688576857509 0.6356767959779457 0.6702887419175763 0.678682484276075 0.6876567982159768 0.678682484276075 0.692358483831969
+avg entropy: 0.6575113480813701
+avg cont entropy: 0.66284280092778
+delta all entropy: -0.187344681388651 0.02659582320359888 0.005504107335371988 0.006916166805146062 -0.057463868126864326 -0.02269551877003373 -0.00551696929924228 0.007764075172453699 0.03570296274587781 0.0363278199828323
+delta avg entropy: -0.015421008233951062
+all entropy: 0.466652892436316 0.6883891439800401 0.6876567982159768 0.6890688576857509 0.6356767959779457 0.6702887419175763 0.678682484276075 0.6876567982159768 0.678682484276075 0.692358483831969
+avg entropy: 0.6575113480813701
+avg cont entropy: 0.66284280092778
+delta all entropy: -0.187344681388651 0.02659582320359888 0.005504107335371988 0.006916166805146062 -0.057463868126864326 -0.02269551877003373 -0.00551696929924228 0.007764075172453699 0.03570296274587781 0.0363278199828323
+delta avg entropy: -0.015421008233951062
+all entropy: 0.466652892436316 0.6883891439800401 0.6876567982159768 0.6890688576857509 0.6356767959779457 0.6702887419175763 0.678682484276075 0.6876567982159768 0.678682484276075 0.692358483831969
+avg entropy: 0.6575113480813701
+avg cont entropy: 0.66284280092778
+delta all entropy: -0.187344681388651 0.02659582320359888 0.005504107335371988 0.006916166805146062 -0.057463868126864326 -0.02269551877003373 -0.00551696929924228 0.007764075172453699 0.03570296274587781 0.0363278199828323
+delta avg entropy: -0.015421008233951062
+all entropy: 0.466652892436316 0.6883891439800401 0.6876567982159768 0.6890688576857509 0.6356767959779457 0.6702887419175763 0.678682484276075 0.6876567982159768 0.678682484276075 0.692358483831969
+avg entropy: 0.6575113480813701
+avg cont entropy: 0.66284280092778
+delta all entropy: -0.187344681388651 0.02659582320359888 0.005504107335371988 0.006916166805146062 -0.057463868126864326 -0.02269551877003373 -0.00551696929924228 0.007764075172453699 0.03570296274587781 0.0363278199828323
+delta avg entropy: -0.015421008233951062
+all entropy: 0.466652892436316 0.6883891439800401 0.6876567982159768 0.6890688576857509 0.6356767959779457 0.6702887419175763 0.678682484276075 0.6876567982159768 0.678682484276075 0.692358483831969
+avg entropy: 0.6575113480813701
+avg cont entropy: 0.66284280092778
+delta all entropy: -0.187344681388651 0.02659582320359888 0.005504107335371988 0.006916166805146062 -0.057463868126864326 -0.02269551877003373 -0.00551696929924228 0.007764075172453699 0.03570296274587781 0.0363278199828323
+delta avg entropy: -0.015421008233951062
+all entropy: 0.466652892436316 0.6883891439800401 0.6876567982159768 0.6890688576857509 0.6356767959779457 0.6702887419175763 0.678682484276075 0.6876567982159768 0.678682484276075 0.692358483831969
+avg entropy: 0.6575113480813701
+avg cont entropy: 0.66284280092778
+delta all entropy: -0.187344681388651 0.02659582320359888 0.005504107335371988 0.006916166805146062 -0.057463868126864326 -0.02269551877003373 -0.00551696929924228 0.007764075172453699 0.03570296274587781 0.0363278199828323
+delta avg entropy: -0.015421008233951062
+{'loss': 0.4178, 'learning_rate': 1.4251111111111114e-05, 'epoch': 36.0}
+{'loss': 0.3988, 'learning_rate': 1.4030000000000001e-05, 'epoch': 37.0}
+{'loss': 0.4265, 'learning_rate': 1.3808888888888892e-05, 'epoch': 38.0}
+{'loss': 0.4022, 'learning_rate': 1.3587777777777781e-05, 'epoch': 39.0}
+{'loss': 0.4848, 'learning_rate': 1.336666666666667e-05, 'epoch': 40.0}
+[INFO|trainer.py:2907] 2025-06-23 14:17:48,106 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 14:17:48,106 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 14:17:48,106 >>   Batch size = 100
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(80.14), 'mean_accuracy': np.float64(78.74), 'min_accuracy': np.float64(69.31), 'std_accuracy': np.float64(5.37), 'avg_ensemble_accuracy': 84.84, 'vote_ensemble_accuracy': 84.48}
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(80.14), 'mean_accuracy': np.float64(78.74), 'min_accuracy': np.float64(69.31), 'std_accuracy': np.float64(5.37), 'avg_ensemble_accuracy': 84.84, 'vote_ensemble_accuracy': 84.48}
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(80.14), 'mean_accuracy': np.float64(78.74), 'min_accuracy': np.float64(69.31), 'std_accuracy': np.float64(5.37), 'avg_ensemble_accuracy': 84.84, 'vote_ensemble_accuracy': 84.48}
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(80.14), 'mean_accuracy': np.float64(78.74), 'min_accuracy': np.float64(69.31), 'std_accuracy': np.float64(5.37), 'avg_ensemble_accuracy': 84.84, 'vote_ensemble_accuracy': 84.48}
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(80.14), 'mean_accuracy': np.float64(78.74), 'min_accuracy': np.float64(69.31), 'std_accuracy': np.float64(5.37), 'avg_ensemble_accuracy': 84.84, 'vote_ensemble_accuracy': 84.48}
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(80.14), 'mean_accuracy': np.float64(78.74), 'min_accuracy': np.float64(69.31), 'std_accuracy': np.float64(5.37), 'avg_ensemble_accuracy': 84.84, 'vote_ensemble_accuracy': 84.48}
+[INFO|trainer.py:2907] 2025-06-23 14:18:16,251 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 14:18:16,251 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 14:18:16,251 >>   Batch size = 100
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(80.14), 'mean_accuracy': np.float64(78.74), 'min_accuracy': np.float64(69.31), 'std_accuracy': np.float64(5.37), 'avg_ensemble_accuracy': 84.84, 'vote_ensemble_accuracy': 84.48}
+all entropy: 0.44959153012584874 0.6883891439800401 0.653997573824967 0.6519079859154411 0.5532341597979409 0.6135921720303664 0.6278452104537974 0.6580074975533652 0.6926192559325051 0.6841994535753173
+avg entropy: 0.6273383983189589
+avg cont entropy: 0.6383513237513847
+delta all entropy: -0.2044060436991183 0.02659582320359888 -0.02815511705563778 -0.030244704965163738 -0.13990650430686913 -0.07939208865724356 -0.05635424312151993 -0.021885225490157922 0.049639734402307845 0.028168789726180643
+delta avg entropy: -0.0455939579963623
+all entropy: 0.44959153012584874 0.6883891439800401 0.653997573824967 0.6519079859154411 0.5532341597979409 0.6135921720303664 0.6278452104537974 0.6580074975533652 0.6926192559325051 0.6841994535753173all entropy: 0.44959153012584874 0.6883891439800401 0.653997573824967 0.6519079859154411 0.5532341597979409 0.6135921720303664 0.6278452104537974 0.6580074975533652 0.6926192559325051 0.6841994535753173
+
+avg entropy: 0.6273383983189589
+avg cont entropy: 0.6383513237513847
+avg entropy: 0.6273383983189589
+avg cont entropy: 0.6383513237513847
+delta all entropy: -0.2044060436991183 0.02659582320359888 -0.02815511705563778 -0.030244704965163738 -0.13990650430686913 -0.07939208865724356 -0.05635424312151993 -0.021885225490157922 0.049639734402307845 0.028168789726180643
+delta avg entropy: -0.0455939579963623
+delta all entropy: -0.2044060436991183 0.02659582320359888 -0.02815511705563778 -0.030244704965163738 -0.13990650430686913 -0.07939208865724356 -0.05635424312151993 -0.021885225490157922 0.049639734402307845 0.028168789726180643
+delta avg entropy: -0.0455939579963623
+all entropy: 0.44959153012584874 0.6883891439800401 0.653997573824967 0.6519079859154411 0.5532341597979409 0.6135921720303664 0.6278452104537974 0.6580074975533652 0.6926192559325051 0.6841994535753173
+avg entropy: 0.6273383983189589
+avg cont entropy: 0.6383513237513847
+delta all entropy: -0.2044060436991183 0.02659582320359888 -0.02815511705563778 -0.030244704965163738 -0.13990650430686913 -0.07939208865724356 -0.05635424312151993 -0.021885225490157922 0.049639734402307845 0.028168789726180643
+delta avg entropy: -0.0455939579963623
+all entropy: 0.44959153012584874 0.6883891439800401 0.653997573824967 0.6519079859154411 0.5532341597979409 0.6135921720303664 0.6278452104537974 0.6580074975533652 0.6926192559325051 0.6841994535753173
+avg entropy: 0.6273383983189589
+avg cont entropy: 0.6383513237513847
+delta all entropy: -0.2044060436991183 0.02659582320359888 -0.02815511705563778 -0.030244704965163738 -0.13990650430686913 -0.07939208865724356 -0.05635424312151993 -0.021885225490157922 0.049639734402307845 0.028168789726180643
+delta avg entropy: -0.0455939579963623
+all entropy: 0.44959153012584874 0.6883891439800401 0.653997573824967 0.6519079859154411 0.5532341597979409 0.6135921720303664 0.6278452104537974 0.6580074975533652 0.6926192559325051 0.6841994535753173
+avg entropy: 0.6273383983189589
+avg cont entropy: 0.6383513237513847all entropy: 0.44959153012584874 0.6883891439800401 0.653997573824967 0.6519079859154411 0.5532341597979409 0.6135921720303664 0.6278452104537974 0.6580074975533652 0.6926192559325051 0.6841994535753173
+
+delta all entropy: -0.2044060436991183 0.02659582320359888 -0.02815511705563778 -0.030244704965163738 -0.13990650430686913 -0.07939208865724356 -0.05635424312151993 -0.021885225490157922 0.049639734402307845 0.028168789726180643
+delta avg entropy: -0.0455939579963623avg entropy: 0.6273383983189589
+
+avg cont entropy: 0.6383513237513847
+delta all entropy: -0.2044060436991183 0.02659582320359888 -0.02815511705563778 -0.030244704965163738 -0.13990650430686913 -0.07939208865724356 -0.05635424312151993 -0.021885225490157922 0.049639734402307845 0.028168789726180643
+delta avg entropy: -0.0455939579963623
+[INFO|trainer.py:2031] 2025-06-23 14:18:43,904 >> 
+
+Training completed. Do not forget to share your model on huggingface.co/models =)
+
+
+{'train_runtime': 3222.9174, 'train_samples_per_second': 8.688, 'train_steps_per_second': 0.31, 'train_loss': 0.2981479126214981, 'epoch': 40.0}
+[INFO|trainer.py:2907] 2025-06-23 14:18:43,905 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 14:18:43,905 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 14:18:43,906 >>   Batch size = 100
+all entropy: 0.44959153012584874 0.6883891439800401 0.653997573824967 0.6519079859154411 0.5532341597979409 0.6135921720303664 0.6278452104537974 0.6580074975533652 0.6926192559325051 0.6841994535753173
+avg entropy: 0.6273383983189589
+avg cont entropy: 0.6383513237513847
+delta all entropy: -0.2044060436991183 0.02659582320359888 -0.02815511705563778 -0.030244704965163738 -0.13990650430686913 -0.07939208865724356 -0.05635424312151993 -0.021885225490157922 0.049639734402307845 0.028168789726180643
+delta avg entropy: -0.0455939579963623
+all entropy: 0.44959153012584874 0.6883891439800401 0.653997573824967 0.6519079859154411 0.5532341597979409 0.6135921720303664 0.6278452104537974 0.6580074975533652 0.6926192559325051 0.6841994535753173
+avg entropy: 0.6273383983189589
+avg cont entropy: 0.6383513237513847
+delta all entropy: -0.2044060436991183 0.02659582320359888 -0.02815511705563778 -0.030244704965163738 -0.13990650430686913 -0.07939208865724356 -0.05635424312151993 -0.021885225490157922 0.049639734402307845 0.028168789726180643
+delta avg entropy: -0.0455939579963623
+all entropy: 0.44959153012584874 0.6883891439800401 0.653997573824967 0.6519079859154411 0.5532341597979409 0.6135921720303664 0.6278452104537974 0.6580074975533652 0.6926192559325051 0.6841994535753173
+avg entropy: 0.6273383983189589
+avg cont entropy: 0.6383513237513847
+delta all entropy: -0.2044060436991183 0.02659582320359888 -0.02815511705563778 -0.030244704965163738 -0.13990650430686913 -0.07939208865724356 -0.05635424312151993 -0.021885225490157922 0.049639734402307845 0.028168789726180643
+delta avg entropy: -0.0455939579963623
+all entropy: 0.44959153012584874 0.6883891439800401 0.653997573824967 0.6519079859154411 0.5532341597979409 0.6135921720303664 0.6278452104537974 0.6580074975533652 0.6926192559325051 0.6841994535753173
+avg entropy: 0.6273383983189589
+avg cont entropy: 0.6383513237513847
+delta all entropy: -0.2044060436991183 0.02659582320359888 -0.02815511705563778 -0.030244704965163738 -0.13990650430686913 -0.07939208865724356 -0.05635424312151993 -0.021885225490157922 0.049639734402307845 0.028168789726180643
+delta avg entropy: -0.0455939579963623
+all entropy: 0.44959153012584874 0.6883891439800401 0.653997573824967 0.6519079859154411 0.5532341597979409 0.6135921720303664 0.6278452104537974 0.6580074975533652 0.6926192559325051 0.6841994535753173
+avg entropy: 0.6273383983189589
+avg cont entropy: 0.6383513237513847
+delta all entropy: -0.2044060436991183 0.02659582320359888 -0.02815511705563778 -0.030244704965163738 -0.13990650430686913 -0.07939208865724356 -0.05635424312151993 -0.021885225490157922 0.049639734402307845 0.028168789726180643
+delta avg entropy: -0.0455939579963623
+all entropy: 0.44959153012584874 0.6883891439800401 0.653997573824967 0.6519079859154411 0.5532341597979409 0.6135921720303664 0.6278452104537974 0.6580074975533652 0.6926192559325051 0.6841994535753173
+avg entropy: 0.6273383983189589
+avg cont entropy: 0.6383513237513847
+delta all entropy: -0.2044060436991183 0.02659582320359888 -0.02815511705563778 -0.030244704965163738 -0.13990650430686913 -0.07939208865724356 -0.05635424312151993 -0.021885225490157922 0.049639734402307845 0.028168789726180643
+delta avg entropy: -0.0455939579963623
+all entropy: 0.44959153012584874 0.6883891439800401 0.653997573824967 0.6519079859154411 0.5532341597979409 0.6135921720303664 0.6278452104537974 0.6580074975533652 0.6926192559325051 0.6841994535753173
+avg entropy: 0.6273383983189589
+avg cont entropy: 0.6383513237513847
+delta all entropy: -0.2044060436991183 0.02659582320359888 -0.02815511705563778 -0.030244704965163738 -0.13990650430686913 -0.07939208865724356 -0.05635424312151993 -0.021885225490157922 0.049639734402307845 0.028168789726180643
+delta avg entropy: -0.0455939579963623
+06/23/2025 14:19:11 - INFO - __main__ - dev_unsupervised_all entropy = [0.44959153 0.68838914 0.65399757 0.65190799 0.55323416 0.61359217
+ 0.62784521 0.6580075  0.69261926 0.68419945]
+06/23/2025 14:19:11 - INFO - __main__ - dev_unsupervised_avg entropy = 0.6273383983189589
+06/23/2025 14:19:11 - INFO - __main__ - dev_unsupervised_avg cont entropy = 0.6383513237513847
+06/23/2025 14:19:11 - INFO - __main__ - dev_unsupervised_delta all entropy = [-0.20440604  0.02659582 -0.02815512 -0.0302447  -0.1399065  -0.07939209
+ -0.05635424 -0.02188523  0.04963973  0.02816879]
+06/23/2025 14:19:11 - INFO - __main__ - dev_unsupervised_delta avg entropy = -0.0455939579963623
+[INFO|trainer.py:2907] 2025-06-23 14:19:11,400 >> ***** Running Evaluation *****
+[INFO|trainer.py:2909] 2025-06-23 14:19:11,400 >>   Num examples = 5540
+[INFO|trainer.py:2912] 2025-06-23 14:19:11,400 >>   Batch size = 100
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(80.14), 'mean_accuracy': np.float64(78.74), 'min_accuracy': np.float64(69.31), 'std_accuracy': np.float64(5.37), 'avg_ensemble_accuracy': 84.84, 'vote_ensemble_accuracy': 84.48}
+Best checkpoint at step 350: 
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+Best checkpoint selected by avg entropy at step 350:
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+Best checkpoint selected by avg cont entropy at step 350:
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(80.14), 'mean_accuracy': np.float64(78.74), 'min_accuracy': np.float64(69.31), 'std_accuracy': np.float64(5.37), 'avg_ensemble_accuracy': 84.84, 'vote_ensemble_accuracy': 84.48}
+Best checkpoint at step 350: 
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+Best checkpoint selected by avg entropy at step 350:
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+Best checkpoint selected by avg cont entropy at step 350:
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(80.14), 'mean_accuracy': np.float64(78.74), 'min_accuracy': np.float64(69.31), 'std_accuracy': np.float64(5.37), 'avg_ensemble_accuracy': 84.84, 'vote_ensemble_accuracy': 84.48}
+06/23/2025 14:19:39 - INFO - __main__ - max_accuracy = 86.28
+06/23/2025 14:19:39 - INFO - __main__ - median_accuracy = 80.14
+06/23/2025 14:19:39 - INFO - __main__ - mean_accuracy = 78.74
+06/23/2025 14:19:39 - INFO - __main__ - min_accuracy = 69.31
+06/23/2025 14:19:39 - INFO - __main__ - std_accuracy = 5.37
+06/23/2025 14:19:39 - INFO - __main__ - avg_ensemble_accuracy = 84.84
+06/23/2025 14:19:39 - INFO - __main__ - vote_ensemble_accuracy = 84.48
+Best checkpoint at step 350: 
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+Best checkpoint selected by avg entropy at step 350:
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+Best checkpoint selected by avg cont entropy at step 350:
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(80.14), 'mean_accuracy': np.float64(78.74), 'min_accuracy': np.float64(69.31), 'std_accuracy': np.float64(5.37), 'avg_ensemble_accuracy': 84.84, 'vote_ensemble_accuracy': 84.48}
+Best checkpoint at step 350: 
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+Best checkpoint selected by avg entropy at step 350:
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+Best checkpoint selected by avg cont entropy at step 350:
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(80.14), 'mean_accuracy': np.float64(78.74), 'min_accuracy': np.float64(69.31), 'std_accuracy': np.float64(5.37), 'avg_ensemble_accuracy': 84.84, 'vote_ensemble_accuracy': 84.48}
+Best checkpoint at step 350: 
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+Best checkpoint selected by avg entropy at step 350:
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+Best checkpoint selected by avg cont entropy at step 350:
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(80.14), 'mean_accuracy': np.float64(78.74), 'min_accuracy': np.float64(69.31), 'std_accuracy': np.float64(5.37), 'avg_ensemble_accuracy': 84.84, 'vote_ensemble_accuracy': 84.48}
+Best checkpoint at step 350: 
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+Best checkpoint selected by avg entropy at step 350:
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+Best checkpoint selected by avg cont entropy at step 350:
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+{'max_accuracy': np.float64(86.28), 'median_accuracy': np.float64(80.14), 'mean_accuracy': np.float64(78.74), 'min_accuracy': np.float64(69.31), 'std_accuracy': np.float64(5.37), 'avg_ensemble_accuracy': 84.84, 'vote_ensemble_accuracy': 84.48}
+Best checkpoint at step 350: 
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+Best checkpoint selected by avg entropy at step 350:
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+Best checkpoint selected by avg cont entropy at step 350:
+max_accuracy=86.28,median_accuracy=84.66,mean_accuracy=82.17,min_accuracy=70.4,std_accuracy=5.05,avg_ensemble_accuracy=88.81,vote_ensemble_accuracy=88.81
+bosco:1879421:1888946 [1] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879421:1888946 [1] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879421:1888946 [1] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879421:1888946 [1] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879421:1888946 [1] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879421:1888946 [1] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879421:1888946 [1] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879421:1888946 [1] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879421:1888946 [1] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879421:1883075 [1] NCCL INFO misc/socket.cc:881 -> 3
+[rank0]:[W623 14:19:40.374974899 ProcessGroupNCCL.cpp:1479] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+bosco:1879420:1888950 [0] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879420:1888950 [0] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879420:1888950 [0] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879420:1888950 [0] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879420:1888950 [0] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879420:1888950 [0] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879420:1888950 [0] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879420:1888950 [0] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879420:1888950 [0] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879420:1883076 [0] NCCL INFO misc/socket.cc:881 -> 3
+bosco:1879421:1883075 [1] NCCL INFO misc/socket.cc:881 -> 3
+bosco:1879421:1888946 [1] NCCL INFO comm 0x55e6bf241000 rank 1 nranks 7 cudaDev 1 busId 3a000 - Abort COMPLETE
+bosco:1879422:1888952 [2] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879422:1888952 [2] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879422:1888952 [2] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879422:1888952 [2] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879422:1888952 [2] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879422:1888952 [2] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879422:1888952 [2] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879422:1888952 [2] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879422:1888952 [2] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879422:1883073 [2] NCCL INFO misc/socket.cc:881 -> 3
+bosco:1879423:1888954 [3] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879420:1883076 [0] NCCL INFO misc/socket.cc:881 -> 3
+bosco:1879423:1888954 [3] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879423:1888954 [3] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879423:1888954 [3] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879423:1888954 [3] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879423:1888954 [3] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879423:1888954 [3] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879423:1888954 [3] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879423:1888954 [3] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879423:1883074 [3] NCCL INFO misc/socket.cc:881 -> 3
+bosco:1879425:1888956 [5] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879425:1888956 [5] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879425:1888956 [5] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879425:1888956 [5] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879425:1888956 [5] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879425:1888956 [5] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879425:1888956 [5] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879425:1888956 [5] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879425:1888956 [5] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879425:1883072 [5] NCCL INFO misc/socket.cc:881 -> 3
+bosco:1879424:1888958 [4] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879424:1888958 [4] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879424:1888958 [4] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879424:1888958 [4] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879424:1888958 [4] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879424:1888958 [4] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879424:1888958 [4] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879424:1888958 [4] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879424:1888958 [4] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879424:1883078 [4] NCCL INFO misc/socket.cc:881 -> 3
+bosco:1879422:1883073 [2] NCCL INFO misc/socket.cc:881 -> 3
+bosco:1879425:1883072 [5] NCCL INFO misc/socket.cc:881 -> 3
+bosco:1879422:1888952 [2] NCCL INFO comm 0x55b3dcedec40 rank 2 nranks 7 cudaDev 2 busId 3b000 - Abort COMPLETE
+bosco:1879426:1888960 [6] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879426:1888960 [6] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879426:1888960 [6] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879423:1883074 [3] NCCL INFO misc/socket.cc:881 -> 3
+bosco:1879426:1888960 [6] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879426:1888960 [6] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879426:1888960 [6] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879426:1888960 [6] NCCL INFO misc/socket.cc:64 -> 3
+bosco:1879426:1888960 [6] NCCL INFO misc/socket.cc:80 -> 3
+bosco:1879426:1888960 [6] NCCL INFO misc/socket.cc:829 -> 3
+bosco:1879426:1883079 [6] NCCL INFO misc/socket.cc:881 -> 3
+bosco:1879423:1888954 [3] NCCL INFO comm 0x563c82591310 rank 3 nranks 7 cudaDev 3 busId 3c000 - Abort COMPLETE
+bosco:1879425:1888956 [5] NCCL INFO comm 0x55f5c2ae4060 rank 5 nranks 7 cudaDev 5 busId ae000 - Abort COMPLETE
+bosco:1879420:1888950 [0] NCCL INFO comm 0x56096e1555d0 rank 0 nranks 7 cudaDev 0 busId 2d000 - Abort COMPLETE
+bosco:1879420:1883025 [0] NCCL INFO [Service thread] Connection closed by localRank 1
+bosco:1879422:1883016 [2] NCCL INFO [Service thread] Connection closed by localRank 1
+bosco:1879424:1888958 [4] NCCL INFO comm 0x55c8a3b2b440 rank 4 nranks 7 cudaDev 4 busId ad000 - Abort COMPLETE
+bosco:1879424:1883017 [4] NCCL INFO [Service thread] Connection closed by localRank 2
+bosco:1879426:1888960 [6] NCCL INFO comm 0x55af25ecbc10 rank 6 nranks 7 cudaDev 6 busId bd000 - Abort COMPLETE
+[2025-06-23 14:19:41,762] [INFO] [launch.py:351:main] Process 1879421 exits successfully.
+bosco:1879424:1883017 [0] NCCL INFO [Service thread] Connection closed by localRank 5
+bosco:1879426:1883014 [6] NCCL INFO [Service thread] Connection closed by localRank 5
+bosco:1879426:1883014 [6] NCCL INFO [Service thread] Connection closed by localRank 3
+[2025-06-23 14:19:42,764] [INFO] [launch.py:351:main] Process 1879422 exits successfully.
+[2025-06-23 14:19:42,764] [INFO] [launch.py:351:main] Process 1879420 exits successfully.
+[2025-06-23 14:19:42,765] [INFO] [launch.py:351:main] Process 1879425 exits successfully.
+[2025-06-23 14:19:42,765] [INFO] [launch.py:351:main] Process 1879426 exits successfully.
+[2025-06-23 14:19:42,765] [INFO] [launch.py:351:main] Process 1879423 exits successfully.
+[2025-06-23 14:19:43,767] [INFO] [launch.py:351:main] Process 1879424 exits successfully.
