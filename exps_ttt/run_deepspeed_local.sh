@@ -101,9 +101,9 @@ SAVE="$REPO_ROOT/checkpoints/${dname}/${exp_name}_${DATE}"
 rm -rf "${SAVE}"; mkdir -p "${SAVE}"
 cp "$0" "${SAVE}/run.sh"
 
-# Launch with DeepSpeed on 8 GPUs
+# Launch with DeepSpeed on 7 GPUs
 
-deepspeed --num_gpus 8 "$REPO_ROOT/examples/pytorch/t0-zero-shot/run_t0.py" \
+deepspeed --num_gpus 7 "$REPO_ROOT/examples/pytorch/t0-zero-shot/run_t0.py" \
   --deepspeed "$REPO_ROOT/deepspeed_configs/ds_config_zero2.json" \
   --dataset_name ${dataset} --subset_name ${subset} --prompt_set_name ${dataset} --testset_name ${testset_name} \
   --model_name_or_path ${model} --per_device_train_batch_size ${bsz} --per_device_eval_batch_size ${eval_bsz} \
