@@ -17,10 +17,11 @@ cache_dir="$REPO_ROOT/pretrain_models/huggingface"
 # Allow Transformers to download models if they are not present locally.
 # Uncomment the next line to disable network access and run strictly offline.
 # export TRANSFORMERS_OFFLINE=1
-export WANDB_MODE=offline
+# Enable wandb logging
+export WANDB_MODE=online
 
 # wandb env variables
-export WANDB_PROJECT=gaogao
+export WANDB_PROJECT="swarm-distillation"
 export WANDB_WATCH="false"
 
 # Avoid protobuf runtime errors when using precompiled tokenizer protobufs.
@@ -124,6 +125,6 @@ deepspeed --num_gpus 7 "$REPO_ROOT/examples/pytorch/t0-zero-shot/run_t0.py" \
   --train_random_n_prompts ${nprompts} --train_data_source ${train_data} \
   --save_strategy "no" --warmup_steps 100 --gradient_accumulation_steps ${ga} \
   --lr_scheduler_type ${lr_scheduler_type} \
-  --output_dir ${SAVE} --overwrite_output_dir --report_to "none" \
+  --output_dir ${SAVE} --overwrite_output_dir --report_to "wandb" \
   --bf16 \
   --disable_tqdm "True" 2>&1 | tee ${SAVE}/log.txt
