@@ -26,6 +26,11 @@ export WANDB_WATCH="false"
 # Avoid protobuf runtime errors when using precompiled tokenizer protobufs.
 export PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python
 
+# Enable verbose NCCL logging and disable peer-to-peer access to help
+# diagnose or avoid NCCL collectives hanging on some systems.
+export NCCL_DEBUG=INFO
+export NCCL_P2P_DISABLE=1
+
 export TOKENIZERS_PARALLELISM="false"
 DATE=`date +%Y%m%d`
 
