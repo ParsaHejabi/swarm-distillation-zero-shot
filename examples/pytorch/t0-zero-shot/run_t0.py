@@ -202,6 +202,10 @@ def main():
                 p.requires_grad = True
             else:
                 p.requires_grad = False
+        # ensure parameters are contiguous for deepspeed broadcast
+        for p in model.parameters():
+            if not p.data.is_contiguous():
+                p.data = p.data.contiguous()
         return model
 
     if test_args.test_mode == "t0":
