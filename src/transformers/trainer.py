@@ -826,16 +826,25 @@ class Trainer:
         if self.optimizer is None:
             decay_parameters = get_parameter_names(self.model, [nn.LayerNorm])
             decay_parameters = [name for name in decay_parameters if "bias" not in name]
-            optimizer_grouped_parameters = [
-                {
-                    "params": [p for n, p in self.model.named_parameters() if n in decay_parameters],
-                    "weight_decay": self.args.weight_decay,
-                },
-                {
-                    "params": [p for n, p in self.model.named_parameters() if n not in decay_parameters],
-                    "weight_decay": 0.0,
-                },
+            decay_group = [
+                p for n, p in self.model.named_parameters()
+                if n in decay_parameters and p.requires_grad
             ]
+            non_decay_group = [
+                p for n, p in self.model.named_parameters()
+                if n not in decay_parameters and p.requires_grad
+            ]
+            optimizer_grouped_parameters = []
+            if len(decay_group) > 0:
+                optimizer_grouped_parameters.append({
+                    "params": decay_group,
+                    "weight_decay": self.args.weight_decay,
+                })
+            if len(non_decay_group) > 0:
+                optimizer_grouped_parameters.append({
+                    "params": non_decay_group,
+                    "weight_decay": 0.0,
+                })
             optimizer_cls = Adafactor if self.args.adafactor else AdamW
             if self.args.adafactor:
                 optimizer_cls = Adafactor
