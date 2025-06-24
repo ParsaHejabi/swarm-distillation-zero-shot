@@ -21,7 +21,6 @@ cache_dir="$REPO_ROOT/pretrain_models/huggingface"
 export WANDB_MODE=online
 
 # wandb env variables
-export WANDB_API_KEY=f91e8e2147583923d589354eccb8a5eac45b86ee
 export WANDB_PROJECT="swarm-distillation"
 export WANDB_WATCH="false"
 
@@ -124,7 +123,7 @@ deepspeed --num_gpus 7 "$REPO_ROOT/examples/pytorch/t0-zero-shot/run_t0.py" \
   --lora_dropout ${lora_dropout} --lora_alpha ${lora_alpha} --lora_pos ${lora_pos} \
   --prob_temperature ${temp} --combine_option ${copt} \
   --train_random_n_prompts ${nprompts} --train_data_source ${train_data} \
-  --save_strategy "no" --warmup_steps 100 --gradient_accumulation_steps ${ga} \
+  --save_strategy 'steps' --warmup_steps 100 --gradient_accumulation_steps ${ga} \
   --lr_scheduler_type ${lr_scheduler_type} \
   --output_dir ${SAVE} --overwrite_output_dir --report_to "wandb" \
   --bf16 \
