@@ -1,7 +1,7 @@
-max_accuracy=90.61,median_accuracy=84.48,mean_accuracy=85.27,min_accuracy=81.95,std_accuracy=2.49,avg_ensemble_accuracy=85.56,vote_ensemble_accuracy=85.92
-acc: 83.75451263537906 85.1985559566787 87.36462093862815 87.00361010830325 83.03249097472924 90.61371841155234 86.64259927797833 83.39350180505414 81.94945848375451 83.75451263537906
-ent: 0.3268922875709472 0.3957416792156312 0.4076547854815763 0.40326260404655384 0.4508646591750632 0.42999657439266203 0.4291977840252913 0.41741516248105776 0.34819577576388583 0.3968553123344773
-gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,1 1 1 1 1 1 1 1 1 1
+max_accuracy=90.61,median_accuracy=84.66,mean_accuracy=85.23,min_accuracy=81.95,std_accuracy=2.51,avg_ensemble_accuracy=85.56,vote_ensemble_accuracy=85.92
+acc: 83.39350180505414 85.1985559566787 87.36462093862815 87.00361010830325 82.31046931407943 90.61371841155234 86.28158844765343 84.11552346570397 81.94945848375451 84.11552346570397
+ent: 0.32745254504709226 0.39576771946252315 0.4076965598074451 0.40299759564991905 0.45068454364476923 0.4299959954048535 0.4291541053929843 0.4177048374102048 0.3483444948611629 0.39679290204614365
+gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,0 1 1 1 1 1 1 1 1 1
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,1 0 0 0 1 0 1 0 0 0
 gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,1 1 1 1 1 1 1 1 1 1
 gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,0 0 1 1 1 1 1 1 1 0
@@ -103,7 +103,7 @@ gold=0,median=1,max=1,avg_esemb=1,vote_esemb=1,1 1 1 1 0 1 1 1 1 1
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
 gold=0,median=1,max=1,avg_esemb=0,vote_esemb=0,0 0 0 0 0 1 0 0 0 0
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 1 0 0 0 0 0
-gold=0,median=1,max=1,avg_esemb=0,vote_esemb=0,0 0 1 0 0 1 0 0 0 0
+gold=0,median=1,max=1,avg_esemb=0,vote_esemb=0,0 0 1 0 1 1 0 0 0 0
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
@@ -175,7 +175,7 @@ gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 1 0 0 0 0 0
 gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,1 1 1 1 1 1 1 1 1 1
 gold=0,median=1,max=1,avg_esemb=1,vote_esemb=1,0 1 1 0 1 1 1 1 0 0
-gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
+gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 1 0 0 0 0 0
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
@@ -201,7 +201,7 @@ gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,1 1 1 1 1 1 1 1 1 1
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
 gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,1 1 1 1 1 1 1 1 1 1
 gold=1,median=1,max=1,avg_esemb=0,vote_esemb=0,0 0 0 0 1 1 1 0 0 0
-gold=0,median=1,max=1,avg_esemb=0,vote_esemb=0,0 1 1 0 0 1 1 1 0 0
+gold=0,median=1,max=1,avg_esemb=0,vote_esemb=0,0 1 1 0 0 1 1 0 0 0
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
 gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,1 1 1 1 1 1 1 1 1 1
@@ -242,7 +242,7 @@ gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
 gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,1 1 1 1 1 1 1 1 1 1
 gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,1 1 1 0 1 1 1 1 1 1
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 1 0 0
-gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 1 0 0
+gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 1 1 0 0
 gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,1 1 1 1 1 1 1 1 1 1
 gold=1,median=1,max=1,avg_esemb=1,vote_esemb=0,0 1 1 1 1 1 0 0 0 0
 gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,1 1 1 1 1 1 1 1 1 1
@@ -272,7 +272,7 @@ gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,1 1 1 1 1 1 1 1 1 1
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
 gold=1,median=1,max=1,avg_esemb=0,vote_esemb=0,0 0 0 0 0 1 0 0 0 0
 gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,1 1 1 1 1 1 1 1 1 1
-gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,0 1 1 1 1 1 1 0 0 0
+gold=1,median=1,max=1,avg_esemb=1,vote_esemb=1,0 1 1 1 1 1 1 1 0 1
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 1 0 0 0 0 0
 gold=0,median=0,max=0,avg_esemb=0,vote_esemb=0,0 0 0 0 0 0 0 0 0 0
 gold=0,median=1,max=1,avg_esemb=0,vote_esemb=0,0 0 0 0 0 1 0 0 0 0

@@ -164,5 +164,4 @@ tags
 
 # Parsa added these
 pretrain_models/
-checkpoints/*/*/*.p*
 exps_ttt/wandb
