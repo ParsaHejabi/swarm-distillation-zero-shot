@@ -1,27 +1,41 @@
+"""Inspect how :class:`DatasetByPrompt` transforms raw dataset examples."""
+
+import sys
+from pathlib import Path
+
 import datasets
-from argparse import Namespace
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, HfArgumentParser
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 from ttt.dataloader import DatasetByPrompt
+from ttt.options import DataArguments
 
 
 def main():
-    # load the raw validation example from SuperGLUE RTE
-    raw_dataset = datasets.load_dataset("super_glue", "rte", split="validation")
+    parser = HfArgumentParser(DataArguments)
+    if len(sys.argv) == 1:
+        parser.print_help()
+        return
+
+    data_args = parser.parse_args_into_dataclasses()[0]
+
+    # load the raw dataset split
+    raw_dataset = datasets.load_dataset(
+        data_args.dataset_name,
+        data_args.subset_name if data_args.subset_name != "none" else None,
+        split=data_args.testset_name,
+    )
     print("Raw example:\n", raw_dataset[0], "\n")
 
-    # build DatasetByPrompt using the same split
     tokenizer = AutoTokenizer.from_pretrained("t5-small")
-    args = Namespace(
-        dataset_name="super_glue",
-        subset_name="rte",
-        testset_name="validation",
-        prompt_set_name="super_glue",
-        task_type="classification",
-        cb_surgery=0,
-        abl_nprompts=-1,
+    proc_dataset = DatasetByPrompt(
+        data_args,
+        cache_dir="./cache",
+        tokenizer=tokenizer,
+        split=data_args.testset_name,
     )
-    proc_dataset = DatasetByPrompt(args, cache_dir="./cache", tokenizer=tokenizer, split="validation")
-
+    
     examples, label = proc_dataset[0]
     print("After DatasetByPrompt (first prompt example):\n", examples[0])
     print("Gold label:", label)
