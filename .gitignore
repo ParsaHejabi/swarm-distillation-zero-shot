@@ -167,3 +167,4 @@ pretrain_models/
 exps_ttt/wandb
 checkpoints/*/*/checkpoint-*/
 checkpoints/*/*/*.p*
+scripts/cache

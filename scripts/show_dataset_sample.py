@@ -1,4 +1,8 @@
-"""Inspect how :class:`DatasetByPrompt` transforms raw dataset examples."""
+"""Inspect how :class:`DatasetByPrompt` transforms raw dataset examples.
+
+Usage:
+    python3 scripts/show_dataset_sample.py --dataset_name super_glue --subset_name rte --prompt_set_name super_glue --testset_name validation
+"""
 
 import sys
 from pathlib import Path
