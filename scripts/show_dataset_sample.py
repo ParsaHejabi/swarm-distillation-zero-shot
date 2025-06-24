@@ -35,7 +35,7 @@ def main():
         tokenizer=tokenizer,
         split=data_args.testset_name,
     )
-
+    
     examples, label = proc_dataset[0]
     print("After DatasetByPrompt (first prompt example):\n", examples[0])
     print("Gold label:", label)
