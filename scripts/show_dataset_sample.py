@@ -57,7 +57,6 @@ def main():
         tokenizer=tokenizer,
         split=data_args.testset_name,
     )
-
     examples, label = proc_dataset[0]
     print("\nAfter DatasetByPrompt -- tokenized inputs (showing first):")
     print(examples[0])
