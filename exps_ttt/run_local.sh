@@ -11,6 +11,9 @@ export PYTHONPATH="$REPO_ROOT:$PYTHONPATH"
 export TRANSFORMERS_CACHE="$REPO_ROOT/pretrain_models/huggingface"
 export HF_DATASETS_CACHE="$REPO_ROOT/pretrain_models/huggingface"
 export HF_METRICS_CACHE="$REPO_ROOT/pretrain_models/huggingface"
+# Ensure the Hugging Face endpoint is explicitly set so downloads work even if
+# an invalid value was inherited from the environment.
+export HF_ENDPOINT="https://huggingface.co"
 cache_dir="$REPO_ROOT/pretrain_models/huggingface"
 
 # Allow Transformers to download models if they are not present locally.
