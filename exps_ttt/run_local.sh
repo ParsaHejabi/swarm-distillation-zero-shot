@@ -69,7 +69,7 @@ lora_pos="encdec"
 lora_dropout=0.3
 lora_alpha=4
 
-lr=2e-5
+lr=4e-5
 lr_scheduler_type="polynomial"
 max_epochs=50
 log_steps=10
@@ -85,7 +85,7 @@ save_steps=10
 test_mode="ttt_t0"
 train_data="validation"
 train_size=10000
-model="T0pp"
+model="T0_3B"
 loss_opt='consistency'
 jsd=0
 detach_kl_left=1
@@ -98,7 +98,7 @@ disable_eval_mode=0
 pseudo_target_mode="pairwise"
 ensemble_subset_size=0.0
 
-exp_name=11B_${test_mode}.train.source.${train_data}.${dataset}.${subset}.${testset_name}.${model}.peft.${peft}.lora_alpha${lora_alpha}.lora_drop${lora_dropout}.bn${pL}.pw${pseudo_weight}.np${nprompts}.bsz${bsz}.ga${ga}.lr${lr}.steps.${max_steps}
+exp_name=3B_${test_mode}.train.source.${train_data}.${dataset}.${subset}.${testset_name}.${model}.peft.${peft}.lora_alpha${lora_alpha}.lora_drop${lora_dropout}.bn${pL}.pw${pseudo_weight}.np${nprompts}.bsz${bsz}.ga${ga}.lr${lr}.steps.${max_steps}
 SAVE="$REPO_ROOT/checkpoints/${dname}/${exp_name}_${DATE}"
 rm -rf "${SAVE}"; mkdir -p "${SAVE}"
 cp "$0" "${SAVE}/run.sh"

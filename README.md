@@ -35,7 +35,8 @@ need to run strictly offline.
 If you want to debug the training loop without DeepSpeed, use
 `exps_ttt/run_local.sh`. This script mirrors the settings of the DeepSpeed
 version but runs the training script directly with PyTorch so that variables can
-be inspected easily.
+be inspected easily. It defaults to the smaller `T0_3B` model so that debugging
+can be done on a single GPU.
 
 If you see errors about protobuf descriptors when launching the script, set the
 environment variable `PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python` or
