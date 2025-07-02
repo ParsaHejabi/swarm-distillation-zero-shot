@@ -32,6 +32,11 @@ default, the script allows Transformers to download models if they are not
 cached locally. Uncomment the `TRANSFORMERS_OFFLINE` line in the script if you
 need to run strictly offline.
 
+If you want to debug the training loop without DeepSpeed, use
+`exps_ttt/run_local.sh`. This script mirrors the settings of the DeepSpeed
+version but runs the training script directly with PyTorch so that variables can
+be inspected easily.
+
 If you see errors about protobuf descriptors when launching the script, set the
 environment variable `PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python` or
 install a `protobuf` version <=3.20 to resolve the issue.
