@@ -2,6 +2,10 @@ import numpy as np
 import scipy
 import math
 import os
+from typing import Any, Dict, List
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def index_median(array):
@@ -78,10 +82,12 @@ def compute_metrics(logprobs,
     avg_ensemble_predictions = []
     vote_ensemble_predictions = []
     all_avg_probs = []  # only used when num of examples=1
+    posix_values = []
     idx = 0
     logits = [[] for _ in range(num_prompts)]
     for eidx in range(num_examples):
         avg_probs = np.zeros(num_targets)
+        example_logits = []
         for pidx in range(num_prompts):
             max_ll, pred_label = -np.inf, -1
             # actually, the number of labels of each prompt should be the same
@@ -94,6 +100,7 @@ def compute_metrics(logprobs,
                 logit.append(logprobs[idx])
                 idx += 1
             logits[pidx].append(logit)
+            example_logits.append(logit)
             normalized_probs = normalized_probs / normalized_probs.sum()
             entropies[pidx].append(-(normalized_probs * np.log(normalized_probs)).sum())
             avg_probs += normalized_probs
@@ -101,6 +108,8 @@ def compute_metrics(logprobs,
             predictions[pidx].append(pred_label)
 
         # import pdb; pdb.set_trace()
+        posix_values.append(_posix_from_logits(example_logits))
+
         if 0.0 < random_selection_ensemble < 1.0 and num_examples == 1:
             selected_prompts = np.random.permutation(num_prompts)[:int(num_prompts * random_selection_ensemble)]
             avg_probs = sum([all_avg_probs[jj] for jj in selected_prompts]) / len(selected_prompts)
@@ -140,10 +149,18 @@ def compute_metrics(logprobs,
 
     prompt_metrics = []
     for ppred in predictions:
-        prompt_metrics.append(metrics.compute(predictions=ppred, references=golds))
+        m = metrics.compute(predictions=ppred, references=golds)
+        p, r, f = _compute_precision_recall_f1(ppred, golds, num_targets)
+        m.update({"precision": p, "recall": r, "f1": f})
+        prompt_metrics.append(m)
+
     avg_ensemble_metrics = metrics.compute(predictions=avg_ensemble_predictions, references=golds)
+    p, r, f = _compute_precision_recall_f1(avg_ensemble_predictions, golds, num_targets)
+    avg_ensemble_metrics.update({"precision": p, "recall": r, "f1": f})
     avg_entropy = [np.mean(ents) for ents in entropies]
     vote_ensemble_metrics = metrics.compute(predictions=vote_ensemble_predictions, references=golds)
+    p, r, f = _compute_precision_recall_f1(vote_ensemble_predictions, golds, num_targets)
+    vote_ensemble_metrics.update({"precision": p, "recall": r, "f1": f})
 
     # print logits
     if fout_name.startswith("results"):
@@ -158,6 +175,7 @@ def compute_metrics(logprobs,
     results = write_results_to_file(fout_name, suffix, prompt_metrics, predictions,
                                     avg_ensemble_metrics, avg_ensemble_predictions,
                                     vote_ensemble_metrics, vote_ensemble_predictions, golds, avg_entropy)
+    results["posix"] = float(np.mean(posix_values))
     print(results)
     return results, None
 
@@ -198,8 +216,11 @@ def compute_unsupervised_metrics(logprobs,
     predictions = [[] for _ in range(num_prompts)]
     entropies = [[] for _ in range(num_prompts)]
     all_avg_probs = [[] for _ in range(num_prompts)]
+    logits = [[] for _ in range(num_prompts)]
+    posix_values = []
     idx = 0
     for eidx in range(num_examples):
+        example_logits = []
         for pidx in range(num_prompts):
             max_ll, pred_label = -np.inf, -1
             # actually, the number of labels of each prompt should be the same
@@ -209,10 +230,13 @@ def compute_unsupervised_metrics(logprobs,
                     max_ll, pred_label = logprobs[idx], ii
                 normalized_probs[ii] = math.exp(logprobs[idx])
                 idx += 1
+            logits[pidx].append(logit)
+            example_logits.append(logit)
             normalized_probs = normalized_probs / normalized_probs.sum()
             entropies[pidx].append(-(normalized_probs * np.log(normalized_probs)).sum())
             all_avg_probs[pidx].append(normalized_probs)
             predictions[pidx].append(pred_label)
+        posix_values.append(_posix_from_logits(example_logits))
 
     results = {}
 
@@ -225,6 +249,17 @@ def compute_unsupervised_metrics(logprobs,
     results['avg cont entropy'] = np.mean(all_continuous_entropy)
 
     fout_name = os.path.join(fout_name, f'unsupervised_dev_{suffix}')
+
+    if golds is not None:
+        avg_preds = []
+        for eidx in range(num_examples):
+            avg_p = np.mean([all_avg_probs[pidx][eidx] for pidx in range(num_prompts)], axis=0)
+            avg_preds.append(int(np.argmax(avg_p)))
+        m = metrics.compute(predictions=avg_preds, references=golds)
+        p, r, f = _compute_precision_recall_f1(avg_preds, golds, num_targets)
+        m.update({"precision": p, "recall": r, "f1": f})
+        results.update(m)
+        results["posix"] = float(np.mean(posix_values))
 
     if initial_predictions is None:
         print('finish collecting initial predictions before optimization')
@@ -343,3 +378,54 @@ def compute_unsupervised_dev_best_results(dir_path, min_train_steps, metrics=['a
     for k, v in best_dev_results.items():
         print("Best checkpoint selected by {} at step {}:".format(k, v[0]))
         print(all_results[v[0]])
+
+
+def _compute_precision_recall_f1(preds: List[int], refs: List[int], num_labels: int):
+    """Compute macro precision, recall and F1 scores."""
+    tp = [0] * num_labels
+    fp = [0] * num_labels
+    fn = [0] * num_labels
+    for p, r in zip(preds, refs):
+        if p == r:
+            tp[p] += 1
+        else:
+            fp[p] += 1
+            fn[r] += 1
+    precision = 0.0
+    recall = 0.0
+    for i in range(num_labels):
+        denom_p = tp[i] + fp[i]
+        denom_r = tp[i] + fn[i]
+        precision += tp[i] / denom_p if denom_p > 0 else 0.0
+        recall += tp[i] / denom_r if denom_r > 0 else 0.0
+    precision /= num_labels
+    recall /= num_labels
+    f1 = 2 * precision * recall / (precision + recall) if precision + recall > 0 else 0.0
+    return precision, recall, f1
+
+
+def _posix_from_logits(prompt_logits: List[List[float]]) -> float:
+    """Compute the POSIX metric from per-prompt logit lists."""
+    N = len(prompt_logits)
+    if N <= 1:
+        if N == 0:
+            raise ZeroDivisionError("No entries: cannot compute POSIX")
+        logger.warning("Only one prompt provided. Returning 0.0 POSIX.")
+        return 0.0
+
+    best_classes = [int(np.argmax(row)) for row in prompt_logits]
+    logprob_matrix = [[0.0] * N for _ in range(N)]
+    for i in range(N):
+        for j in range(N):
+            logprob_matrix[i][j] = prompt_logits[i][best_classes[j]]
+
+    total = 0.0
+    for j in range(N):
+        diff_jj = logprob_matrix[j][j]
+        for i in range(N):
+            if i == j:
+                continue
+            diff_ij = logprob_matrix[i][j]
+            total += abs(diff_ij - diff_jj)
+    return total / (N * (N - 1))
+
