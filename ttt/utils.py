@@ -225,10 +225,12 @@ def compute_unsupervised_metrics(logprobs,
             max_ll, pred_label = -np.inf, -1
             # actually, the number of labels of each prompt should be the same
             normalized_probs = np.zeros(num_targets)
+            logit = []
             for ii in range(num_targets):
                 if logprobs[idx] > max_ll:
                     max_ll, pred_label = logprobs[idx], ii
                 normalized_probs[ii] = math.exp(logprobs[idx])
+                logit.append(logprobs[idx])
                 idx += 1
             logits[pidx].append(logit)
             example_logits.append(logit)
