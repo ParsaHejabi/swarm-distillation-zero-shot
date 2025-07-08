@@ -243,8 +243,8 @@ def compute_unsupervised_metrics(logprobs,
     results = {}
 
     entropy = compute_entropy(predictions, num_targets)
-    results['all entropy'] = entropy
-    results['avg entropy'] = entropy.mean()
+    results['all entropy'] = entropy.tolist()
+    results['avg entropy'] = float(entropy.mean())
     all_continuous_entropy = []
     for probs in all_avg_probs:
         all_continuous_entropy.append(scipy.stats.entropy(np.mean(probs, 0)))
@@ -270,8 +270,8 @@ def compute_unsupervised_metrics(logprobs,
         return results, predictions
     else:
         initial_entropy = compute_entropy(initial_predictions, num_targets)
-        results['delta all entropy'] = entropy - initial_entropy
-        results['delta avg entropy'] = results['delta all entropy'].mean()
+        results['delta all entropy'] = (entropy - initial_entropy).tolist()
+        results['delta avg entropy'] = float(np.mean(results['delta all entropy']))
         print_dict(results)
         write_unsupervised_results_to_file(fout_name, results, predictions, golds)
         return results, None
