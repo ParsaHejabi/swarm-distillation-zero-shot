@@ -1232,6 +1232,9 @@ class Trainer:
 
         self.state = TrainerState()
         self.state.is_hyper_param_search = trial is not None
+        # set rank info so callbacks initialize once
+        self.state.is_local_process_zero = self.is_local_process_zero()
+        self.state.is_world_process_zero = self.is_world_process_zero()
 
         # Activate gradient checkpointing if needed
         if args.gradient_checkpointing:
@@ -1703,10 +1706,13 @@ class Trainer:
                 # init trainer
                 self.reset_parameter_efficient_modules()
                 self.optimizer, self.lr_scheduler = None, None
-            self.create_optimizer_and_scheduler(num_training_steps=max_steps)
 
+            self.create_optimizer_and_scheduler(num_training_steps=max_steps)
         self.state = TrainerState()
         self.state.is_hyper_param_search = trial is not None
+        # set rank info so callbacks initialize once
+        self.state.is_local_process_zero = self.is_local_process_zero()
+        self.state.is_world_process_zero = self.is_world_process_zero()
 
         # Activate gradient checkpointing if needed
         if args.gradient_checkpointing:
