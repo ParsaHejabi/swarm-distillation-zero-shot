@@ -564,7 +564,8 @@ class DataCollatorForSeq2Seq:
             return self.collate_list(features, return_tensors)
 
         if isinstance(features[0], List):
-            features = [feature for example in features for feature in example]
+            while isinstance(features[0], List):
+                features = [feature for example in features for feature in example]
 
         labels = [feature["labels"] for feature in features] if "labels" in features[0].keys() else None
         # We have to pad the labels before calling `tokenizer.pad` as this method won't pad them and needs them of the
@@ -607,6 +608,7 @@ class DataCollatorForSeq2Seq:
 
     def collate_list(self, list_of_features, return_tensors):
         import numpy as np
+
         results = []
         # only one example can be accommodated
         list_of_features = list_of_features[0]
@@ -618,9 +620,9 @@ class DataCollatorForSeq2Seq:
                 max_label_length = max(len(l) for l in labels)
                 if self.pad_to_multiple_of is not None:
                     max_label_length = (
-                            (max_label_length + self.pad_to_multiple_of - 1)
-                            // self.pad_to_multiple_of
-                            * self.pad_to_multiple_of
+                        (max_label_length + self.pad_to_multiple_of - 1)
+                        // self.pad_to_multiple_of
+                        * self.pad_to_multiple_of
                     )
 
                 padding_side = self.tokenizer.padding_side
@@ -649,6 +651,7 @@ class DataCollatorForSeq2Seq:
                 features["decoder_input_ids"] = decoder_input_ids
             results.append(features)
         return results
+
 
 @dataclass
 class DataCollatorForLanguageModeling(DataCollatorMixin):
@@ -1000,7 +1003,7 @@ class DataCollatorForWholeWordMask(DataCollatorForLanguageModeling):
             )
 
         cand_indexes = []
-        for (i, token) in enumerate(input_tokens):
+        for i, token in enumerate(input_tokens):
             if token == "[CLS]" or token == "[SEP]":
                 continue
 

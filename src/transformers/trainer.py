@@ -131,6 +131,7 @@ from .trainer_utils import (
 )
 from .training_args import ParallelMode, TrainingArguments
 from .utils import logging
+
 sys.path.insert(2, "./")
 from ttt.dataloader import TTTOfflineLoopDataset
 from ttt.utils import compute_loss_scale
@@ -496,7 +497,6 @@ class Trainer:
         self.label_names = default_label_names if self.args.label_names is None else self.args.label_names
         self.control = self.callback_handler.on_init_end(self.args, self.state, self.control)
 
-
         # Junxian
         # store model's initial predictions before optimization
         self.initial_predictions = None
@@ -733,6 +733,10 @@ class Trainer:
         if is_datasets_available() and isinstance(eval_dataset, datasets.Dataset):
             eval_dataset = self._remove_unused_columns(eval_dataset, description="evaluation")
 
+        collate_fn = self.test_data_collator
+        if eval_dataset is self.train_dataset:
+            collate_fn = self.data_collator
+
         if isinstance(eval_dataset, torch.utils.data.IterableDataset):
             if self.args.world_size > 1:
                 eval_dataset = IterableDatasetShard(
@@ -745,7 +749,7 @@ class Trainer:
             return DataLoader(
                 eval_dataset,
                 batch_size=self.args.eval_batch_size,
-                collate_fn=self.test_data_collator,
+                collate_fn=collate_fn,
                 num_workers=self.args.dataloader_num_workers,
                 pin_memory=self.args.dataloader_pin_memory,
             )
@@ -756,7 +760,7 @@ class Trainer:
             eval_dataset,
             sampler=eval_sampler,
             batch_size=self.args.eval_batch_size,
-            collate_fn=self.test_data_collator,
+            collate_fn=collate_fn,
             drop_last=self.args.dataloader_drop_last,
             num_workers=self.args.dataloader_num_workers,
             pin_memory=self.args.dataloader_pin_memory,
@@ -826,25 +830,25 @@ class Trainer:
         if self.optimizer is None:
             decay_parameters = get_parameter_names(self.model, [nn.LayerNorm])
             decay_parameters = [name for name in decay_parameters if "bias" not in name]
-            decay_group = [
-                p for n, p in self.model.named_parameters()
-                if n in decay_parameters and p.requires_grad
-            ]
+            decay_group = [p for n, p in self.model.named_parameters() if n in decay_parameters and p.requires_grad]
             non_decay_group = [
-                p for n, p in self.model.named_parameters()
-                if n not in decay_parameters and p.requires_grad
+                p for n, p in self.model.named_parameters() if n not in decay_parameters and p.requires_grad
             ]
             optimizer_grouped_parameters = []
             if len(decay_group) > 0:
-                optimizer_grouped_parameters.append({
-                    "params": decay_group,
-                    "weight_decay": self.args.weight_decay,
-                })
+                optimizer_grouped_parameters.append(
+                    {
+                        "params": decay_group,
+                        "weight_decay": self.args.weight_decay,
+                    }
+                )
             if len(non_decay_group) > 0:
-                optimizer_grouped_parameters.append({
-                    "params": non_decay_group,
-                    "weight_decay": 0.0,
-                })
+                optimizer_grouped_parameters.append(
+                    {
+                        "params": non_decay_group,
+                        "weight_decay": 0.0,
+                    }
+                )
             optimizer_cls = Adafactor if self.args.adafactor else AdamW
             if self.args.adafactor:
                 optimizer_cls = Adafactor
@@ -1046,16 +1050,16 @@ class Trainer:
     def reset_parameter_efficient_modules(self):
         with torch.no_grad():
             for n, p in self.model.named_parameters():
-                if self.args.peft_option == 'prompt_tuning' and "ef_" in n:
+                if self.args.peft_option == "prompt_tuning" and "ef_" in n:
                     p.data.normal_(mean=0.0, std=0.02)
                     p.requires_grad = True
-                elif self.args.peft_option == 'lora' and "ef_" in n:
+                elif self.args.peft_option == "lora" and "ef_" in n:
                     if "ef_lora_A" in n:
                         nn.init.kaiming_uniform_(p, a=math.sqrt(5))
                     elif "ef_lora_B" in n:
                         nn.init.zeros_(p)
                     p.requires_grad = True
-                elif self.args.peft_option == 'bitfit' and "bias" in n:
+                elif self.args.peft_option == "bitfit" and "bias" in n:
                     # todo: how to recover original bias params?
                     pass
                 else:
@@ -1109,7 +1113,9 @@ class Trainer:
                     FutureWarning,
                 )
             if len(kwargs) > 0:
-                raise TypeError(f"train() received got unexpected keyword arguments: {', '.join(list(kwargs.keys()))}.")
+                raise TypeError(
+                    f"train() received got unexpected keyword arguments: {', '.join(list(kwargs.keys()))}."
+                )
             # This might change the seed so needs to run first.
             self._hp_search_setup(trial)
 
@@ -1217,14 +1223,19 @@ class Trainer:
             self.deepspeed = deepspeed_engine
             self.optimizer = optimizer
             self.lr_scheduler = lr_scheduler
-        elif args.deepspeed and self.deepspeed and not reinit_model and getattr(self.args, 'test_mode', 'none') == 'ttt_t0':
+        elif (
+            args.deepspeed
+            and self.deepspeed
+            and not reinit_model
+            and getattr(self.args, "test_mode", "none") == "ttt_t0"
+        ):
             # init trainer
             self.reset_parameter_efficient_modules()
             # reinit optimizer states and lr scheduler
             self.model_wrapped.optimizer.state = defaultdict(dict)
             self.model_wrapped._configure_lr_scheduler(None)
         elif not delay_optimizer_creation:
-            if getattr(self.args, 'test_mode', 'none') == 'ttt_t0' and not reinit_model:
+            if getattr(self.args, "test_mode", "none") == "ttt_t0" and not reinit_model:
                 # init trainer
                 self.reset_parameter_efficient_modules()
                 self.optimizer, self.lr_scheduler = None, None
@@ -1255,7 +1266,6 @@ class Trainer:
         # important: at this point:
         # self.model         is the Transformers Model
         # self.model_wrapped is DDP(Transformers Model), Deepspeed(Transformers Model), etc.
-
 
         # Train!
         num_examples = (
@@ -1539,12 +1549,12 @@ class Trainer:
         return TrainOutput(self.state.global_step, train_loss, metrics)
 
     def train_ttt(
-            self,
-            resume_from_checkpoint: Optional[Union[str, bool]] = None,
-            trial: Union["optuna.Trial", Dict[str, Any]] = None,
-            ignore_keys_for_eval: Optional[List[str]] = None,
-            reinit_model: Optional[bool] = True,
-            **kwargs,
+        self,
+        resume_from_checkpoint: Optional[Union[str, bool]] = None,
+        trial: Union["optuna.Trial", Dict[str, Any]] = None,
+        ignore_keys_for_eval: Optional[List[str]] = None,
+        reinit_model: Optional[bool] = True,
+        **kwargs,
     ):
         """
         Main training entry point.
@@ -1587,7 +1597,9 @@ class Trainer:
                     FutureWarning,
                 )
             if len(kwargs) > 0:
-                raise TypeError(f"train() received got unexpected keyword arguments: {', '.join(list(kwargs.keys()))}.")
+                raise TypeError(
+                    f"train() received got unexpected keyword arguments: {', '.join(list(kwargs.keys()))}."
+                )
             # This might change the seed so needs to run first.
             self._hp_search_setup(trial)
 
@@ -1695,14 +1707,19 @@ class Trainer:
             self.deepspeed = deepspeed_engine
             self.optimizer = optimizer
             self.lr_scheduler = lr_scheduler
-        elif args.deepspeed and self.deepspeed and not reinit_model and getattr(self.args, 'test_mode', 'none') == 'ttt_t0':
+        elif (
+            args.deepspeed
+            and self.deepspeed
+            and not reinit_model
+            and getattr(self.args, "test_mode", "none") == "ttt_t0"
+        ):
             # init trainer
             self.reset_parameter_efficient_modules()
             # reinit optimizer states and lr scheduler
             self.model_wrapped.optimizer.state = defaultdict(dict)
             self.model_wrapped._configure_lr_scheduler(None)
         elif not delay_optimizer_creation:
-            if getattr(self.args, 'test_mode', 'none') == 'ttt_t0' and not reinit_model:
+            if getattr(self.args, "test_mode", "none") == "ttt_t0" and not reinit_model:
                 # init trainer
                 self.reset_parameter_efficient_modules()
                 self.optimizer, self.lr_scheduler = None, None
@@ -1735,7 +1752,7 @@ class Trainer:
         # self.model_wrapped is DDP(Transformers Model), Deepspeed(Transformers Model), etc.
 
         # do evaluation first before training to collect initial predictions
-        print('run dev evaluation first to collect initial predictions')
+        print("run dev evaluation first to collect initial predictions")
         self.evaluate(eval_dataset=self.dev_dataset, metric_key_prefix="unsupervised_dev")
 
         # Train!
@@ -1761,7 +1778,7 @@ class Trainer:
 
         # Check if continuing training from a checkpoint
         if resume_from_checkpoint is not None and os.path.isfile(
-                os.path.join(resume_from_checkpoint, TRAINER_STATE_NAME)
+            os.path.join(resume_from_checkpoint, TRAINER_STATE_NAME)
         ):
             self.state = TrainerState.load_from_json(os.path.join(resume_from_checkpoint, TRAINER_STATE_NAME))
             epochs_trained = self.state.global_step // num_update_steps_per_epoch
@@ -1876,17 +1893,20 @@ class Trainer:
                         assert not logprobs.isnan().any()
                         all_logprobs.extend(logprobs.to(dtype=torch.float32).cpu().numpy())
 
-                    #     total_tokens_ttt += (inputs['labels'] != -100).sum().float()
+                        #     total_tokens_ttt += (inputs['labels'] != -100).sum().float()
                         continue
 
                     if inner_step == self.train_dataset.dev_size:
-                        _, avg_ens_pred, vote_ens_pred = self.compute_metrics(all_logprobs, 1,
-                                                                              self.train_dataset.num_choices,
-                                                                              self.train_dataset.num_prompts,
-                                                                              pseudo_dist=self.args.pseudo_dist,
-                                                                              return_all_prompt_preds=self.args.pseudo_target_mode=="pairwise",
-                                                                              random_selection_ensemble=self.args.ensemble_subset_size,
-                                                                              self_train=self.args.self_train_option!="none")
+                        _, avg_ens_pred, vote_ens_pred = self.compute_metrics(
+                            all_logprobs,
+                            1,
+                            self.train_dataset.num_choices,
+                            self.train_dataset.num_prompts,
+                            pseudo_dist=self.args.pseudo_dist,
+                            return_all_prompt_preds=self.args.pseudo_target_mode == "pairwise",
+                            random_selection_ensemble=self.args.ensemble_subset_size,
+                            self_train=self.args.self_train_option != "none",
+                        )
                         # import pdb; pdb.set_trace()
                         if self.args.ensemble_option == "avg_prob":
                             ens_pred = avg_ens_pred
@@ -1896,7 +1916,9 @@ class Trainer:
                         else:
                             raise ValueError("unknown ensemble: {}".format(self.args.ensemble_option))
 
-                        model = self._wrap_model(self.model_wrapped,)  # w/o deepspeed, self.model_wrapped = self.model
+                        model = self._wrap_model(
+                            self.model_wrapped,
+                        )  # w/o deepspeed, self.model_wrapped = self.model
                         # self.is_in_train = True
 
                     assert ens_pred is not None
@@ -1904,36 +1926,46 @@ class Trainer:
                     # is_ensemble_answer = is_ensemble_answer and self.args.loss_option in ["consistency_pseudo_train", "pseudo_train"]
                     # import pdb; pdb.set_trace()
 
-                    inputs['is_true_answer_state'] = 0
+                    inputs["is_true_answer_state"] = 0
                     if self.args.pseudo_target_mode == "pairwise":
-                        last_prompt_batch = ((inner_step - self.train_dataset.dev_size) % self.train_dataset.num_choices) == (self.train_dataset.num_choices-1)
+                        last_prompt_batch = (
+                            (inner_step - self.train_dataset.dev_size) % self.train_dataset.num_choices
+                        ) == (self.train_dataset.num_choices - 1)
                         cur_prompt_num = inputs["input_ids"].size(0)
                         ans_id = (inner_step - self.train_dataset.dev_size) % self.train_dataset.num_choices
                         if self.args.loss_option in ["consistency_pseudo_train", "pseudo_train"]:
-                            is_ensemble_answer = [pred[ans_id] for pred in ens_pred[seen_prompts:seen_prompts+cur_prompt_num]]
+                            is_ensemble_answer = [
+                                pred[ans_id] for pred in ens_pred[seen_prompts : seen_prompts + cur_prompt_num]
+                            ]
                         else:
                             is_ensemble_answer = -1
                         if last_prompt_batch:
                             seen_prompts += cur_prompt_num
                     else:
                         if self.args.loss_option in ["consistency_pseudo_train", "pseudo_train"]:
-                            is_ensemble_answer = ens_pred[(inner_step - self.train_dataset.dev_size) % self.train_dataset.num_choices]
+                            is_ensemble_answer = ens_pred[
+                                (inner_step - self.train_dataset.dev_size) % self.train_dataset.num_choices
+                            ]
                         else:
                             is_ensemble_answer = -1
 
-                    if not isinstance(is_ensemble_answer, list) and is_ensemble_answer < 1e-9 and inputs["input_ids"].size(0) == 1:
+                    if (
+                        not isinstance(is_ensemble_answer, list)
+                        and is_ensemble_answer < 1e-9
+                        and inputs["input_ids"].size(0) == 1
+                    ):
                         # bsz = 1, not is_true_answer: skip
                         continue
                     else:
                         # bsz > 1, is_true_answer: loss 1 + loss 2
                         # bsz > 1, not is_true_answer: loss 1
                         # bsz = 1, is_true_answer: loss 2
-                        inputs['is_true_answer_state'] = is_ensemble_answer
+                        inputs["is_true_answer_state"] = is_ensemble_answer
 
                     if (
-                            ((step + 1) % args.gradient_accumulation_steps != 0)
-                            and args.local_rank != -1
-                            and args._no_sync_in_gradient_accumulation
+                        ((step + 1) % args.gradient_accumulation_steps != 0)
+                        and args.local_rank != -1
+                        and args._no_sync_in_gradient_accumulation
                     ):
                         # Avoid unnecessary DDP synchronization since there will be no backward pass on this example.
                         with model.no_sync():
@@ -1942,9 +1974,9 @@ class Trainer:
                         tr_loss_step = self.training_step(model, inputs, inner_steps=total_inner_steps)
 
                     if (
-                            args.logging_nan_inf_filter
-                            and not is_torch_tpu_available()
-                            and (torch.isnan(tr_loss_step) or torch.isinf(tr_loss_step))
+                        args.logging_nan_inf_filter
+                        and not is_torch_tpu_available()
+                        and (torch.isnan(tr_loss_step) or torch.isinf(tr_loss_step))
                     ):
                         # if loss is nan or inf simply add the average of previous logged losses
                         tr_loss += tr_loss / (1 + self.state.global_step - self._globalstep_last_logged)
@@ -1958,9 +1990,9 @@ class Trainer:
                     self.deepspeed.step()
 
                 if (step + 1) % args.gradient_accumulation_steps == 0 or (
-                        # last step in epoch but step is always smaller than gradient_accumulation_steps
-                        steps_in_epoch <= args.gradient_accumulation_steps
-                        and (step + 1) == steps_in_epoch
+                    # last step in epoch but step is always smaller than gradient_accumulation_steps
+                    steps_in_epoch <= args.gradient_accumulation_steps
+                    and (step + 1) == steps_in_epoch
                 ):
                     # Gradient clipping
                     if args.max_grad_norm is not None and args.max_grad_norm > 0 and not self.deepspeed:
@@ -2120,17 +2152,31 @@ class Trainer:
             self._report_to_hp_search(trial, epoch, metrics)
 
             # Junxian
-            metrics = self.evaluate(eval_dataset=self.dev_dataset,
-                                    metric_key_prefix='unsupervised_dev',
-                                    ignore_keys=ignore_keys_for_eval)
+            metrics = self.evaluate(
+                eval_dataset=self.dev_dataset,
+                metric_key_prefix="unsupervised_dev",
+                ignore_keys=ignore_keys_for_eval,
+            )
 
-            if self.early_stop_metric > metrics['avg entropy'] and self.state.global_step > self.args.min_train_steps:
+            unsup_entropy_key = "unsupervised_dev_avg entropy"
+            if (
+                self.early_stop_metric > metrics[unsup_entropy_key]
+                and self.state.global_step > self.args.min_train_steps
+            ):
                 self.early_stop_patience = self.early_stop_patience + 1
             else:
                 self.early_stop_patience = 0
-            self.early_stop_metric = metrics['avg entropy']
+            self.early_stop_metric = metrics[unsup_entropy_key]
 
             self._report_to_hp_search(trial, epoch, metrics)
+
+            if self.train_dataset is not None:
+                train_metrics = self.evaluate(
+                    eval_dataset=self.train_dataset,
+                    metric_key_prefix="train",
+                    ignore_keys=ignore_keys_for_eval,
+                )
+                self.log(train_metrics)
 
         if self.control.should_save:
             self._save_checkpoint(model, trial, metrics=metrics)
@@ -2472,7 +2518,9 @@ class Trainer:
 
         return ctx_manager
 
-    def training_step(self, model: nn.Module, inputs: Dict[str, Union[torch.Tensor, Any]], inner_steps=None) -> torch.Tensor:
+    def training_step(
+        self, model: nn.Module, inputs: Dict[str, Union[torch.Tensor, Any]], inner_steps=None
+    ) -> torch.Tensor:
         """
         Perform a training step on a batch of inputs.
 
@@ -2541,9 +2589,9 @@ class Trainer:
             self._past = outputs[self.args.past_index]
 
         training = model.module.training if self.args.deepspeed else model.training
-        if getattr(self.args, 'test_mode', 'none') == 'ttt_t0' and not training:
+        if getattr(self.args, "test_mode", "none") == "ttt_t0" and not training:
             loss = outputs.loss
-            #fixme
+            # fixme
             # print(
             #     "rank = {}, size = {}, loss= {}".format(torch.distributed.get_rank(), loss.size(), loss))
         else:
@@ -2786,7 +2834,7 @@ class Trainer:
             metric_key_prefix=metric_key_prefix,
         )
 
-        if hasattr(self.args, 'test_mode') and self.args.test_mode == 'ttt_t0':
+        if hasattr(self.args, "test_mode") and self.args.test_mode == "ttt_t0":
             if isinstance(output.metrics, dict):
                 metric_logs = output.metrics.copy()
                 total_batch_size = self.args.eval_batch_size * self.args.world_size
@@ -2966,18 +3014,18 @@ class Trainer:
             # Prediction step
             loss, logits, labels = self.prediction_step(model, inputs, prediction_loss_only, ignore_keys=ignore_keys)
 
-            #fixme
+            # fixme
             # print(
-                # "******* loop: rank = {}, loss= {}".format(torch.distributed.get_rank(), loss))
+            # "******* loop: rank = {}, loss= {}".format(torch.distributed.get_rank(), loss))
             # Update containers on host
             if loss is not None:
-                if hasattr(self.args, 'test_mode') and self.args.test_mode == 'ttt_t0':
+                if hasattr(self.args, "test_mode") and self.args.test_mode == "ttt_t0":
                     loss = self._pad_across_processes(loss)
                     losses = self._nested_gather(loss)
                 else:
                     losses = self._nested_gather(loss.repeat(batch_size))
                 losses_host = losses if losses_host is None else torch.cat((losses_host, losses), dim=0)
-            if logits is not None and not hasattr(self.args, 'test_mode'):
+            if logits is not None and not hasattr(self.args, "test_mode"):
                 logits = self._pad_across_processes(logits)
                 logits = self._nested_gather(logits)
                 preds_host = logits if preds_host is None else nested_concat(preds_host, logits, padding_index=-100)
@@ -3042,13 +3090,20 @@ class Trainer:
             all_labels = nested_truncate(all_labels, num_samples)
 
         # Metrics!
-        if (self.compute_metrics is not None or self.compute_unsupervised_metrics is not None) \
-             and hasattr(self.args, 'test_mode') and self.args.test_mode == 'ttt_t0':
-            compute_metrics = self.compute_metrics if metric_key_prefix != 'unsupervised_dev' else self.compute_unsupervised_metrics
-            dataset = self.eval_dataset if metric_key_prefix != 'unsupervised_dev' else self.dev_dataset
-            eval_datasize = 1 if self.args.train_data_source == 'stream' else dataset.num_instances
-            if self.args.train_data_source == 'stream':
-                metrics_output, initial_predictions = compute_metrics(all_losses, 1, dataset.num_choices, dataset.num_prompts)
+        if (
+            (self.compute_metrics is not None or self.compute_unsupervised_metrics is not None)
+            and hasattr(self.args, "test_mode")
+            and self.args.test_mode == "ttt_t0"
+        ):
+            compute_metrics = (
+                self.compute_metrics if metric_key_prefix != "unsupervised_dev" else self.compute_unsupervised_metrics
+            )
+            dataset = self.eval_dataset if metric_key_prefix != "unsupervised_dev" else self.dev_dataset
+            eval_datasize = 1 if self.args.train_data_source == "stream" else dataset.num_instances
+            if self.args.train_data_source == "stream":
+                metrics_output, initial_predictions = compute_metrics(
+                    all_losses, 1, dataset.num_choices, dataset.num_prompts
+                )
             else:
                 metrics_output, initial_predictions = compute_metrics(
                     all_losses,
@@ -3058,7 +3113,7 @@ class Trainer:
                     dataset.gold_labels,
                     self.additional_metrics,
                     fout_name=self.args.output_dir,
-                    suffix=f'{self.state.global_step}',
+                    suffix=f"{self.state.global_step}",
                     metric_key_prefix=metric_key_prefix,
                     initial_predictions=self.initial_predictions,
                 )
@@ -3066,7 +3121,18 @@ class Trainer:
                 if initial_predictions is not None:
                     self.initial_predictions = initial_predictions
 
-            return EvalLoopOutput(predictions=metrics_output, label_ids=None, metrics=denumpify_detensorize(metrics_output), num_samples=1)
+            # add metric prefix so it can be logged properly
+            metrics_output = {
+                (f"{metric_key_prefix}_" + k) if not k.startswith(f"{metric_key_prefix}_") else k: v
+                for k, v in metrics_output.items()
+            }
+
+            return EvalLoopOutput(
+                predictions=metrics_output,
+                label_ids=None,
+                metrics=denumpify_detensorize(metrics_output),
+                num_samples=1,
+            )
         elif self.compute_metrics is not None and all_preds is not None and all_labels is not None:
             metrics = self.compute_metrics(EvalPrediction(predictions=all_preds, label_ids=all_labels))
         else:
@@ -3206,7 +3272,7 @@ class Trainer:
                     with self.autocast_smart_context_manager():
                         loss, outputs = self.compute_loss(model, inputs, return_outputs=True)
 
-                    if hasattr(self.args, 'test_mode') and self.args.test_mode == 'ttt_t0':
+                    if hasattr(self.args, "test_mode") and self.args.test_mode == "ttt_t0":
                         loss = loss.detach()
                     else:
                         loss = loss.mean().detach()
