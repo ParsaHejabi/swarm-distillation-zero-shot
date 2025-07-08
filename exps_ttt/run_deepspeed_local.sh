@@ -36,7 +36,7 @@ export TOKENIZERS_PARALLELISM="false"
 DATE=`date +%Y%m%d`
 
 # Choose dataset name here, e.g., rte, cb, anli_r1 ...
-dname="rte"
+dname="anli_r1"
 
 datasets=(wsc winogrande anli_r1 anli_r2 anli_r3 cb rte copa hellaswag story_cloze wic)
 
@@ -54,7 +54,10 @@ elif [ ${dname} = "cb" ]; then
   dataset="super_glue"
   subset="cb"
   testset_name="validation"
-# Add other datasets if needed
+elif [ ${dname} = "anli_r1" ]; then
+  dataset="anli"
+  subset="none"
+  testset_name="dev_r1"
 else
   echo "wrong dataset name!"
   exit
