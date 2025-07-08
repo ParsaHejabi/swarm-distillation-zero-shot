@@ -1232,6 +1232,9 @@ class Trainer:
 
         self.state = TrainerState()
         self.state.is_hyper_param_search = trial is not None
+        # set rank info so callbacks initialize once
+        self.state.is_local_process_zero = self.is_local_process_zero()
+        self.state.is_world_process_zero = self.is_world_process_zero()
 
         # Activate gradient checkpointing if needed
         if args.gradient_checkpointing:
@@ -1703,10 +1706,13 @@ class Trainer:
                 # init trainer
                 self.reset_parameter_efficient_modules()
                 self.optimizer, self.lr_scheduler = None, None
-            self.create_optimizer_and_scheduler(num_training_steps=max_steps)
 
+            self.create_optimizer_and_scheduler(num_training_steps=max_steps)
         self.state = TrainerState()
         self.state.is_hyper_param_search = trial is not None
+        # set rank info so callbacks initialize once
+        self.state.is_local_process_zero = self.is_local_process_zero()
+        self.state.is_world_process_zero = self.is_world_process_zero()
 
         # Activate gradient checkpointing if needed
         if args.gradient_checkpointing:
@@ -2781,6 +2787,18 @@ class Trainer:
         )
 
         if hasattr(self.args, 'test_mode') and self.args.test_mode == 'ttt_t0':
+            if isinstance(output.metrics, dict):
+                metric_logs = output.metrics.copy()
+                total_batch_size = self.args.eval_batch_size * self.args.world_size
+                metric_logs.update(
+                    speed_metrics(
+                        metric_key_prefix,
+                        start_time,
+                        num_samples=output.num_samples,
+                        num_steps=math.ceil(output.num_samples / total_batch_size),
+                    )
+                )
+                self.log(metric_logs)
             self._memory_tracker.stop_and_update_metrics(None)
             return output.predictions
 
@@ -3030,20 +3048,25 @@ class Trainer:
             dataset = self.eval_dataset if metric_key_prefix != 'unsupervised_dev' else self.dev_dataset
             eval_datasize = 1 if self.args.train_data_source == 'stream' else dataset.num_instances
             if self.args.train_data_source == 'stream':
-                preds, initial_predictions = compute_metrics(all_losses, 1, dataset.num_choices, dataset.num_prompts)
+                metrics_output, initial_predictions = compute_metrics(all_losses, 1, dataset.num_choices, dataset.num_prompts)
             else:
-                preds, initial_predictions = compute_metrics(all_losses, eval_datasize, dataset.num_choices,
-                                        dataset.num_prompts, dataset.gold_labels,
-                                        self.additional_metrics,
-                                        fout_name=self.args.output_dir,
-                                        suffix=f'{self.state.global_step}',
-                                        metric_key_prefix=metric_key_prefix,
-                                        initial_predictions=self.initial_predictions)
+                metrics_output, initial_predictions = compute_metrics(
+                    all_losses,
+                    eval_datasize,
+                    dataset.num_choices,
+                    dataset.num_prompts,
+                    dataset.gold_labels,
+                    self.additional_metrics,
+                    fout_name=self.args.output_dir,
+                    suffix=f'{self.state.global_step}',
+                    metric_key_prefix=metric_key_prefix,
+                    initial_predictions=self.initial_predictions,
+                )
 
                 if initial_predictions is not None:
                     self.initial_predictions = initial_predictions
 
-            return EvalLoopOutput(predictions=preds, label_ids=None, metrics=None, num_samples=1)
+            return EvalLoopOutput(predictions=metrics_output, label_ids=None, metrics=denumpify_detensorize(metrics_output), num_samples=1)
         elif self.compute_metrics is not None and all_preds is not None and all_labels is not None:
             metrics = self.compute_metrics(EvalPrediction(predictions=all_preds, label_ids=all_labels))
         else:
