@@ -26,14 +26,16 @@ import re
 import shutil
 import sys
 import time
-from collections import defaultdict
 import warnings
+from collections import defaultdict
 from collections.abc import Mapping
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, Tuple, Union
 
 from tqdm.auto import tqdm
+
 from ttt.utils import compute_metrics
+
 
 # Integrations must be imported before ML frameworks:
 from .integrations import (  # isort: split
@@ -132,9 +134,11 @@ from .trainer_utils import (
 from .training_args import ParallelMode, TrainingArguments
 from .utils import logging
 
+
 sys.path.insert(2, "./")
 from ttt.dataloader import TTTOfflineLoopDataset
 from ttt.utils import compute_loss_scale
+
 
 _is_torch_generator_available = False
 _is_native_amp_available = False
@@ -2171,11 +2175,14 @@ class Trainer:
             self._report_to_hp_search(trial, epoch, metrics)
 
             if self.train_dataset is not None:
-                train_metrics = self.evaluate(
-                    eval_dataset=self.train_dataset,
-                    metric_key_prefix="train",
-                    ignore_keys=ignore_keys_for_eval,
-                )
+                if isinstance(self.train_dataset, TTTOfflineLoopDataset):
+                    train_metrics = self._evaluate_ttt_train_dataset(ignore_keys=ignore_keys_for_eval)
+                else:
+                    train_metrics = self.evaluate(
+                        eval_dataset=self.train_dataset,
+                        metric_key_prefix="train",
+                        ignore_keys=ignore_keys_for_eval,
+                    )
                 self.log(train_metrics)
 
         if self.control.should_save:
@@ -3301,6 +3308,39 @@ class Trainer:
             logits = logits[0]
 
         return (loss, logits, labels)
+
+    def _evaluate_ttt_train_dataset(self, ignore_keys=None):
+        """Evaluate the training dataset when it is a :class:`TTTOfflineLoopDataset`."""
+        dataloader = self.get_eval_dataloader(self.train_dataset)
+        model = self._wrap_model(self.model, training=False)
+        if not self.args.disable_eval_mode:
+            model.eval()
+
+        all_logprobs = []
+        for _, list_of_inputs in enumerate(dataloader):
+            for inputs in list_of_inputs:
+                loss, _, _ = self.prediction_step(model, inputs, prediction_loss_only=True, ignore_keys=ignore_keys)
+                if loss is None:
+                    continue
+                all_logprobs.extend(loss.detach().to(dtype=torch.float32).cpu().tolist())
+
+        metrics_output, initial_predictions = compute_metrics(
+            all_logprobs,
+            self.train_dataset.datasize,
+            self.train_dataset.num_choices,
+            self.train_dataset.num_prompts,
+            self.train_dataset.gold_labels,
+            self.additional_metrics,
+            fout_name=self.args.output_dir,
+            suffix=f"{self.state.global_step}",
+            metric_key_prefix="train",
+            initial_predictions=getattr(self, "initial_predictions", None),
+        )
+        if initial_predictions is not None:
+            self.initial_predictions = initial_predictions
+
+        metrics_output = {("train_" + k) if not k.startswith("train_") else k: v for k, v in metrics_output.items()}
+        return metrics_output
 
     def floating_point_ops(self, inputs: Dict[str, Union[torch.Tensor, Any]]):
         """
