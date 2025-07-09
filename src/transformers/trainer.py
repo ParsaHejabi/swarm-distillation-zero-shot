@@ -3327,8 +3327,15 @@ class Trainer:
 
         all_logprobs = []
         for _, list_of_inputs in enumerate(dataloader):
-            for inputs in list_of_inputs:
-                loss, _, _ = self.prediction_step(model, inputs, prediction_loss_only=True, ignore_keys=ignore_keys)
+            for inner_step, inputs in enumerate(list_of_inputs):
+                if inner_step >= self.train_dataset.dev_size:
+                    break
+                loss, _, _ = self.prediction_step(
+                    model,
+                    inputs,
+                    prediction_loss_only=True,
+                    ignore_keys=ignore_keys,
+                )
                 if loss is None:
                     continue
                 all_logprobs.extend(loss.detach().to(dtype=torch.float32).cpu().tolist())
