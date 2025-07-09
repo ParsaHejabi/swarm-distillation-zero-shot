@@ -3311,7 +3311,16 @@ class Trainer:
 
     def _evaluate_ttt_train_dataset(self, ignore_keys=None):
         """Evaluate the training dataset when it is a :class:`TTTOfflineLoopDataset`."""
-        dataloader = self.get_eval_dataloader(self.train_dataset)
+        sampler = self._get_eval_sampler(self.train_dataset)
+        dataloader = DataLoader(
+            self.train_dataset,
+            sampler=sampler,
+            batch_size=1,
+            collate_fn=self.data_collator,
+            drop_last=self.args.dataloader_drop_last,
+            num_workers=self.args.dataloader_num_workers,
+            pin_memory=self.args.dataloader_pin_memory,
+        )
         model = self._wrap_model(self.model, training=False)
         if not self.args.disable_eval_mode:
             model.eval()
@@ -3324,18 +3333,27 @@ class Trainer:
                     continue
                 all_logprobs.extend(loss.detach().to(dtype=torch.float32).cpu().tolist())
 
-        metrics_output, initial_predictions = compute_metrics(
-            all_logprobs,
-            self.train_dataset.datasize,
-            self.train_dataset.num_choices,
-            self.train_dataset.num_prompts,
-            self.train_dataset.gold_labels,
-            self.additional_metrics,
-            fout_name=self.args.output_dir,
-            suffix=f"{self.state.global_step}",
-            metric_key_prefix="train",
-            initial_predictions=getattr(self, "initial_predictions", None),
-        )
+        eval_datasize = 1 if self.args.train_data_source == "stream" else self.train_dataset.datasize
+        if self.args.train_data_source == "stream":
+            metrics_output, initial_predictions = compute_metrics(
+                all_logprobs,
+                1,
+                self.train_dataset.num_choices,
+                self.train_dataset.num_prompts,
+            )
+        else:
+            metrics_output, initial_predictions = compute_metrics(
+                all_logprobs,
+                eval_datasize,
+                self.train_dataset.num_choices,
+                self.train_dataset.num_prompts,
+                self.train_dataset.gold_labels,
+                self.additional_metrics,
+                fout_name=self.args.output_dir,
+                suffix=f"{self.state.global_step}",
+                metric_key_prefix="train",
+                initial_predictions=getattr(self, "initial_predictions", None),
+            )
         if initial_predictions is not None:
             self.initial_predictions = initial_predictions
 
