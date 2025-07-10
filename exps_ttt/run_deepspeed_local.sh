@@ -43,7 +43,7 @@ datasets=(wsc winogrande anli_r1 anli_r2 anli_r3 cb rte copa hellaswag story_clo
 # Default hyperparameters (can be adjusted)
 ga=4
 max_steps=1000
-eval_steps=50
+eval_steps=10
 metric="accuracy"
 
 if [ ${dname} = "rte" ]; then
