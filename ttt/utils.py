@@ -2,7 +2,7 @@ import numpy as np
 import scipy
 import math
 import os
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 import logging
 
 logger = logging.getLogger(__name__)
@@ -26,9 +26,20 @@ def write_results_to_file(
     vote_ensemble_preds,
     golds,
     avg_entropy=None,
+    extra_results: Optional[Dict[str, Any]] = None,
 ):
-    results = {}
-    for k, v in all_prompt_metrics[0].items():
+    """Write evaluation metrics to multiple files.
+
+    Each metric gets its own output file (``<metric>_<suffix>``) containing
+    the full set of aggregated results. The per-example statistics are written
+    with the correct metric label instead of the hard-coded ``acc`` prefix.
+    ``extra_results`` can be used to inject additional fields such as POSIX
+    before the metrics are written.
+    """
+
+    results: Dict[str, Any] = {}
+    per_metric_data: Dict[str, Any] = {}
+    for k in all_prompt_metrics[0].keys():
         all_metrics = [pptm[k] * 100 for pptm in all_prompt_metrics]
         median_prompt = all_prompt_predictions[index_median(all_metrics)]
         max_prompt = all_prompt_predictions[np.argsort(all_metrics)[-1]]
@@ -39,31 +50,7 @@ def write_results_to_file(
         results["std_" + k] = round(np.std(all_metrics), 2)
         results["avg_ensemble_" + k] = round(avg_ensemble_metrics[k] * 100, 2)
         results["vote_ensemble_" + k] = round(vote_ensemble_metrics[k] * 100, 2)
-        if fout_name.startswith("results"):
-            nfout = fout_name + f".{k}_{suffix}"
-        else:
-            nfout = os.path.join(fout_name, f"{k}_{suffix}")
-        with open(nfout, "w") as fout:
-            fout.write(",".join(["{}={}".format(kk, vv) for kk, vv in results.items()]) + "\n")
-            if avg_entropy is not None:
-                fout.write("acc: " + " ".join([str(vv) for vv in all_metrics]) + "\n")
-                fout.write("ent: " + " ".join([str(vv) for vv in avg_entropy]) + "\n")
-            # output predictions of prompts for each example
-            for ii in range(len(all_prompt_predictions[0])):
-                s = (
-                    ",".join(
-                        [
-                            "gold={}".format(golds[ii]),
-                            "median={}".format(median_prompt[ii]),
-                            "max={}".format(max_prompt[ii]),
-                            "avg_esemb={}".format(avg_ensemble_preds[ii]),
-                            "vote_esemb={}".format(vote_ensemble_preds[ii]),
-                        ]
-                    )
-                    + ","
-                )
-                s += " ".join([str(all_prompt_predictions[jj][ii]) for jj in range(len(all_prompt_predictions))])
-                fout.write(s + "\n")
+        per_metric_data[k] = (all_metrics, median_prompt, max_prompt)
 
     # compute spread metrics
     if "max_precision" in results and "min_precision" in results:
@@ -81,32 +68,37 @@ def write_results_to_file(
     except Exception as e:
         logger.warning("Fleiss kappa computation failed: %s", str(e))
 
-    # rewrite the last metric file with the full results including the new metrics
-    if fout_name.startswith("results"):
-        nfout = fout_name + f".f1_{suffix}"
-    else:
-        nfout = os.path.join(fout_name, f"f1_{suffix}")
-    with open(nfout, "w") as fout:
-        fout.write(",".join(["{}={}".format(kk, vv) for kk, vv in results.items()]) + "\n")
-        if avg_entropy is not None:
-            all_metrics = [pptm["f1"] * 100 for pptm in all_prompt_metrics]
-            fout.write("acc: " + " ".join([str(vv) for vv in all_metrics]) + "\n")
-            fout.write("ent: " + " ".join([str(vv) for vv in avg_entropy]) + "\n")
-        for ii in range(len(all_prompt_predictions[0])):
-            s = (
-                ",".join(
-                    [
-                        f"gold={golds[ii]}",
-                        f"median={all_prompt_predictions[index_median(all_metrics)][ii]}",
-                        f"max={all_prompt_predictions[np.argsort(all_metrics)[-1]][ii]}",
-                        f"avg_esemb={avg_ensemble_preds[ii]}",
-                        f"vote_esemb={vote_ensemble_preds[ii]}",
-                    ]
+    if extra_results:
+        results.update(extra_results)
+
+    for metric, (metric_values, median_prompt, max_prompt) in per_metric_data.items():
+        if fout_name.startswith("results"):
+            nfout = fout_name + f".{metric}_{suffix}"
+        else:
+            nfout = os.path.join(fout_name, f"{metric}_{suffix}")
+        with open(nfout, "w") as fout:
+            fout.write(",".join([f"{kk}={vv}" for kk, vv in results.items()]) + "\n")
+            if avg_entropy is not None:
+                fout.write(f"{metric}: " + " ".join([str(vv) for vv in metric_values]) + "\n")
+                fout.write("ent: " + " ".join([str(vv) for vv in avg_entropy]) + "\n")
+            for ii in range(len(all_prompt_predictions[0])):
+                s = (
+                    ",".join(
+                        [
+                            f"gold={golds[ii]}",
+                            f"median={median_prompt[ii]}",
+                            f"max={max_prompt[ii]}",
+                            f"avg_esemb={avg_ensemble_preds[ii]}",
+                            f"vote_esemb={vote_ensemble_preds[ii]}",
+                        ]
+                    )
+                    + ","
                 )
-                + ","
-            )
-            s += " ".join([str(all_prompt_predictions[jj][ii]) for jj in range(len(all_prompt_predictions))])
-            fout.write(s + "\n")
+                s += " ".join([
+                    str(all_prompt_predictions[jj][ii])
+                    for jj in range(len(all_prompt_predictions))
+                ])
+                fout.write(s + "\n")
 
     return results
 
@@ -236,6 +228,7 @@ def compute_metrics(
             for logit in logits[pidx]:
                 fout.write(" ".join([str(l) for l in logit]) + "\n")
 
+    posix_score = float(np.mean(posix_values))
     results = write_results_to_file(
         fout_name,
         suffix,
@@ -247,8 +240,8 @@ def compute_metrics(
         vote_ensemble_predictions,
         golds,
         avg_entropy,
+        extra_results={"posix": posix_score},
     )
-    results["posix"] = float(np.mean(posix_values))
     print(results)
     return results, None
 
@@ -387,6 +380,7 @@ def summarize_metrics(
             vote_ensemble_metrics,
             vote_ensemble_predictions,
             golds,
+            extra_results=None,
         )
     return results
 
