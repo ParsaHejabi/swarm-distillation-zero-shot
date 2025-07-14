@@ -487,6 +487,10 @@ class Trainer:
             self.label_smoother = None
 
         self.state = TrainerState()
+        # Ensure the process information is properly set before any callback
+        # uses it (e.g. for wandb initialization in ``on_init_end``).
+        self.state.is_local_process_zero = self.is_local_process_zero()
+        self.state.is_world_process_zero = self.is_world_process_zero()
         self.control = TrainerControl()
         # Internal variable to count flos in each process, will be accumulated in `self.state.total_flos` then
         # returned to 0 every time flos need to be logged
