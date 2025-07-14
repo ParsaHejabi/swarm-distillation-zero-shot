@@ -1260,6 +1260,11 @@ class Trainer:
         # Check if saved optimizer or scheduler states exist
         self._load_optimizer_and_scheduler(resume_from_checkpoint)
 
+        # After initializing distributed training, update process zero flags so
+        # callbacks like `WandbCallback` correctly know which rank should log
+        self.state.is_local_process_zero = self.is_local_process_zero()
+        self.state.is_world_process_zero = self.is_world_process_zero()
+
         # important: at this point:
         # self.model         is the Transformers Model
         # self.model_wrapped is DDP(Transformers Model), Deepspeed(Transformers Model), etc.
