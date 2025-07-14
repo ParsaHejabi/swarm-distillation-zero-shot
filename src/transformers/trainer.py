@@ -2781,8 +2781,20 @@ class Trainer:
         )
 
         if hasattr(self.args, 'test_mode') and self.args.test_mode == 'ttt_t0':
-            self._memory_tracker.stop_and_update_metrics(None)
-            return output.predictions
+            metrics = output.predictions if isinstance(output.predictions, dict) else {}
+            if metrics:
+                # Prefix metrics just like the standard evaluation path so that
+                # wandb logging keeps the same structure.
+                for key in list(metrics.keys()):
+                    if not key.startswith(f"{metric_key_prefix}_"):
+                        metrics[f"{metric_key_prefix}_{key}"] = metrics.pop(key)
+
+                self.log(metrics)
+                self.control = self.callback_handler.on_evaluate(self.args, self.state, self.control, metrics)
+                self._memory_tracker.stop_and_update_metrics(metrics)
+            else:
+                self._memory_tracker.stop_and_update_metrics(None)
+            return metrics
 
         total_batch_size = self.args.eval_batch_size * self.args.world_size
         output.metrics.update(
