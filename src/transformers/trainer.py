@@ -1267,6 +1267,7 @@ class Trainer:
         # Check if saved optimizer or scheduler states exist
         self._load_optimizer_and_scheduler(resume_from_checkpoint)
 
+        # Initialize callbacks (e.g., wandb) before any logging happens
         # important: at this point:
         # self.model         is the Transformers Model
         # self.model_wrapped is DDP(Transformers Model), Deepspeed(Transformers Model), etc.
@@ -1339,8 +1340,6 @@ class Trainer:
         self._total_loss_scalar = 0.0
         self._globalstep_last_logged = self.state.global_step
         model.zero_grad()
-
-        self.control = self.callback_handler.on_train_begin(args, self.state, self.control)
 
         # Skip the first epochs_trained epochs to get the random state of the dataloader at the right point.
         if not args.ignore_data_skip:
@@ -1751,6 +1750,9 @@ class Trainer:
         # Check if saved optimizer or scheduler states exist
         self._load_optimizer_and_scheduler(resume_from_checkpoint)
 
+        # Initialize callbacks (e.g., wandb) before any logging happens
+        self.control = self.callback_handler.on_train_begin(args, self.state, self.control)
+
         # important: at this point:
         # self.model         is the Transformers Model
         # self.model_wrapped is DDP(Transformers Model), Deepspeed(Transformers Model), etc.
@@ -1829,8 +1831,6 @@ class Trainer:
         self._total_loss_scalar = 0.0
         self._globalstep_last_logged = self.state.global_step
         model.zero_grad()
-
-        self.control = self.callback_handler.on_train_begin(args, self.state, self.control)
 
         # Skip the first epochs_trained epochs to get the random state of the dataloader at the right point.
         if not args.ignore_data_skip:
