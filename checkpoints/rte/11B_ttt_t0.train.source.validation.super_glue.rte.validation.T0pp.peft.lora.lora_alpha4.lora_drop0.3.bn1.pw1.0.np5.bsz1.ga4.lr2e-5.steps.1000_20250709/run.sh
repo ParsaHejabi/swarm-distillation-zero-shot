@@ -36,7 +36,7 @@ export TOKENIZERS_PARALLELISM="false"
 DATE=`date +%Y%m%d`
 
 # Choose dataset name here, e.g., rte, cb, anli_r1 ...
-dname="anli_r1"
+dname="rte"
 
 datasets=(wsc winogrande anli_r1 anli_r2 anli_r3 cb rte copa hellaswag story_cloze wic)
 
