@@ -498,7 +498,17 @@ class WandbCallback(TrainerCallback):
         if self._wandb is None:
             return
         self._initialized = True
-        if state.is_world_process_zero:
+
+        actual_world_process_zero = state.is_world_process_zero
+        try:
+            import torch
+
+            if torch.distributed.is_available() and torch.distributed.is_initialized():
+                actual_world_process_zero = torch.distributed.get_rank() == 0
+        except Exception:
+            pass
+
+        if actual_world_process_zero:
             logger.info(
                 'Automatic Weights & Biases logging enabled, to disable set os.environ["WANDB_DISABLED"] = "true"'
             )

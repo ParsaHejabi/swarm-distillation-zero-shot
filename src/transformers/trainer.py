@@ -2150,11 +2150,16 @@ class Trainer:
                 eval_dataset=self.dev_dataset, metric_key_prefix="unsupervised_dev", ignore_keys=ignore_keys_for_eval
             )
 
-            if self.early_stop_metric > metrics["avg entropy"] and self.state.global_step > self.args.min_train_steps:
-                self.early_stop_patience = self.early_stop_patience + 1
-            else:
-                self.early_stop_patience = 0
-            self.early_stop_metric = metrics["avg entropy"]
+            metric_name = "unsupervised_dev_avg entropy"
+            if metric_name in metrics:
+                if (
+                    self.early_stop_metric > metrics[metric_name]
+                    and self.state.global_step > self.args.min_train_steps
+                ):
+                    self.early_stop_patience = self.early_stop_patience + 1
+                else:
+                    self.early_stop_patience = 0
+                self.early_stop_metric = metrics[metric_name]
 
             self._report_to_hp_search(trial, epoch, metrics)
 
