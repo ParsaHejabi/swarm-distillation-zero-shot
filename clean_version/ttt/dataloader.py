@@ -1,30 +1,18 @@
-import logging
+from promptsource.templates import DatasetTemplates
+import datasets
+from torch.utils.data import Dataset
+import numpy as np
 import os
 from collections import defaultdict
-
-import datasets
-import numpy as np
-from torch.utils.data import Dataset
-
-from promptsource.templates import DatasetTemplates
-
+import logging
 
 logger = logging.getLogger(__name__)
 
 
 class DatasetByPrompt(Dataset):
     # used for test, maybe need to extend this class for open-ended generation tasks
-    def __init__(
-        self,
-        args,
-        cache_dir,
-        tokenizer,
-        split=None,
-        hold_out=-1,
-        random_hold_out=True,
-        testdev_set=False,
-        prompt_names=None,
-    ):
+    def __init__(self, args, cache_dir, tokenizer, split=None, hold_out=-1, random_hold_out=True, testdev_set=False,
+                 prompt_names=None):
         super().__init__()
         self.cache_dir = cache_dir
 
@@ -44,38 +32,26 @@ class DatasetByPrompt(Dataset):
         self.abl_nprompts = args.abl_nprompts
         self.prompts = DatasetTemplates(self.PROMPTSET_NAME, self.SUBSET_NAME)
         if prompt_names is None:
-            self.original_task_prompts = self.extract_original_task_prompts(
-                check_valid_prompts=self.SUBSET_NAME == "copa"
-            )
+            self.original_task_prompts = self.extract_original_task_prompts(check_valid_prompts=self.SUBSET_NAME=="copa")
         else:
             self.original_task_prompts = prompt_names
         self.construct_meta_info()
         self.num_choices = len(self.prompts[self.original_task_prompts[0]].get_answer_choices_list(self.dataset[0]))
-        print(
-            "{} has {} original task prompts, number choices = {}, total test examples = {}".format(
-                self.DATASET_NAME + ("/" + self.SUBSET_NAME) if self.SUBSET_NAME is not None else "",
-                len(self.original_task_prompts),
-                self.num_choices,
-                len(self),
-            )
-        )
+        print("{} has {} original task prompts, number choices = {}, total test examples = {}".format(self.DATASET_NAME + ("/" + self.SUBSET_NAME) if self.SUBSET_NAME is not None else "",
+                                                                                 len(self.original_task_prompts),
+                                                                                 self.num_choices,
+                                                                                 len(self)))
 
     def load(self):
         if self.DATASET_NAME == "story_cloze":
-            self.dataset = datasets.load_dataset("csv", data_files=os.path.join(self.cache_dir, "cloze_2016_val.csv"))[
-                "train"
-            ]
+            self.dataset = datasets.load_dataset("csv", data_files=os.path.join(self.cache_dir, "cloze_2016_val.csv"))["train"]
         else:
-            self.dataset = datasets.load_dataset(self.DATASET_NAME, self.SUBSET_NAME, cache_dir=self.cache_dir)[
-                self.TESTSET_NAME if self.split is None else self.split
-            ]
+            self.dataset = datasets.load_dataset(self.DATASET_NAME, self.SUBSET_NAME,
+                                             cache_dir=self.cache_dir)[self.TESTSET_NAME if self.split is None else self.split]
 
         if self.hold_out > -1 and len(self.dataset) > self.hold_out:
-            selected_data = (
-                np.random.choice(len(self.dataset), self.hold_out, replace=False)
-                if self.random_hold_out
+            selected_data = np.random.choice(len(self.dataset), self.hold_out, replace=False) if self.random_hold_out \
                 else range(self.hold_out)
-            )
             self.dataset = [self.dataset[int(sidx)] for sidx in selected_data]
 
     @property
@@ -112,19 +88,14 @@ class DatasetByPrompt(Dataset):
             model_inputs = self.tokenizer(inputs, padding=False, truncation=True)
         else:
             model_inputs = self.tokenizer(inputs, padding=False, truncation=True, add_special_tokens=False)
-        outputs_ids = self.tokenizer(outputs, padding=False, truncation=True).input_ids
-        model_inputs["labels"] = [[l if l != self.tokenizer.pad_token_id else -100 for l in x] for x in outputs_ids]
+        outputs_ids = self.tokenizer(outputs,  padding=False, truncation=True).input_ids
+        model_inputs['labels'] = [[l if l != self.tokenizer.pad_token_id else -100 for l in x] for x in outputs_ids]
 
-        results = [
-            {
-                "input_ids": input_id,
-                "attention_mask": amask,
-                "labels": label,
-            }
-            for input_id, amask, label in zip(
-                model_inputs["input_ids"], model_inputs["attention_mask"], model_inputs["labels"]
-            )
-        ]
+        results = [{
+            'input_ids': input_id,
+            'attention_mask': amask,
+            'labels': label,
+        } for input_id, amask, label in zip(model_inputs['input_ids'], model_inputs['attention_mask'], model_inputs['labels'])]
         return results, label
 
     def construct_meta_info(self):
@@ -153,11 +124,7 @@ class DatasetByPrompt(Dataset):
                             invalid_names.append(pname)
                             break
         invalid_names = set(invalid_names)
-        prompt_names = [
-            name
-            for name in all_prompt_names
-            if self.prompts[name].metadata.original_task and name not in invalid_names
-        ]
+        prompt_names = [name for name in all_prompt_names if self.prompts[name].metadata.original_task and name not in invalid_names]
         if self.SUBSET_NAME == "cb" and self.cb_surgery:
             return [name for ii, name in enumerate(prompt_names) if ii != 1 and ii != 10]
 
@@ -170,7 +137,7 @@ class TTTOnlineDataset(Dataset):
     def __init__(self, test_dataset, test_args, idx=-1):
         super().__init__()
         train_data_form = test_args.train_data_source
-        assert train_data_form == "stream"
+        assert train_data_form == 'stream'
         assert idx >= 0
         self.dataset, self.gold_label = test_dataset[idx]
 
@@ -179,7 +146,7 @@ class TTTOnlineDataset(Dataset):
         self.original_task_prompts = test_dataset.original_task_prompts
 
     def __getitem__(self, idx):
-        return self.dataset[idx * self.num_choices : (idx + 1) * self.num_choices]
+        return self.dataset[idx * self.num_choices: (idx+1) * self.num_choices]
 
     def __len__(self):
         return self.num_prompts
@@ -194,7 +161,7 @@ class TTTOfflineDataset(Dataset):
         super().__init__()
         print("Building TTT training set: {}!".format(test_args.train_data_source))
         train_data_form = test_args.train_data_source
-        assert train_data_form != "stream"
+        assert train_data_form != 'stream'
 
         self.random_n_prompts = random_n_prompts
 
@@ -219,7 +186,7 @@ class TTTOfflineDataset(Dataset):
         results = []
         s = idx * self.tot_single_ds_size
         for rp in random_prompts:
-            results.extend(self.dataset[s + rp * self.num_choices : s + (rp + 1) * self.num_choices])
+            results.extend(self.dataset[s+rp*self.num_choices : s+(rp+1)*self.num_choices])
         return results
 
     def __len__(self):
@@ -230,7 +197,7 @@ class TTTOnlineTokenLossDataset(Dataset):
     def __init__(self, test_dataset, test_args, idx=-1):
         super().__init__()
         train_data_form = test_args.train_data_source
-        assert train_data_form == "stream"
+        assert train_data_form == 'stream'
         assert idx >= 0
         self.dataset, self.gold_label = test_dataset[idx]
 
@@ -255,7 +222,7 @@ class TTTOfflineTokenLossDataset(Dataset):
         super().__init__()
         print("Building TTT training set: {}!".format(test_args.train_data_source))
         train_data_form = test_args.train_data_source
-        assert train_data_form != "stream"
+        assert train_data_form != 'stream'
 
         self.random_n_prompts = random_n_prompts
 
@@ -282,7 +249,7 @@ class TTTOfflineTokenLossDataset(Dataset):
         ans_idx = idx // self.datasize
         s = item_idx * self.tot_single_ds_size
         for rp in random_prompts:
-            results.append(self.dataset[s + rp * self.num_choices + ans_idx])
+            results.append(self.dataset[s+rp*self.num_choices+ans_idx])
         return results
 
     def __len__(self):
@@ -294,7 +261,7 @@ class TTTOfflineLoopDataset(Dataset):
         super().__init__()
         print("Building TTT training set: {}!".format(test_args.train_data_source))
         train_data_form = test_args.train_data_source
-        if train_data_form != "stream":
+        if train_data_form != 'stream':
             assert idx == -1
             self.dataset, self.gold_labels = self.construct_dataset(test_dataset)
             self.datasize = len(test_dataset)
@@ -312,7 +279,7 @@ class TTTOfflineLoopDataset(Dataset):
         self.prompt_groups = test_dataset.prompt_groups
 
         tot = self.tot_single_ds_size
-        self.dev_batches = [(i, i + dev_bsz if i + dev_bsz < tot else tot) for i in range(0, tot, dev_bsz)]
+        self.dev_batches = [(i, i+dev_bsz if i+dev_bsz < tot else tot) for i in range(0, tot, dev_bsz)]
         self.dev_size = len(self.dev_batches)
 
         self.split_answer_groups = test_args.split_answer_groups
@@ -332,23 +299,17 @@ class TTTOfflineLoopDataset(Dataset):
         results = []
         s = idx * self.tot_single_ds_size
         for bidx1, bidx2 in self.dev_batches:
-            results.append(self.dataset[s + bidx1 : s + bidx2])
+            results.append(self.dataset[s+bidx1: s+bidx2])
 
         if self.split_answer_groups:
             for pgroup in self.prompt_groups:
-                random_prompts = (
-                    pgroup
-                    if len(pgroup) <= self.random_n_prompts
+                random_prompts = pgroup if len(pgroup) <= self.random_n_prompts \
                     else np.random.choice(pgroup, self.random_n_prompts, replace=False)
-                )
                 for ans_idx in range(self.num_choices):
                     results.append([self.dataset[s + pid * self.num_choices + ans_idx] for pid in random_prompts])
         else:
-            random_prompts = (
-                list(range(self.num_prompts))
-                if self.num_prompts <= self.random_n_prompts
-                else np.random.choice(self.num_prompts, self.random_n_prompts, replace=False)
-            )
+            random_prompts = list(range(self.num_prompts)) if self.num_prompts <= self.random_n_prompts \
+                                                            else np.random.choice(self.num_prompts, self.random_n_prompts, replace=False)
             for ans_idx in range(self.num_choices):
                 results.append([self.dataset[s + pid * self.num_choices + ans_idx] for pid in random_prompts])
         return results

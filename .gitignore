@@ -168,3 +168,6 @@ exps_ttt/wandb
 checkpoints/*/*/checkpoint-*/
 checkpoints/*/*/*.p*
 scripts/cache
+clean_version/promptsource-main/
+clean_version/wandb/
+clean_version/checkpoints/
